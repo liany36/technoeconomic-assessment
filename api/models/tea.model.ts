@@ -1,4 +1,8 @@
 export interface InputVarMod {
-    cost: number;
-    time: number;
+    CapitalCost: number;
+    NetPlantCapacity: number;
+    CapacityFactor: number;
+    NetStationEfficiency: number;
+    FuelHeatingValue: number;
+    FuelAshConcentration: number;
 }

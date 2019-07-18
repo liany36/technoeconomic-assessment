@@ -19,10 +19,10 @@ const port = 3000;
 
 app.post('/tearun', async (req: any, res: any) => {
   const inputParams: InputVarMod = req.body;
-  console.log('req object = ');
+  console.log('\nrequest object = ');
   console.log(inputParams);
   const result = await calculate(inputParams);
-  console.log('result = ');
+  console.log('result object = ');
   console.log(result);
   res.status(200).json(result);
 });
