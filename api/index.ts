@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import express from 'express';
 // import swaggerUi from 'swagger-ui-express';
 
-import { InputVarMod } from './tea.model';
-import { calculate } from './tearun';
+import { InputVarMod } from './models/tea.model';
+import { calculate } from './models/tearun';
 
 // tslint:disable-next-line: no-var-requires
 // const swaggerDocument = require('../swagger.json');
