@@ -13,17 +13,21 @@ function GenericPowerOnly(input: InputVarMod) {
     const TotalNonFuelExpenses = input.LaborCost + input.MaintenanceCost + input.InsurancePropertyTax + input.Utilities
         + input.AshDisposal + input.Management + input.OtherOperatingExpenses;
     const TotalExpensesIncludingFuel = input.FuelCost * AnnualFuelConsumption + TotalNonFuelExpenses;
-    const FuelCostKwh = AnnualFuelConsumption * input.FuelCost / AnnualGeneration;
-    const LaborCostKwh = input.LaborCost / AnnualGeneration;
-    const MaintenanceCostKwh = input.MaintenanceCost / AnnualGeneration;
-    const InsurancePropertyTaxKwh = input.InsurancePropertyTax / AnnualGeneration;
-    const UtilitiesKwh = input.Utilities / AnnualGeneration;
-    const AshDisposalKwh = input.AshDisposal / AnnualGeneration;
-    const ManagementKwh = input.Management / AnnualGeneration;
-    const OtherOperatingExpensesKwh = input.OtherOperatingExpenses / AnnualGeneration;
+    const FuelCostKwh = CalcKwh(AnnualFuelConsumption * input.FuelCost);
+    const LaborCostKwh = CalcKwh(input.LaborCost);
+    const MaintenanceCostKwh = CalcKwh(input.MaintenanceCost);
+    const InsurancePropertyTaxKwh = CalcKwh(input.InsurancePropertyTax);
+    const UtilitiesKwh = CalcKwh(input.Utilities);
+    const AshDisposalKwh = CalcKwh(input.AshDisposal);
+    const ManagementKwh = CalcKwh(input.Management);
+    const OtherOperatingExpensesKwh = CalcKwh(input.OtherOperatingExpenses);
     const TotalNonFuelExpensesKwh = LaborCostKwh + MaintenanceCostKwh + InsurancePropertyTaxKwh
         + UtilitiesKwh + AshDisposalKwh + ManagementKwh + OtherOperatingExpensesKwh;
     const TotalExpensesIncludingFuelKwh = FuelCostKwh + TotalNonFuelExpensesKwh;
+
+    function CalcKwh(cost: number) {
+        return cost / AnnualGeneration;
+    }
 
     return {
             'Electrical and Fuel--base year':
