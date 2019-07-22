@@ -1,4 +1,4 @@
-import { InputVarMod } from './tea.model';
+import { CashFlow, InputVarMod } from './tea.model';
 
 function GenericPowerOnly(input: InputVarMod) {
     // Electrical and Fuel--base year
@@ -61,6 +61,43 @@ function GenericPowerOnly(input: InputVarMod) {
     input.EscalationFuel = 2.1;
     input.EscalationForProductionTaxCredit = 2.1;
     input.EscalationOther = 2.1;
+    // Depreciation Schedule
+    const DepreciationFraction = 1 / input.EconomicLife;
+    // Annual Cash Flows
+    const cashFlow = [];
+    for (let i = 0; i < 20; i++) {
+        const newCashFlow: CashFlow = { EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                        EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
+                                        DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
+                                        NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
+                                        InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
+                                        EnergyRevenueRequired: 0 };
+        cashFlow.push(newCashFlow);
+    }
+    cashFlow[0].EquityRecovery = AnnualEquityRecovery;
+    cashFlow[0].EquityInterest = input.CostOfEquity / 100 * TotalEquityCost;
+    cashFlow[0].EquityPrincipalPaid = cashFlow[0].EquityRecovery - cashFlow[0].EquityInterest;
+    cashFlow[0].EquityPrincipalRemaining = TotalEquityCost - cashFlow[0].EquityPrincipalPaid;
+    cashFlow[0].DebtRecovery = AnnualDebtPayment;
+    cashFlow[0].DebtInterest = input.InterestRateOnDebt / 100 * TotalDebtCost;
+    cashFlow[0].DebtPrincipalPaid = cashFlow[0].DebtRecovery - cashFlow[0].DebtInterest;
+    cashFlow[0].DebtPrincipalRemaining = TotalDebtCost - cashFlow[0].DebtPrincipalPaid;
+    cashFlow[0].FuelCost = AnnualFuelConsumption * input.FuelCost;
+    cashFlow[0].NonFuelExpenses = TotalNonFuelExpenses;
+    cashFlow[0].DebtReserve = DebtReserve;
+    cashFlow[0].Depreciation = TotalCostOfPlant * DepreciationFraction;
+    cashFlow[0].CapacityIncome = AnnualCapacityPayment;
+    cashFlow[0].InterestOnDebtReserve = AnnualDebtReserveInterest;
+    cashFlow[0].TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+        * (cashFlow[0].EquityPrincipalPaid + cashFlow[0].DebtPrincipalPaid + cashFlow[0].EquityInterest
+            - cashFlow[0].Depreciation + DebtReserve);
+    cashFlow[0].TaxCredit = AnnualGeneration * input.ProductionTaxCredit * input.TaxCreditFrac[0];
+    cashFlow[0].Taxes = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+        * (cashFlow[0].EquityPrincipalPaid + cashFlow[0].DebtPrincipalPaid + cashFlow[0].EquityInterest
+            - cashFlow[0].Depreciation + DebtReserve - cashFlow[0].TaxCredit);
+    cashFlow[0].EnergyRevenueRequired = cashFlow[0].EquityRecovery + cashFlow[0].DebtRecovery
+        + cashFlow[0].FuelCost + cashFlow[0].NonFuelExpenses + cashFlow[0].Taxes + DebtReserve
+        - cashFlow[0].CapacityIncome - cashFlow[0].InterestOnDebtReserve;
 
     return {
             'Electrical and Fuel--base year':
@@ -96,7 +133,8 @@ function GenericPowerOnly(input: InputVarMod) {
                     'AnnualEquityRecovery': AnnualEquityRecovery,
                     'AnnualDebtPayment': AnnualDebtPayment,
                     'DebtReserve': DebtReserve
-                }
+                },
+            'cashFlow0': cashFlow[0]
             };
 }
 

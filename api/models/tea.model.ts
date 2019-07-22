@@ -32,4 +32,27 @@ export interface InputVarMod {
     EscalationFuel: number;
     EscalationForProductionTaxCredit: number;
     EscalationOther: number;
+    // Tax Credit Schedule
+    TaxCreditFrac: number[];
+}
+
+export interface CashFlow {
+    EquityRecovery: number;
+    EquityInterest: number;
+    EquityPrincipalPaid: number;
+    EquityPrincipalRemaining: number;
+    DebtRecovery: number;
+    DebtInterest: number;
+    DebtPrincipalPaid: number;
+    DebtPrincipalRemaining: number;
+    FuelCost: number;
+    NonFuelExpenses: number;
+    DebtReserve: number;
+    Depreciation: number;
+    CapacityIncome: number;
+    InterestOnDebtReserve: number;
+    TaxesWoCredit: number;
+    TaxCredit: number;
+    Taxes: number;
+    EnergyRevenueRequired: number;
 }
