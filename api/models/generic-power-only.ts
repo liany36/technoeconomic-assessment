@@ -28,16 +28,9 @@ function GenericPowerOnly(input: InputVarMod) {
         return cost / AnnualGeneration;
     }
     // Taxes
-    input.FederalTaxRate = 34;
-    input.StateTaxRate = 9.6;
-    input.ProductionTaxCredit = 0.009;
     const CombinedTaxRate = input.StateTaxRate + input.FederalTaxRate * (1 - input.StateTaxRate / 100);
     // Financing
-    input.DebtRatio = 75;
     const EquityRatio = 100 - input.DebtRatio;
-    input.InterestRateOnDebt = 5;
-    input.EconomicLife = 20;
-    input.CostOfEquity = 15;
     const CostOfMoney = input.DebtRatio / 100 * input.InterestRateOnDebt + EquityRatio / 100 * input.CostOfEquity;
     const TotalCostOfPlant = input.CapitalCost;
     const TotalEquityCost = TotalCostOfPlant * EquityRatio / 100;
@@ -52,15 +45,8 @@ function GenericPowerOnly(input: InputVarMod) {
         return A;
     }
     // Income other than energy
-    input.CapacityPayment = 166;
-    input.InterestRateonDebtReserve = 5;
     const AnnualCapacityPayment = input.CapacityPayment * input.NetPlantCapacity;
     const AnnualDebtReserveInterest = DebtReserve * input.InterestRateonDebtReserve / 100;
-    // Escalation/Inflation
-    input.GeneralInflation = 2.1;
-    input.EscalationFuel = 2.1;
-    input.EscalationForProductionTaxCredit = 2.1;
-    input.EscalationOther = 2.1;
     // Depreciation Schedule
     const DepreciationFraction = 1 / input.EconomicLife;
     // Annual Cash Flows
@@ -100,11 +86,11 @@ function GenericPowerOnly(input: InputVarMod) {
     cashFlow[0].EnergyRevenueRequired = cashFlow[0].EquityRecovery + cashFlow[0].DebtRecovery
         + cashFlow[0].FuelCost + cashFlow[0].NonFuelExpenses + cashFlow[0].Taxes + DebtReserve
         - cashFlow[0].CapacityIncome - cashFlow[0].InterestOnDebtReserve;
-    // Year 2 to Year 19
+    // Year 2 to the last second Year (19 in this case)
     for (let i = 1; i < input.EconomicLife - 1; i++) {
         cashFlow[i] = CalcCashFlow(cashFlow[i - 1], i + 1);
     }
-    // Year 20
+    // Last Year (20 in this case)
     cashFlow[input.EconomicLife - 1] = CalcCashFlowLast(cashFlow[input.EconomicLife - 2], input.EconomicLife);
 
     function CalcCashFlow(CF: CashFlow, Year: number) {
@@ -225,6 +211,11 @@ function GenericPowerOnly(input: InputVarMod) {
     const ConstantLACofEnergy = ConstantLevelAnnualRevenueRequirements / AnnualGeneration;
 
     return {
+            'Sensitivity Analysis':
+                {
+                    'LAC Current': CurrentLACofEnergy,
+                    'LAC Constant': ConstantLACofEnergy
+                },
             'Electrical and Fuel--base year':
                 {'AnnualHours': AnnualHours, 'FuelConsumptionRate': FuelConsumptionRate,
                  'AnnualGeneration': AnnualGeneration, 'CapitalCostNEC': CapitalCostNEC,
@@ -270,7 +261,7 @@ function GenericPowerOnly(input: InputVarMod) {
                     'CapitalRecoveryFactorConstant': CapitalRecoveryFactorConstant,
                     'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
                     'ConstantLACofEnergy': ConstantLACofEnergy
-                }
+                },
             };
 }
 
