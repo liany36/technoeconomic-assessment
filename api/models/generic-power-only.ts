@@ -1,4 +1,4 @@
-import { InputVarMod } from './tea.model';
+import { CashFlow, InputVarMod, TotalCashFlow } from './tea.model';
 
 function GenericPowerOnly(input: InputVarMod) {
     // Electrical and Fuel--base year
@@ -61,6 +61,150 @@ function GenericPowerOnly(input: InputVarMod) {
     input.EscalationFuel = 2.1;
     input.EscalationForProductionTaxCredit = 2.1;
     input.EscalationOther = 2.1;
+    // Depreciation Schedule
+    const DepreciationFraction = 1 / input.EconomicLife;
+    // Annual Cash Flows
+    const cashFlow = [];
+    for (let i = 0; i < 20; i++) {
+        const newCF: CashFlow = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                  EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
+                                  DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
+                                  NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
+                                  InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
+                                  EnergyRevenueRequired: 0 };
+        cashFlow.push(newCF);
+    }
+    // Year 1
+    cashFlow[0].Year = 1;
+    cashFlow[0].EquityRecovery = AnnualEquityRecovery;
+    cashFlow[0].EquityInterest = input.CostOfEquity / 100 * TotalEquityCost;
+    cashFlow[0].EquityPrincipalPaid = cashFlow[0].EquityRecovery - cashFlow[0].EquityInterest;
+    cashFlow[0].EquityPrincipalRemaining = TotalEquityCost - cashFlow[0].EquityPrincipalPaid;
+    cashFlow[0].DebtRecovery = AnnualDebtPayment;
+    cashFlow[0].DebtInterest = input.InterestRateOnDebt / 100 * TotalDebtCost;
+    cashFlow[0].DebtPrincipalPaid = cashFlow[0].DebtRecovery - cashFlow[0].DebtInterest;
+    cashFlow[0].DebtPrincipalRemaining = TotalDebtCost - cashFlow[0].DebtPrincipalPaid;
+    cashFlow[0].FuelCost = AnnualFuelConsumption * input.FuelCost;
+    cashFlow[0].NonFuelExpenses = TotalNonFuelExpenses;
+    cashFlow[0].DebtReserve = DebtReserve;
+    cashFlow[0].Depreciation = TotalCostOfPlant * DepreciationFraction;
+    cashFlow[0].CapacityIncome = AnnualCapacityPayment;
+    cashFlow[0].InterestOnDebtReserve = AnnualDebtReserveInterest;
+    cashFlow[0].TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+        * (cashFlow[0].EquityPrincipalPaid + cashFlow[0].DebtPrincipalPaid + cashFlow[0].EquityInterest
+            - cashFlow[0].Depreciation + DebtReserve);
+    cashFlow[0].TaxCredit = AnnualGeneration * input.ProductionTaxCredit * input.TaxCreditFrac[0];
+    cashFlow[0].Taxes = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+        * (cashFlow[0].EquityPrincipalPaid + cashFlow[0].DebtPrincipalPaid + cashFlow[0].EquityInterest
+            - cashFlow[0].Depreciation + DebtReserve - cashFlow[0].TaxCredit);
+    cashFlow[0].EnergyRevenueRequired = cashFlow[0].EquityRecovery + cashFlow[0].DebtRecovery
+        + cashFlow[0].FuelCost + cashFlow[0].NonFuelExpenses + cashFlow[0].Taxes + DebtReserve
+        - cashFlow[0].CapacityIncome - cashFlow[0].InterestOnDebtReserve;
+    // Year 2 to Year 19
+    for (let i = 1; i < 19; i++) {
+        cashFlow[i] = CalcCashFlow(cashFlow[i - 1], i + 1);
+    }
+    // Year 20
+    cashFlow[19] = CalcCashFlowLast(cashFlow[18], 20);
+
+    function CalcCashFlow(CF: CashFlow, Year: number) {
+        const newCF: CashFlow = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                  EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
+                                  DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
+                                  NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
+                                  InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
+                                  EnergyRevenueRequired: 0 };
+        newCF.Year = Year;
+        newCF.EquityRecovery = AnnualEquityRecovery;
+        newCF.EquityInterest = input.CostOfEquity / 100 * CF.EquityPrincipalRemaining;
+        newCF.EquityPrincipalPaid = newCF.EquityRecovery - newCF.EquityInterest;
+        newCF.EquityPrincipalRemaining = CF.EquityPrincipalRemaining - newCF.EquityPrincipalPaid;
+        newCF.DebtRecovery = AnnualDebtPayment;
+        newCF.DebtInterest = input.InterestRateOnDebt / 100 * CF.DebtPrincipalRemaining;
+        newCF.DebtPrincipalPaid = newCF.DebtRecovery - newCF.DebtInterest;
+        newCF.DebtPrincipalRemaining = CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
+        newCF.FuelCost = AnnualFuelConsumption * input.FuelCost
+            * Math.pow((1 + input.EscalationFuel / 100), (Year - 1));
+        newCF.NonFuelExpenses = TotalNonFuelExpenses * Math.pow((1 + input.EscalationOther / 100), (Year - 1));
+        newCF.DebtReserve = 0;
+        newCF.Depreciation = TotalCostOfPlant * DepreciationFraction;
+        newCF.CapacityIncome = AnnualCapacityPayment;
+        newCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
+        newCF.TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+            * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
+                - newCF.Depreciation + newCF.DebtReserve);
+        newCF.TaxCredit = AnnualGeneration * input.ProductionTaxCredit
+            * Math.pow((1 + input.EscalationForProductionTaxCredit / 100), (Year - 1)) * input.TaxCreditFrac[Year - 1];
+        newCF.Taxes = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+            * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
+                - newCF.Depreciation + newCF.DebtReserve - newCF.TaxCredit);
+        newCF.EnergyRevenueRequired = newCF.EquityRecovery + newCF.DebtRecovery + newCF.FuelCost
+            + newCF.NonFuelExpenses + newCF.Taxes + newCF.DebtReserve - newCF.CapacityIncome
+            - newCF.InterestOnDebtReserve;
+
+        return newCF;
+    }
+
+    function CalcCashFlowLast(CF: CashFlow, Year: number) { // DebtReserve is calculated differently
+        const newCF: CashFlow = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                  EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
+                                  DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
+                                  NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
+                                  InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
+                                  EnergyRevenueRequired: 0 };
+        newCF.Year = Year;
+        newCF.EquityRecovery = AnnualEquityRecovery;
+        newCF.EquityInterest = input.CostOfEquity / 100 * CF.EquityPrincipalRemaining;
+        newCF.EquityPrincipalPaid = newCF.EquityRecovery - newCF.EquityInterest;
+        newCF.EquityPrincipalRemaining = CF.EquityPrincipalRemaining - newCF.EquityPrincipalPaid;
+        newCF.DebtRecovery = AnnualDebtPayment;
+        newCF.DebtInterest = input.InterestRateOnDebt / 100 * CF.DebtPrincipalRemaining;
+        newCF.DebtPrincipalPaid = newCF.DebtRecovery - newCF.DebtInterest;
+        newCF.DebtPrincipalRemaining = CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
+        newCF.FuelCost = AnnualFuelConsumption * input.FuelCost
+            * Math.pow((1 + input.EscalationFuel / 100), (Year - 1));
+        newCF.NonFuelExpenses = TotalNonFuelExpenses * Math.pow((1 + input.EscalationOther / 100), (Year - 1));
+        newCF.DebtReserve = -DebtReserve;
+        newCF.Depreciation = TotalCostOfPlant * DepreciationFraction;
+        newCF.CapacityIncome = AnnualCapacityPayment;
+        newCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
+        newCF.TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+            * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
+                - newCF.Depreciation + newCF.DebtReserve);
+        newCF.TaxCredit = AnnualGeneration * input.ProductionTaxCredit
+            * Math.pow((1 + input.EscalationForProductionTaxCredit / 100), (Year - 1)) * input.TaxCreditFrac[Year - 1];
+        newCF.Taxes = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+            * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
+                - newCF.Depreciation + newCF.DebtReserve - newCF.TaxCredit);
+        newCF.EnergyRevenueRequired = newCF.EquityRecovery + newCF.DebtRecovery + newCF.FuelCost
+            + newCF.NonFuelExpenses + newCF.Taxes + newCF.DebtReserve - newCF.CapacityIncome
+            - newCF.InterestOnDebtReserve;
+
+        return newCF;
+    }
+    const Total: TotalCashFlow = { EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                   DebtRecovery: 0, DebtInterest: 0, DebtPrincipalPaid: 0, FuelCost: 0,
+                                   NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
+                                   InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
+                                   EnergyRevenueRequired: 0 };
+    for (let i = 0; i < cashFlow.length; i++) {
+        Total.EquityRecovery += cashFlow[i].EquityRecovery;
+        Total.EquityInterest += cashFlow[i].EquityInterest;
+        Total.EquityPrincipalPaid += cashFlow[i].EquityPrincipalPaid;
+        Total.DebtRecovery += cashFlow[i].DebtRecovery;
+        Total.DebtInterest += cashFlow[i].DebtInterest;
+        Total.DebtPrincipalPaid += cashFlow[i].DebtPrincipalPaid;
+        Total.FuelCost += cashFlow[i].FuelCost;
+        Total.NonFuelExpenses += cashFlow[i].NonFuelExpenses;
+        Total.DebtReserve += cashFlow[i].DebtReserve;
+        Total.Depreciation += cashFlow[i].Depreciation;
+        Total.CapacityIncome += cashFlow[i].CapacityIncome;
+        Total.InterestOnDebtReserve += cashFlow[i].InterestOnDebtReserve;
+        Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
+        Total.TaxCredit += cashFlow[i].TaxCredit;
+        Total.Taxes += cashFlow[i].Taxes;
+        Total.EnergyRevenueRequired += cashFlow[i].EnergyRevenueRequired;
+    }
 
     return {
             'Electrical and Fuel--base year':
@@ -96,7 +240,9 @@ function GenericPowerOnly(input: InputVarMod) {
                     'AnnualEquityRecovery': AnnualEquityRecovery,
                     'AnnualDebtPayment': AnnualDebtPayment,
                     'DebtReserve': DebtReserve
-                }
+                },
+            'Annual Cash Flows': cashFlow,
+            'Total Cash Flow': Total
             };
 }
 

@@ -32,4 +32,47 @@ export interface InputVarMod {
     EscalationFuel: number;
     EscalationForProductionTaxCredit: number;
     EscalationOther: number;
+    // Tax Credit Schedule
+    TaxCreditFrac: number[];
+}
+// Annual Cash Flows
+export interface CashFlow {
+    Year: number;
+    EquityRecovery: number;
+    EquityInterest: number;
+    EquityPrincipalPaid: number;
+    EquityPrincipalRemaining: number;
+    DebtRecovery: number;
+    DebtInterest: number;
+    DebtPrincipalPaid: number;
+    DebtPrincipalRemaining: number;
+    FuelCost: number;
+    NonFuelExpenses: number;
+    DebtReserve: number;
+    Depreciation: number;
+    CapacityIncome: number;
+    InterestOnDebtReserve: number;
+    TaxesWoCredit: number;
+    TaxCredit: number;
+    Taxes: number;
+    EnergyRevenueRequired: number;
+}
+// Total Cash Flow
+export interface TotalCashFlow {
+    EquityRecovery: number;
+    EquityInterest: number;
+    EquityPrincipalPaid: number;
+    DebtRecovery: number;
+    DebtInterest: number;
+    DebtPrincipalPaid: number;
+    FuelCost: number;
+    NonFuelExpenses: number;
+    DebtReserve: number;
+    Depreciation: number;
+    CapacityIncome: number;
+    InterestOnDebtReserve: number;
+    TaxesWoCredit: number;
+    TaxCredit: number;
+    Taxes: number;
+    EnergyRevenueRequired: number;
 }
