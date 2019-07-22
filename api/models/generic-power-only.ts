@@ -65,7 +65,7 @@ function GenericPowerOnly(input: InputVarMod) {
     const DepreciationFraction = 1 / input.EconomicLife;
     // Annual Cash Flows
     const cashFlow = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < input.EconomicLife; i++) {
         const newCF: CashFlow = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
                                   EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
                                   DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
@@ -101,11 +101,11 @@ function GenericPowerOnly(input: InputVarMod) {
         + cashFlow[0].FuelCost + cashFlow[0].NonFuelExpenses + cashFlow[0].Taxes + DebtReserve
         - cashFlow[0].CapacityIncome - cashFlow[0].InterestOnDebtReserve;
     // Year 2 to Year 19
-    for (let i = 1; i < 19; i++) {
+    for (let i = 1; i < input.EconomicLife - 1; i++) {
         cashFlow[i] = CalcCashFlow(cashFlow[i - 1], i + 1);
     }
     // Year 20
-    cashFlow[19] = CalcCashFlowLast(cashFlow[18], 20);
+    cashFlow[input.EconomicLife - 1] = CalcCashFlowLast(cashFlow[input.EconomicLife - 2], input.EconomicLife);
 
     function CalcCashFlow(CF: CashFlow, Year: number) {
         const newCF: CashFlow = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
@@ -205,6 +205,24 @@ function GenericPowerOnly(input: InputVarMod) {
         Total.Taxes += cashFlow[i].Taxes;
         Total.EnergyRevenueRequired += cashFlow[i].EnergyRevenueRequired;
     }
+    // Current $ Level Annual Cost (LAC)
+    const PresentWorth = [];
+    let TotalPresentWorth = 0;
+    for (let i = 0; i < cashFlow.length; i++) {
+        const newPW = PW(cashFlow[i].EnergyRevenueRequired, input.CostOfEquity, i + 1);
+        PresentWorth.push(newPW);
+        TotalPresentWorth += newPW;
+    }
+    const CapitalRecoveryFactorCurrent = CapitalRecoveryFactorEquity;
+    const CurrentLevelAnnualRevenueRequirements = CapitalRecoveryFactorCurrent * TotalPresentWorth;
+    const CurrentLACofEnergy = CurrentLevelAnnualRevenueRequirements / AnnualGeneration;
+    function PW(EnergyRevenueRequired: number, CostOfEquity: number, Year: number) {
+        return EnergyRevenueRequired * Math.pow((1 + CostOfEquity / 100), -Year);
+    }
+    const RealCostOfMoney = (1 + input.CostOfEquity / 100) / (1 + input.GeneralInflation / 100) - 1;
+    const CapitalRecoveryFactorConstant = CapitalRecoveryFactor(RealCostOfMoney * 100, input.EconomicLife);
+    const ConstantLevelAnnualRevenueRequirements = TotalPresentWorth * CapitalRecoveryFactorConstant;
+    const ConstantLACofEnergy = ConstantLevelAnnualRevenueRequirements / AnnualGeneration;
 
     return {
             'Electrical and Fuel--base year':
@@ -242,7 +260,17 @@ function GenericPowerOnly(input: InputVarMod) {
                     'DebtReserve': DebtReserve
                 },
             'Annual Cash Flows': cashFlow,
-            'Total Cash Flow': Total
+            'Total Cash Flow': Total,
+            'Current $ Level Annual Cost (LAC)':
+                {
+                    'TotalPresentWorth': TotalPresentWorth,
+                    'CurrentLevelAnnualRevenueRequirements': CurrentLevelAnnualRevenueRequirements,
+                    'CurrentLACofEnergy': CurrentLACofEnergy,
+                    'RealCostOfMoney': RealCostOfMoney / 100,
+                    'CapitalRecoveryFactorConstant': CapitalRecoveryFactorConstant,
+                    'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
+                    'ConstantLACofEnergy': ConstantLACofEnergy
+                }
             };
 }
 
