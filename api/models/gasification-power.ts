@@ -1,6 +1,6 @@
-import { CashFlow, InputVarMod, TotalCashFlow } from './tea.model';
+import { CashFlow, GasificationPowerInputMod, TotalCashFlow } from './tea.model';
 
-function GasificationPower(input: InputVarMod) {
+function GasificationPower(input: GasificationPowerInputMod) {
     // Capital Cost
     // Electrical and Fuel--base year
     // Heat--base year
@@ -13,6 +13,7 @@ function GasificationPower(input: InputVarMod) {
     // Tax Credit Schedule
     // Annual Cash Flows
     // Current $ Level Annual Cost (LAC)
+    return 'lalala';
 }
 
 export { GasificationPower };

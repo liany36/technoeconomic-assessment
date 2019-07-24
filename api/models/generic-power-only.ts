@@ -1,6 +1,6 @@
-import { CashFlow, InputVarMod, TotalCashFlow } from './tea.model';
+import { CashFlow, GenericPowerOnlyInputMod, TotalCashFlow } from './tea.model';
 
-function GenericPowerOnly(input: InputVarMod) {
+function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
     // Electrical and Fuel--base year
     const AnnualHours = input.CapacityFactor / 100 * 8760;
     const FuelConsumptionRate = input.NetPlantCapacity / (input.NetStationEfficiency / 100) * 3600
