@@ -109,6 +109,17 @@ export interface GasificationPowerInputMod {
     CH4LowerHeatingValueMjPerKg: number;
 }
 
+export interface HydrogenInputMod {
+    model: string;
+    // Hydrogen Generation
+    GrossDesignHydrogenCapacity: number;
+    HydrogenHHV: number;
+    HydrogenLHV: number;
+    Feedstock: number;
+    OverallProductionEfficiency: number;
+    CapacityFactor: number;
+}
+
 // Annual Cash Flows - generic-power-only
 export interface CashFlow {
     Year: number;

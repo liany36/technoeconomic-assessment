@@ -6,6 +6,7 @@ import express from 'express';
 import { GasificationPower } from './models/gasification-power';
 import { GenericCombinedHeatPower } from './models/generic-combined-heat-power';
 import { GenericPowerOnly } from './models/generic-power-only';
+import { Hydrogen } from './models/hydrogen';
 
 // tslint:disable-next-line: no-var-requires
 // const swaggerDocument = require('../swagger.json');
@@ -33,6 +34,8 @@ app.post('/tearun', async (req: any, res: any) => {
     case 'gasification-power':
       result = await GasificationPower(req.body);
       break;
+    case 'hydrogen':
+      result = await Hydrogen(req.body);
   }
   // const result = await calculate(res.body);
   console.log('result object = ');
