@@ -47,6 +47,9 @@ export interface GenericCombinedHeatPowerInputMod {
     NetStationEfficiency: number;
     FuelHeatingValue: number;
     FuelAshConcentration: number;
+    // Heat-base year
+    AggregateFractionOfHeatRecovered: number;
+    AggregateSalesPriceForHeat: number;
     // // Expenses--base year
     // FuelCost: number;
     // LaborCost: number;

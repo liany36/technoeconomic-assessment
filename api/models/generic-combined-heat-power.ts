@@ -12,6 +12,15 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
     const AnnualFuelConsumption = FuelConsumptionRate * AnnualHours;
     const CapitalCostNEC = input.CapitalCost / input.NetElectricalCapacity;
     const AnnualAshDisposal = AnnualFuelConsumption * input.FuelAshConcentration / 100;
+    // Heat-base year
+    const TotalHeatProductionRate = FuelPower - input.GrossElectricalCapacity;
+    const RecoveredHeat = TotalHeatProductionRate * input.AggregateFractionOfHeatRecovered / 100;
+    const AnnualHeatSales = RecoveredHeat * AnnualHours;
+    const TotalIncomeFromHeatSales = AnnualHeatSales * input.AggregateSalesPriceForHeat;
+    const HeatIncomePerUnitNEE = TotalIncomeFromHeatSales / AnnualNetGeneration;
+    const OverallCHPefficiencyGross = (input.GrossElectricalCapacity * AnnualHours + AnnualHeatSales)
+        / (FuelPower * AnnualHours) * 100;
+    const OverallCHPefficiencyNet = (AnnualNetGeneration + AnnualHeatSales) / (FuelPower * AnnualHours) * 100;
 
     return {
             'Electrical and Fuel--base year':
@@ -19,6 +28,14 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
                  'FuelPower': FuelPower, 'GrossStationElectricalEfficiency': GrossStationElectricalEfficiency,
                  'AnnualNetGeneration': AnnualNetGeneration, 'AnnualFuelConsumption': AnnualFuelConsumption,
                  'CapitalCostNEC': CapitalCostNEC, 'AnnualAshDisposal': AnnualAshDisposal},
+            'Heat-base year':
+                {
+                    'TotalHeatProductionRate': TotalHeatProductionRate, 'RecoveredHeat': RecoveredHeat,
+                    'AnnualHeatSales': AnnualHeatSales, 'TotalIncomeFromHeatSales': TotalIncomeFromHeatSales,
+                    'HeatIncomePerUnitNEE': HeatIncomePerUnitNEE,
+                    'OverallCHPefficiencyGross': OverallCHPefficiencyGross,
+                    'OverallCHPefficiencyNet': OverallCHPefficiencyNet
+                }
             // 'Expenses--base year':
             // {'TotalNonFuelExpenses': TotalNonFuelExpenses, 'TotalExpensesIncludingFuel': TotalExpensesIncludingFuel,
             //      'FuelCostKwh': FuelCostKwh, 'LaborCostKwh': LaborCostKwh, 'MaintenanceCostKwh': MaintenanceCostKwh,
