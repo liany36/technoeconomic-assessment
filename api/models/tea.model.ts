@@ -50,15 +50,15 @@ export interface GenericCombinedHeatPowerInputMod {
     // Heat-base year
     AggregateFractionOfHeatRecovered: number;
     AggregateSalesPriceForHeat: number;
-    // // Expenses--base year
-    // FuelCost: number;
-    // LaborCost: number;
-    // MaintenanceCost: number;
-    // InsurancePropertyTax: number;
-    // Utilities: number;
-    // AshDisposal: number;
-    // Management: number;
-    // OtherOperatingExpenses: number;
+    // Expenses--base year
+    FuelCost: number;
+    LaborCost: number;
+    MaintenanceCost: number;
+    InsurancePropertyTax: number;
+    Utilities: number;
+    AshDisposal: number;
+    Management: number;
+    OtherOperatingExpenses: number;
     // // Taxes
     // FederalTaxRate: number;
     // StateTaxRate: number;
