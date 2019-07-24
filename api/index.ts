@@ -3,8 +3,9 @@ import dotenv from 'dotenv';
 import express from 'express';
 // import swaggerUi from 'swagger-ui-express';
 
-import { InputVarMod } from './models/tea.model';
-import { calculate } from './models/tearun';
+import { GasificationPower } from './models/gasification-power';
+import { GenericCombinedHeatPower } from './models/generic-combined-heat-power';
+import { GenericPowerOnly } from './models/generic-power-only';
 
 // tslint:disable-next-line: no-var-requires
 // const swaggerDocument = require('../swagger.json');
@@ -18,10 +19,22 @@ app.use(bodyParser.json());
 const port = 3000;
 
 app.post('/tearun', async (req: any, res: any) => {
-  const inputParams: InputVarMod = req.body;
+  // const inputParams: GenericPowerOnlyInputMod = req.body;
   console.log('\nrequest object = ');
-  console.log(inputParams);
-  const result = await calculate(inputParams);
+  console.log(req.body);
+  let result = {};
+  switch (req.body.model) {
+    case 'generic-power-only':
+      result = await GenericPowerOnly(req.body);
+      break;
+    case 'generic-combined-heat-power':
+      result = await GenericCombinedHeatPower(req.body);
+      break;
+    case 'gasification-power':
+      result = await GasificationPower(req.body);
+      break;
+  }
+  // const result = await calculate(res.body);
   console.log('result object = ');
   console.log(result);
   res.status(200).json(result);
