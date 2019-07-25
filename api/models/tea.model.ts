@@ -123,6 +123,12 @@ export interface HydrogenInputMod {
     // Expenses--base year
     FeedstockCost: number;
     OperatingExpensesRate: number;
+    // Other Revenues or Cost Savings
+    ElectricalEnergy: number;
+    IncentivePayments: number;
+    Capacity: number;
+    Heat: number;
+    Residues: number;
     // Taxes and Tax credit
     FederalTaxRate: number;
     StateTaxRate: number;
@@ -145,6 +151,8 @@ export interface HydrogenInputMod {
     MARR: number;
     EconomicLife: number;
     InterestRateOnDebtReserve: number;
+    // Tax Credit Schedule
+    TaxCreditFrac: number[];
 }
 
 // Annual Cash Flows - generic-power-only
@@ -194,6 +202,34 @@ export interface CashFlowCHP {
     EnergyRevenueRequired: number;
 }
 
+// Annual Cash Flows - hydrogen
+export interface CashFlowHydrogen {
+    Year: number;
+    EquityRecovery: number;
+    EquityInterest: number;
+    EquityPrincipalPaid: number;
+    EquityPrincipalRemaining: number;
+    DebtRecovery: number;
+    DebtInterest: number;
+    DebtPrincipalPaid: number;
+    DebtPrincipalRemaining: number;
+    FuelCost: number;
+    NonFuelExpenses: number;
+    DebtReserve: number;
+    Expenses: number;
+    Depreciation: number;
+    IncomeElectricalEnergy: number;
+    IncomeIncentivePayments: number;
+    IncomeCapacity: number;
+    IncomeHeat: number;
+    IncomeResidue: number;
+    InterestOnDebtReserve: number;
+    TaxesWoCredit: number;
+    TaxCredit: number;
+    Taxes: number;
+    EnergyRevenueRequired: number;
+}
+
 // Total Cash Flow - generic-power-only
 export interface TotalCashFlow {
     EquityRecovery: number;
@@ -228,6 +264,31 @@ export interface TotalCashFlowCHP {
     Depreciation: number;
     CapacityIncome: number;
     HeatSalesIncome: number;
+    InterestOnDebtReserve: number;
+    TaxesWoCredit: number;
+    TaxCredit: number;
+    Taxes: number;
+    EnergyRevenueRequired: number;
+}
+
+// Total Cash Flow - Hydrogen
+export interface TotalCashFlowHydrogen {
+    EquityRecovery: number;
+    EquityInterest: number;
+    EquityPrincipalPaid: number;
+    DebtRecovery: number;
+    DebtInterest: number;
+    DebtPrincipalPaid: number;
+    FuelCost: number;
+    NonFuelExpenses: number;
+    DebtReserve: number;
+    Expenses: number;
+    Depreciation: number;
+    IncomeElectricalEnergy: number;
+    IncomeIncentivePayments: number;
+    IncomeCapacity: number;
+    IncomeHeat: number;
+    IncomeResidue: number;
     InterestOnDebtReserve: number;
     TaxesWoCredit: number;
     TaxCredit: number;
