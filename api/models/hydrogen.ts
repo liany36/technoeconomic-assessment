@@ -1,0 +1,327 @@
+import { CashFlowHydrogen, HydrogenInputMod, TotalCashFlowHydrogen } from './tea.model';
+
+function Hydrogen(input: HydrogenInputMod) {
+    // Hydrogen Generation
+    const HydrogenEnergy = input.GrossDesignHydrogenCapacity * input.HydrogenHHV;
+    const DesignHydrogenProductionRateMW = HydrogenEnergy / 24 / 3600;
+    const DesignHydrogenProductionRateMg = input.GrossDesignHydrogenCapacity / 24 / 1000;
+    const FeedstockInput = DesignHydrogenProductionRateMW / (input.OverallProductionEfficiency / 100);
+    const FeedstockSupply = FeedstockInput / input.Feedstock * 3600 / 1000;
+    const AnnualHours = 8760 * input.CapacityFactor / 100;
+    const AnnualFeedstockSupply = FeedstockSupply * AnnualHours;
+    const AnnualFeedstockEnergyInput = AnnualFeedstockSupply * 1000 * input.Feedstock / 1000000000;
+    const AnnualHydrogenProductionMg = DesignHydrogenProductionRateMg * AnnualHours;
+    const AnnualHydrogenProductionKg = AnnualHydrogenProductionMg * 1000;
+    const AnnualHydrogenEnergy = AnnualHydrogenProductionMg * 1000 * input.HydrogenHHV / 1000;
+    // Capital Cost
+    const CapitalCostUnitDaily = input.CapitalCost / input.GrossDesignHydrogenCapacity;
+    const CapitalCostUnitYear = input.CapitalCost / AnnualHydrogenProductionKg;
+    // Expenses--base year
+    const AnnualFeedstockCost = input.FeedstockCost * AnnualFeedstockSupply;
+    const OperatingExpenses = input.CapitalCost * input.OperatingExpensesRate / 100;
+    const TotalAnnualExpenses = AnnualFeedstockCost + OperatingExpenses;
+    // Taxes and Tax credit
+    const CombinedTaxRate = input.StateTaxRate + input.FederalTaxRate * (1 - input.StateTaxRate / 100);
+    // Financing
+    const AmountOfCapitalFinancing = input.CapitalCost;
+    const EquityRatio = 100 - input.DebtRatio;
+    const WeightedCostOfMoney = input.DebtRatio / 100 * input.InterestRateOnDebt + EquityRatio / 100 * input.MARR;
+    const WeightedCapitalRecoveryFactorCurrent = CapitalRecoveryFactor(WeightedCostOfMoney, input.EconomicLife);
+    const RealCostOfMoney = ((1 + WeightedCostOfMoney / 100) / (1 + input.GeneralInflation / 100) - 1) * 100;
+    const WeightedCapitalRecoveryFactorConstant = CapitalRecoveryFactor(RealCostOfMoney, input.EconomicLife);
+    // Debt recovery:
+    const TotalDebtPrincipal = AmountOfCapitalFinancing * input.DebtRatio / 100;
+    const CapitalRecoveryFactorDebt = CapitalRecoveryFactor(input.InterestRateOnDebt, input.EconomicLife);
+    const AnnualDebtRepayment = TotalDebtPrincipal * CapitalRecoveryFactorDebt;
+    const TotalDebtRepayment = AnnualDebtRepayment * input.EconomicLife;
+    const DebtReserve = input.OneYearDebtReserveRequired === true ? AnnualDebtRepayment : 0;
+    // Equity recovery:
+    const TotalEquityPrincipal = AmountOfCapitalFinancing * EquityRatio / 100;
+    const CapitalRecoveryFactorEquity = CapitalRecoveryFactor(input.MARR, input.EconomicLife);
+    const AnnualEquityRepayment = TotalEquityPrincipal * CapitalRecoveryFactorEquity;
+    const TotalEquityRepayment = AnnualEquityRepayment * input.EconomicLife;
+    const RealCostOfEquityConstant = ((1 + input.MARR / 100) / (1 + input.GeneralInflation / 100) - 1) * 100;
+    const CapitalRecoveryFactorEquityConstant = CapitalRecoveryFactor(RealCostOfEquityConstant, input.EconomicLife);
+    // Total Debt + Equity Recovery:
+    const AnnualTotalCapitalRecovery = AnnualDebtRepayment + AnnualEquityRepayment;
+    const TotalCapitalRecovery = TotalDebtRepayment + TotalEquityRepayment;
+    // Debt reserve;
+    const AnnualDebtReserveInterest = DebtReserve * input.InterestRateOnDebtReserve / 100;
+    function CapitalRecoveryFactor(i: number, N: number) {
+        const A = i / 100 * Math.pow((1 + i / 100), N) / (Math.pow((1 + i / 100), N) - 1);
+        return A;
+    }
+    // Depreciation Schedule
+    const DepreciationFraction = 1 / input.EconomicLife;
+    // Annual Cash Flows
+    const cashFlow = [];
+    for (let i = 0; i < input.EconomicLife; i++) {
+        const newCF: CashFlowHydrogen = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                          EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
+                                          DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
+                                          NonFuelExpenses: 0, Expenses: 0, DebtReserve: 0, Depreciation: 0,
+                                          IncomeElectricalEnergy: 0, IncomeIncentivePayments: 0, IncomeCapacity: 0,
+                                          IncomeHeat: 0, IncomeResidue: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0,
+                                          TaxCredit: 0, Taxes: 0, EnergyRevenueRequired: 0 };
+        cashFlow.push(newCF);
+    }
+    // Year 1
+    cashFlow[0].Year = 1;
+    cashFlow[0].EquityRecovery = AnnualEquityRepayment;
+    cashFlow[0].EquityInterest = input.MARR / 100 * TotalEquityPrincipal;
+    cashFlow[0].EquityPrincipalPaid = cashFlow[0].EquityRecovery - cashFlow[0].EquityInterest;
+    cashFlow[0].EquityPrincipalRemaining = TotalEquityPrincipal - cashFlow[0].EquityPrincipalPaid;
+    cashFlow[0].DebtRecovery = AnnualDebtRepayment;
+    cashFlow[0].DebtInterest = input.InterestRateOnDebt / 100 * TotalDebtPrincipal;
+    cashFlow[0].DebtPrincipalPaid = cashFlow[0].DebtRecovery - cashFlow[0].DebtInterest;
+    cashFlow[0].DebtPrincipalRemaining = TotalDebtPrincipal - cashFlow[0].DebtPrincipalPaid;
+    cashFlow[0].FuelCost = AnnualFeedstockCost;
+    cashFlow[0].NonFuelExpenses = OperatingExpenses;
+    cashFlow[0].DebtReserve = DebtReserve;
+    cashFlow[0].Expenses = cashFlow[0].FuelCost + cashFlow[0].NonFuelExpenses;
+    cashFlow[0].Depreciation = AmountOfCapitalFinancing * DepreciationFraction;
+    cashFlow[0].IncomeElectricalEnergy = input.ElectricalEnergy;
+    cashFlow[0].IncomeIncentivePayments = input.IncentivePayments;
+    cashFlow[0].IncomeCapacity = input.Capacity;
+    cashFlow[0].IncomeHeat = input.Heat;
+    cashFlow[0].IncomeResidue = input.Residues;
+    cashFlow[0].InterestOnDebtReserve = AnnualDebtReserveInterest;
+    cashFlow[0].TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+        * (cashFlow[0].EquityPrincipalPaid + cashFlow[0].DebtPrincipalPaid + cashFlow[0].EquityInterest
+            - cashFlow[0].Depreciation + DebtReserve);
+    cashFlow[0].TaxCredit = AnnualHydrogenEnergy * input.ProductionTaxCredit * input.TaxCreditFrac[0];
+    cashFlow[0].Taxes = ((cashFlow[0].TaxesWoCredit - cashFlow[0].TaxCredit) < 0 ?
+        (input.OneYearDebtReserveRequired ?
+            ((CombinedTaxRate / 100) / (1 - (CombinedTaxRate / 100)))
+            * (cashFlow[0].EquityPrincipalPaid + cashFlow[0].DebtPrincipalPaid + cashFlow[0].EquityInterest
+                - cashFlow[0].Depreciation + DebtReserve - cashFlow[0].TaxCredit) : 0)
+            : ((CombinedTaxRate / 100) / (1 - (CombinedTaxRate / 100)))
+            * (cashFlow[0].EquityPrincipalPaid + cashFlow[0].DebtPrincipalPaid + cashFlow[0].EquityInterest
+                - cashFlow[0].Depreciation + cashFlow[0].DebtReserve - cashFlow[0].TaxCredit));
+    cashFlow[0].EnergyRevenueRequired = cashFlow[0].EquityRecovery + cashFlow[0].DebtRecovery
+        + cashFlow[0].FuelCost + cashFlow[0].NonFuelExpenses + cashFlow[0].Taxes + DebtReserve
+        - cashFlow[0].IncomeElectricalEnergy - cashFlow[0].IncomeIncentivePayments - cashFlow[0].IncomeCapacity
+        - cashFlow[0].IncomeHeat - cashFlow[0].IncomeResidue - cashFlow[0].InterestOnDebtReserve;
+    // Year 2 to the last second Year (19 in this case)
+    for (let i = 1; i < input.EconomicLife - 1; i++) {
+        cashFlow[i] = CalcCashFlow(cashFlow[i - 1], i + 1);
+    }
+    // Last Year (20 in this case)
+    cashFlow[input.EconomicLife - 1] = CalcCashFlowLast(cashFlow[input.EconomicLife - 2], input.EconomicLife);
+
+    function CalcCashFlow(CF: CashFlowHydrogen, Year: number) {
+        const newCF: CashFlowHydrogen = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                          EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
+                                          DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
+                                          NonFuelExpenses: 0, Expenses: 0, DebtReserve: 0, Depreciation: 0,
+                                          IncomeElectricalEnergy: 0, IncomeIncentivePayments: 0, IncomeCapacity: 0,
+                                          IncomeHeat: 0, IncomeResidue: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0,
+                                          TaxCredit: 0, Taxes: 0, EnergyRevenueRequired: 0 };
+        newCF.Year = Year;
+        newCF.EquityRecovery = AnnualEquityRepayment;
+        newCF.EquityInterest = input.MARR / 100 * CF.EquityPrincipalRemaining;
+        newCF.EquityPrincipalPaid = newCF.EquityRecovery - newCF.EquityInterest;
+        newCF.EquityPrincipalRemaining = CF.EquityPrincipalRemaining - newCF.EquityPrincipalPaid;
+        newCF.DebtRecovery = AnnualDebtRepayment;
+        newCF.DebtInterest = input.InterestRateOnDebt / 100 * CF.DebtPrincipalRemaining;
+        newCF.DebtPrincipalPaid = newCF.DebtRecovery - newCF.DebtInterest;
+        newCF.DebtPrincipalRemaining = CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
+        newCF.FuelCost = AnnualFeedstockCost * Math.pow(1 + input.EscalationFeedstock / 100, Year - 1);
+        newCF.NonFuelExpenses = OperatingExpenses * Math.pow(1 + input.EscalationOther / 100, Year - 1);
+        newCF.DebtReserve = 0;
+        newCF.Expenses = newCF.FuelCost + newCF.NonFuelExpenses;
+        newCF.Depreciation = AmountOfCapitalFinancing * DepreciationFraction;
+        newCF.IncomeElectricalEnergy
+            = input.ElectricalEnergy * Math.pow(1 + input.EscalationElectricalEnergy / 100, Year - 1);
+        newCF.IncomeIncentivePayments
+            = input.IncentivePayments * Math.pow(1 + input.EscalationIncentivePayments / 100, Year - 1);
+        newCF.IncomeCapacity
+            = input.Capacity * Math.pow(1 + input.EscalationCapacityPayment / 100, Year - 1);
+        newCF.IncomeHeat
+            = input.Heat * Math.pow(1 + input.EscalationHeatSales / 100, Year - 1);
+        newCF.IncomeResidue
+            = input.Residues * Math.pow(1 + input.EscalationResidueSales / 100, Year - 1);
+        newCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
+        newCF.TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+            * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
+                - newCF.Depreciation + newCF.DebtReserve);
+        newCF.TaxCredit = AnnualHydrogenEnergy * input.ProductionTaxCredit
+            * Math.pow((1 + input.EscalationProductionTaxCredit / 100), (Year - 1)) * input.TaxCreditFrac[Year - 1];
+        newCF.Taxes = (newCF.TaxesWoCredit - newCF.TaxCredit) < 0 ?
+            (input.OneYearDebtReserveRequired ?
+                ((CombinedTaxRate / 100) / (1 - (CombinedTaxRate / 100)))
+                * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
+                    - newCF.Depreciation + newCF.DebtReserve - newCF.TaxCredit) : 0)
+                : ((CombinedTaxRate / 100) / (1 - (CombinedTaxRate / 100)))
+                * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
+                    - newCF.Depreciation + newCF.DebtReserve - newCF.TaxCredit);
+        newCF.EnergyRevenueRequired = newCF.EquityRecovery + newCF.DebtRecovery
+                + newCF.FuelCost + newCF.NonFuelExpenses + newCF.Taxes + newCF.DebtReserve
+                - newCF.IncomeElectricalEnergy - newCF.IncomeIncentivePayments - newCF.IncomeCapacity
+                - newCF.IncomeHeat - newCF.IncomeResidue - newCF.InterestOnDebtReserve;
+
+        return newCF;
+    }
+    function CalcCashFlowLast(CF: CashFlowHydrogen, Year: number) { // DebtReserve is calculated differently
+        const newCF: CashFlowHydrogen = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                          EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
+                                          DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
+                                          NonFuelExpenses: 0, Expenses: 0, DebtReserve: 0, Depreciation: 0,
+                                          IncomeElectricalEnergy: 0, IncomeIncentivePayments: 0, IncomeCapacity: 0,
+                                          IncomeHeat: 0, IncomeResidue: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0,
+                                          TaxCredit: 0, Taxes: 0, EnergyRevenueRequired: 0 };
+        newCF.Year = Year;
+        newCF.EquityRecovery = AnnualEquityRepayment;
+        newCF.EquityInterest = input.MARR / 100 * CF.EquityPrincipalRemaining;
+        newCF.EquityPrincipalPaid = newCF.EquityRecovery - newCF.EquityInterest;
+        newCF.EquityPrincipalRemaining = CF.EquityPrincipalRemaining - newCF.EquityPrincipalPaid;
+        newCF.DebtRecovery = AnnualDebtRepayment;
+        newCF.DebtInterest = input.InterestRateOnDebt / 100 * CF.DebtPrincipalRemaining;
+        newCF.DebtPrincipalPaid = newCF.DebtRecovery - newCF.DebtInterest;
+        newCF.DebtPrincipalRemaining = CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
+        newCF.FuelCost = AnnualFeedstockCost * Math.pow(1 + input.EscalationFeedstock / 100, Year - 1);
+        newCF.NonFuelExpenses = OperatingExpenses * Math.pow(1 + input.EscalationOther / 100, Year - 1);
+        newCF.DebtReserve = -DebtReserve;
+        newCF.Expenses = newCF.FuelCost + newCF.NonFuelExpenses;
+        newCF.Depreciation = AmountOfCapitalFinancing * DepreciationFraction;
+        newCF.IncomeElectricalEnergy
+            = input.ElectricalEnergy * Math.pow(1 + input.EscalationElectricalEnergy / 100, Year - 1);
+        newCF.IncomeIncentivePayments
+            = input.IncentivePayments * Math.pow(1 + input.EscalationIncentivePayments / 100, Year - 1);
+        newCF.IncomeCapacity
+            = input.Capacity * Math.pow(1 + input.EscalationCapacityPayment / 100, Year - 1);
+        newCF.IncomeHeat
+            = input.Heat * Math.pow(1 + input.EscalationHeatSales / 100, Year - 1);
+        newCF.IncomeResidue
+            = input.Residues * Math.pow(1 + input.EscalationResidueSales / 100, Year - 1);
+        newCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
+        newCF.TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+            * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
+            - newCF.Depreciation + newCF.DebtReserve);
+        newCF.TaxCredit = AnnualHydrogenEnergy * input.ProductionTaxCredit
+            * Math.pow((1 + input.EscalationProductionTaxCredit / 100), (Year - 1)) * input.TaxCreditFrac[Year - 1];
+        newCF.Taxes = (newCF.TaxesWoCredit - newCF.TaxCredit) < 0 ?
+            (input.OneYearDebtReserveRequired ?
+                ((CombinedTaxRate / 100) / (1 - (CombinedTaxRate / 100)))
+                * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
+                    - newCF.Depreciation + newCF.DebtReserve - newCF.TaxCredit) : 0)
+                : ((CombinedTaxRate / 100) / (1 - (CombinedTaxRate / 100)))
+                * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
+                    - newCF.Depreciation + newCF.DebtReserve - newCF.TaxCredit);
+        newCF.EnergyRevenueRequired = newCF.EquityRecovery + newCF.DebtRecovery
+            + newCF.FuelCost + newCF.NonFuelExpenses + newCF.Taxes + newCF.DebtReserve
+            - newCF.IncomeElectricalEnergy - newCF.IncomeIncentivePayments - newCF.IncomeCapacity
+            - newCF.IncomeHeat - newCF.IncomeResidue - newCF.InterestOnDebtReserve;
+
+        return newCF;
+    }
+    const Total: TotalCashFlowHydrogen = { EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                           DebtRecovery: 0, DebtInterest: 0, DebtPrincipalPaid: 0, FuelCost: 0,
+                                           NonFuelExpenses: 0, Expenses: 0, DebtReserve: 0, Depreciation: 0,
+                                           IncomeElectricalEnergy: 0, IncomeIncentivePayments: 0, IncomeCapacity: 0,
+                                           IncomeHeat: 0, IncomeResidue: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0,
+                                           TaxCredit: 0, Taxes: 0, EnergyRevenueRequired: 0 };
+    for (let i = 0; i < cashFlow.length; i++) {
+        Total.EquityRecovery += cashFlow[i].EquityRecovery;
+        Total.EquityInterest += cashFlow[i].EquityInterest;
+        Total.EquityPrincipalPaid += cashFlow[i].EquityPrincipalPaid;
+        Total.DebtRecovery += cashFlow[i].DebtRecovery;
+        Total.DebtInterest += cashFlow[i].DebtInterest;
+        Total.DebtPrincipalPaid += cashFlow[i].DebtPrincipalPaid;
+        Total.FuelCost += cashFlow[i].FuelCost;
+        Total.NonFuelExpenses += cashFlow[i].NonFuelExpenses;
+        Total.Expenses += cashFlow[i].Expenses;
+        Total.DebtReserve += cashFlow[i].DebtReserve;
+        Total.Depreciation += cashFlow[i].Depreciation;
+        Total.IncomeElectricalEnergy += cashFlow[i].IncomeElectricalEnergy;
+        Total.IncomeIncentivePayments += cashFlow[i].IncomeIncentivePayments;
+        Total.IncomeCapacity += cashFlow[i].IncomeCapacity;
+        Total.IncomeHeat += cashFlow[i].IncomeHeat;
+        Total.IncomeResidue += cashFlow[i].IncomeResidue;
+        Total.InterestOnDebtReserve += cashFlow[i].InterestOnDebtReserve;
+        Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
+        Total.TaxCredit += cashFlow[i].TaxCredit;
+        Total.Taxes += cashFlow[i].Taxes;
+        Total.EnergyRevenueRequired += cashFlow[i].EnergyRevenueRequired;
+    }
+    // Current $ Level Annual Cost (LAC)
+    const PresentWorth = [];
+    let TotalPresentWorth = 0;
+    for (let i = 0; i < cashFlow.length; i++) {
+        const newPW = PW(cashFlow[i].EnergyRevenueRequired, input.MARR, i + 1);
+        PresentWorth.push(newPW);
+        TotalPresentWorth += newPW;
+    }
+    function PW(EnergyRevenueRequired: number, CostOfEquity: number, Year: number) {
+        return EnergyRevenueRequired * Math.pow((1 + CostOfEquity / 100), -Year);
+    }
+    const CapitalRecoveryFactorCurrent = CapitalRecoveryFactorEquity;
+    const CurrentLevelAnnualRevenueRequirements = CapitalRecoveryFactorEquity * TotalPresentWorth;
+    const ConstantLevelAnnualRevenueRequirements = TotalPresentWorth * CapitalRecoveryFactorEquityConstant;
+    const CurrentLACofEnergy = CurrentLevelAnnualRevenueRequirements / AnnualHydrogenProductionKg;
+
+    const ConstantLACofEnergy = ConstantLevelAnnualRevenueRequirements / AnnualHydrogenProductionKg;
+
+    return {
+        'Sensitivity Analysis':
+        {
+            'LAC Current': CurrentLACofEnergy,
+            'LAC Constant': ConstantLACofEnergy
+        },
+        'Hydrogen Generation': {
+            'HydrogenEnergy': HydrogenEnergy, 'DesignHydrogenProductionRateMW': DesignHydrogenProductionRateMW,
+            'DesignHydrogenProductionRateMg': DesignHydrogenProductionRateMg, 'FeedstockInput': FeedstockInput,
+            'FeedstockSupply': FeedstockSupply, 'AnnualHours': AnnualHours,
+            'AnnualFeedstockSupply': AnnualFeedstockSupply, 'AnnualFeedstockEnergyInput': AnnualFeedstockEnergyInput,
+            'AnnualHydrogenProductionMg': AnnualHydrogenProductionMg,
+            'AnnualHydrogenProductionKg': AnnualHydrogenProductionKg, 'AnnualHydrogenEnergy': AnnualHydrogenEnergy
+        },
+        'Capital Cost': {
+            'CapitalCostUnitDaily': CapitalCostUnitDaily, 'CapitalCostUnitYear': CapitalCostUnitYear
+        },
+        'Expenses--base year': {
+            'AnnualFeedstockCost': AnnualFeedstockCost, 'OperatingExpenses': OperatingExpenses,
+            'TotalAnnualExpenses': TotalAnnualExpenses
+        },
+        'Taxes and Tax credit': {
+            'CombinedTaxRate': CombinedTaxRate
+        },
+        'Financing': {
+            'AmountOfCapitalFinancing': AmountOfCapitalFinancing, 'EquityRatio': EquityRatio,
+            'WeightedCostOfMoney': WeightedCostOfMoney,
+            'WeightedCapitalRecoveryFactorCurrent': WeightedCapitalRecoveryFactorCurrent,
+            'RealCostOfMoney': RealCostOfMoney,
+            'WeightedCapitalRecoveryFactorConstant': WeightedCapitalRecoveryFactorConstant,
+            'Debt recovery': {
+                'TotalDebtPrincipal': TotalDebtPrincipal, 'CapitalRecoveryFactorDebt': CapitalRecoveryFactorDebt,
+                'AnnualDebtRepayment': AnnualDebtRepayment, 'TotalDebtRepayment': TotalDebtRepayment,
+                'DebtReserve': DebtReserve
+            },
+            'Equity recovery': {
+                'TotalEquityPrincipal': TotalEquityPrincipal,
+                'CapitalRecoveryFactorEquity': CapitalRecoveryFactorEquity,
+                'AnnualEquityRepayment': AnnualEquityRepayment, 'TotalEquityRepayment': TotalEquityRepayment,
+                'RealCostOfEquityConstant': RealCostOfEquityConstant,
+                'CapitalRecoveryFactorEquityConstant': CapitalRecoveryFactorEquityConstant
+            },
+            'Total Debt + Equity Recovery': {
+                'AnnualTotalCapitalRecovery': AnnualTotalCapitalRecovery, 'TotalCapitalRecovery': TotalCapitalRecovery
+            },
+            'Debt reserve': {
+                'AnnualDebtReserveInterest': AnnualDebtReserveInterest
+            },
+            'Annual Cash Flows': cashFlow,
+            'Total Cash Flow': Total,
+            'Current $ Level Annual Cost (LAC)':
+                {
+                    'TotalPresentWorth': TotalPresentWorth,
+                    'CurrentLevelAnnualRevenueRequirements': CurrentLevelAnnualRevenueRequirements,
+                    'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
+                    'CurrentLACofEnergy': CurrentLACofEnergy,
+                    'ConstantLACofEnergy': ConstantLACofEnergy
+                },
+        }
+    };
+}
+
+export { Hydrogen };
