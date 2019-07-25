@@ -118,6 +118,33 @@ export interface HydrogenInputMod {
     Feedstock: number;
     OverallProductionEfficiency: number;
     CapacityFactor: number;
+    // Capital Cost
+    CapitalCost: number;
+    // Expenses--base year
+    FeedstockCost: number;
+    OperatingExpensesRate: number;
+    // Taxes and Tax credit
+    FederalTaxRate: number;
+    StateTaxRate: number;
+    ProductionTaxCredit: number;
+    NegativeTaxesOffset: boolean;
+    // Escalation/Inflation
+    GeneralInflation: number;
+    EscalationFeedstock: number;
+    EscalationElectricalEnergy: number;
+    EscalationIncentivePayments: number;
+    EscalationCapacityPayment: number;
+    EscalationProductionTaxCredit: number;
+    EscalationHeatSales: number;
+    EscalationResidueSales: number;
+    EscalationOther: number;
+    // Financing
+    DebtRatio: number;
+    InterestRateOnDebt: number;
+    OneYearDebtReserveRequired: boolean;
+    MARR: number;
+    EconomicLife: number;
+    InterestRateOnDebtReserve: number;
 }
 
 // Annual Cash Flows - generic-power-only
