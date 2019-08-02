@@ -1,4 +1,5 @@
-input
+input params
+
 GenericPowerOnly
 {
 	"model": "generic-power-only",
@@ -37,6 +38,7 @@ GenericPowerOnly
     
     "TaxCreditFrac": [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 }
+
 GenericCombinedHeatPower
 {
 	"model": "generic-combined-heat-power",
@@ -79,6 +81,7 @@ GenericCombinedHeatPower
     
     "TaxCreditFrac": [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 }
+
 GasificationPower
 {
 	"model": "gasification-power",
@@ -106,6 +109,7 @@ GasificationPower
     "H2LowerHeatingMjPerKg": 120,
     "CH4HigherHeatingMjPerKg": 55.5,
     "CH4LowerHeatingMjPerKg": 50,
+    
     "GasifierSystemCapitalCost": 300000,
     "GasCleaningSystemCapitalCost": 50000,
     "PowerGenerationCapitalCost": 450000,
@@ -127,8 +131,10 @@ GasificationPower
     "MoistureContent": 15,
     "AshContent": 5,
     "CarbonConcentration": 30,
+    
     "AggregateFractionOfHeatRecovered": 50,
     "AggregateSalesPriceForHeat": 0.01,
+    
     "BiomassFuelCost": 22.05,
     "DualFuelCost": 0.3,
     "LaborCost": 20000,
@@ -138,12 +144,15 @@ GasificationPower
     "Utilities": 1000,
     "Management": 1000,
     "OtherOperatingExpenses": 1000,
+    
     "FederalTaxRate": 34,
     "StateTaxRate": 9.6,
     "ProductionTaxCredit": 0.009,
+    
     "ElectricityCapacityPayment": 0,
     "InterestRateOnDebtReserve": 2,
     "SalesPriceForChar": 0,
+    
     "GeneralInflation": 2.1,
     "EscalationBiomassFuel": 2.1,
     "EscalationDualFuel": 2.1,
@@ -156,10 +165,10 @@ GasificationPower
     "InterestRateOnDebt": 5,
     "EconomicLife": 20,
     "CostOfEquity": 15,
+    
     "TaxCreditFrac": [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-
-
 }
+
 Hydrogen
 {
 	"model": "hydrogen",
@@ -204,4 +213,3 @@ Hydrogen
 
     "TaxCreditFrac": [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 }
-
