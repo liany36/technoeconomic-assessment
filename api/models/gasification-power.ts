@@ -248,7 +248,6 @@ function GasificationPower(input: GasificationPowerInputMod) {
             'HeatRecoverySystemCapitalCostPerKwe': HeatRecoverySystemCapitalCostPerKwe,
             'TotalFacilityCapitalCost': TotalFacilityCapitalCost,
             'TotalFacilityCapitalCostPerKwe': TotalFacilityCapitalCostPerKwe
-
         },
         'Taxes': {
             'CombinedTaxRate': CombinedTaxRate
