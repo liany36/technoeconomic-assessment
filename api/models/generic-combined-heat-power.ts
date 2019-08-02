@@ -1,4 +1,4 @@
-import { CashFlowCHP, GenericCombinedHeatPowerInputMod, TotalCashFlowCHP } from './tea.model';
+import { CashFlowCHP, GenericCombinedHeatPowerInputMod, TotalCashFlowCHP } from './generic-combined-heat-power.model';
 
 function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
     // Electrical and Fuel--base year

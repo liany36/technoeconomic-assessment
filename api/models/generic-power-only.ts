@@ -1,4 +1,4 @@
-import { CashFlow, GenericPowerOnlyInputMod, TotalCashFlow } from './tea.model';
+import { CashFlow, GenericPowerOnlyInputMod, TotalCashFlow } from './generic-power-only.model';
 
 function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
     // Electrical and Fuel--base year
