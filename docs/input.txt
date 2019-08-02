@@ -205,36 +205,3 @@ Hydrogen
     "TaxCreditFrac": [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 }
 
-Fuel Properties
-{
-	"model": "fuel-properties",
-	"GasolineDensity": 750,
-	"GasolineHigherHeatingValueMjPerKg": 47.3,
-	"GasolineLowerHeatingValueMjPerKg": 44,
-	"LightDieselDensity": 810,
-	"LightDieselHigherHeatingValueMjPerKg": 46.1,
-	"LightDieselLowerHeatingValueMjPerKg": 43.2,
-	"HeavyDieselDensity": 850,
-	"HeavyDieselHigherHeatingValueMjPerKg": 45.5,
-	"HeavyDieselLowerHeatingValueMjPerKg": 42.8,
-	"NaturalGasDensity": 0.724,
-	"NaturalGasHigherHeatingValueMjPerKg": 50,
-	"NaturalGasLowerHeatingValueMjPerKg": 45,
-	"COHigherHeatingValueMjPerKg": 10.1,
-	"COLowerHeatingValueMjPerKg": 10.1,
-	"H2HigherHeatingValueMjPerKg": 142,
-	"H2LowerHeatingValueMjPerKg": 120,
-	"CH4HigherHeatingValueMjPerKg": 55.5,
-	"CH4LowerHeatingValueMjPerKg": 50
-}
-
-Unit Conversions
-{
-	"model": "unit-conversion",
-	"BtuPerCubicFoot": 150,
-	"BtuPerPound": 8000,
-	"MetricTonsPerHour": 24,
-	"DollarPerMetricTons": 20,
-	"CubicFootPerPonds": 5.6,
-	"DollarPerMillionBtu": 5
-}

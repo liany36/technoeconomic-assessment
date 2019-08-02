@@ -1,5 +1,5 @@
-import { ConstantLAC, CurrentLAC, GasCashFlow, GasificationPowerInputMod,
-    GasTotalCashFlow } from './gasification-power.model';
+import { CashFlowGas, ConstantLAC, CurrentLAC, GasificationPowerInputMod,
+    TotalCashFlowGas, } from './gasification-power.model';
 function GasificationPower(input: GasificationPowerInputMod) {
      // Fuel Properties
     const CODensity = 101325 * 28 / 8314 / 298;
@@ -97,7 +97,7 @@ function GasificationPower(input: GasificationPowerInputMod) {
     // Annual Cash Flows
     const CashFlow = [];
     for (let i = 0; i < input.EconomicLife; i++) {
-         const tGCF: GasCashFlow = {Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+         const tGCF: CashFlowGas = {Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
                                     EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
                                     DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, BiomassFuelCostCF: 0,
                                     DualFuelCostCF: 0, NonFuelExpensesCF: 0, DebtReserveCF: 0,
@@ -109,8 +109,8 @@ function GasificationPower(input: GasificationPowerInputMod) {
     for (let i = 0; i < input.EconomicLife; i++) {
             CashFlow[i] = CalcCashFlow(CashFlow[i - 1], i + 1);
     }
-    function CalcCashFlow(GCF: GasCashFlow, Year: number) {
-    const NGCF: GasCashFlow = {Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+    function CalcCashFlow(GCF: CashFlowGas, Year: number) {
+    const NGCF: CashFlowGas = {Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
                                EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
                                DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, BiomassFuelCostCF: 0,
                                DualFuelCostCF: 0, NonFuelExpensesCF: 0, DebtReserveCF: 0,
@@ -183,7 +183,7 @@ function GasificationPower(input: GasificationPowerInputMod) {
     return NGCF;
     }
     // Total Cash Flow
-    const TotalCashFlow: GasTotalCashFlow = {EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+    const TotalCashFlow: TotalCashFlowGas = {EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
                                              DebtRecovery: 0, DebtInterest: 0, DebtPrincipalPaid: 0,
                                              BiomassFuelCostCF: 0, DualFuelCostCF: 0, NonFuelExpensesCF: 0,
                                              DebtReserveCF: 0, Depreciation: 0, CapacityIncome: 0, HeatIncome: 0,

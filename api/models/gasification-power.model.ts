@@ -82,7 +82,7 @@ export interface GasificationPowerInputMod {
 }
 
 // Annual Cash Flows - Gasification Power
-export interface GasCashFlow {
+export interface CashFlowGas {
     Year: number;
     EquityRecovery: number;
     EquityInterest: number;
@@ -108,7 +108,7 @@ export interface GasCashFlow {
 }
 
 // Total Cash Flow - Gasification Power
-export interface GasTotalCashFlow {
+export interface TotalCashFlowGas {
     EquityRecovery: number;
     EquityInterest: number;
     EquityPrincipalPaid: number;
