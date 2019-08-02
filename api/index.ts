@@ -3,10 +3,12 @@ import dotenv from 'dotenv';
 import express from 'express';
 // import swaggerUi from 'swagger-ui-express';
 
+import { FuelProperties } from './models/fuel-properties';
 import { GasificationPower } from './models/gasification-power';
 import { GenericCombinedHeatPower } from './models/generic-combined-heat-power';
 import { GenericPowerOnly } from './models/generic-power-only';
 import { Hydrogen } from './models/hydrogen';
+import { UnitConversion } from './models/unit-conversion';
 
 // tslint:disable-next-line: no-var-requires
 // const swaggerDocument = require('../swagger.json');
@@ -25,6 +27,12 @@ app.post('/tearun', async (req: any, res: any) => {
   console.log(req.body);
   let result = {};
   switch (req.body.model) {
+    case 'fuel-properties':
+      result = await(FuelProperties(req.body));
+      break;
+    case 'unit-conversion':
+      result = await(UnitConversion(req.body));
+      break;
     case 'generic-power-only':
       result = await GenericPowerOnly(req.body);
       break;

@@ -1,4 +1,4 @@
-import { CashFlowHydrogen, HydrogenInputMod, TotalCashFlowHydrogen } from './tea.model';
+import { CashFlowHydrogen, HydrogenInputMod, TotalCashFlowHydrogen } from './hydrogen.model';
 
 function Hydrogen(input: HydrogenInputMod) {
     // Hydrogen Generation
