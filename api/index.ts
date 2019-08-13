@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import express from 'express';
-// import swaggerUi from 'swagger-ui-express';
+import swaggerUi from 'swagger-ui-express';
 
 import { GasificationPower } from './models/gasification-power';
 import { GenericCombinedHeatPower } from './models/generic-combined-heat-power';
@@ -9,7 +9,7 @@ import { GenericPowerOnly } from './models/generic-power-only';
 import { Hydrogen } from './models/hydrogen';
 
 // tslint:disable-next-line: no-var-requires
-// const swaggerDocument = require('../swagger.json');
+const swaggerDocument = require('../swagger.json');
 
 dotenv.config();
 
@@ -43,6 +43,6 @@ app.post('/tearun', async (req: any, res: any) => {
   res.status(200).json(result);
 });
 
-// app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));
