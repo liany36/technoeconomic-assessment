@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This is a service for running TEA, funded by California Energy Commission.",
+    "description": "This is a service for running Techno-Economic Assessment (TEA) API, funded by California Energy Commission.",
     "version": "1.0.0",
-    "title": "Energy Cost Calculator",
+    "title": "Techno-Economic Assessment",
     "contact": {
       "email": "kkyli@ucdavis.edu"
     },
@@ -14,7 +14,7 @@
   },
   "tags": [
     {
-      "name": "Techno-Economic Assessment (TEA)",
+      "name": "TEA",
       "description": ""
     }
   ],
