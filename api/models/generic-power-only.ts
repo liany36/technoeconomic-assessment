@@ -211,14 +211,12 @@ function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
     const ConstantLACofEnergy = ConstantLevelAnnualRevenueRequirements / AnnualGeneration;
 
     return {
-            'Annual Cash Flows': cashFlow,
-            'Total Cash Flow': Total,
+            'AnnualCashFlows': cashFlow,
+            'TotalCashFlow': Total,
             'TotalPresentWorth': TotalPresentWorth,
             'CurrentLevelAnnualRevenueRequirements': CurrentLevelAnnualRevenueRequirements,
-            'CurrentLACofEnergy': CurrentLACofEnergy,
-            'RealCostOfMoney': RealCostOfMoney / 100,
-            'CapitalRecoveryFactorConstant': CapitalRecoveryFactorConstant,
             'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
+            'CurrentLACofEnergy': CurrentLACofEnergy,
             'ConstantLACofEnergy': ConstantLACofEnergy
             };
 }
