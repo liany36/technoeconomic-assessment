@@ -39,7 +39,7 @@ export interface GenericPowerOnlyInputMod {
 }
 
 // Annual Cash Flows - generic-power-only
-export interface CashFlow {
+export interface CashFlowGPO {
     Year: number;
     EquityRecovery: number;
     EquityInterest: number;
@@ -62,7 +62,7 @@ export interface CashFlow {
 }
 
 // Total Cash Flow - generic-power-only
-export interface TotalCashFlow {
+export interface TotalCashFlowGPO {
     EquityRecovery: number;
     EquityInterest: number;
     EquityPrincipalPaid: number;

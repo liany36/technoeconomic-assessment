@@ -1,0 +1,448 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a service for running TEA, funded by California Energy Commission.",
+    "version": "1.0.0",
+    "title": "Energy Cost Calculator",
+    "contact": {
+      "email": "kkyli@ucdavis.edu"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://github.com/ucdavis/technoeconomic-assessment/blob/master/LICENSE"
+    }
+  },
+  "tags": [
+    {
+      "name": "Techno-Economic Assessment (TEA)",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/tearun": {
+      "post": {
+        "tags": [
+          "energy-cost-calculator"
+        ],
+        "summary": "Runs TEA from given input",
+        "description": "Find out the orginal excel spreadsheets in [California Biomass Collaborative](https://biomass.ucdavis.edu/tools/energy-cost-calculator/)",
+        "operationId": "runTEA",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "params",
+            "schema": {
+              "$ref": "#/definitions/GenericPowerOnlyInputMod"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/GenericPowerOnlyOutputMod"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters supplied"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GenericPowerOnlyInputMod": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "example": "generic-power-only"
+        },
+        "CapitalCost": {
+          "type": "number",
+          "example": 70000000
+        },
+        "NetPlantCapacity": {
+          "type": "number",
+          "example": 25000
+        },
+        "CapacityFactor": {
+          "type": "number",
+          "example": 85
+        },
+        "NetStationEfficiency": {
+          "type": "number",
+          "example": 20
+        },
+        "FuelHeatingValue": {
+          "type": "number",
+          "example": 18608
+        },
+        "FuelAshConcentration": {
+          "type": "number",
+          "example": 5
+        },
+        "FuelCost": {
+          "type": "number",
+          "format": "float",
+          "example": 22.05
+        },
+        "LaborCost": {
+          "type": "number",
+          "example": 2000000
+        },
+        "MaintenanceCost": {
+          "type": "number",
+          "example": 1500000
+        },
+        "InsurancePropertyTax": {
+          "type": "number",
+          "example": 1400000
+        },
+        "Utilities": {
+          "type": "number",
+          "example": 200000
+        },
+        "AshDisposal": {
+          "type": "number",
+          "example": 100000
+        },
+        "Management": {
+          "type": "number",
+          "example": 200000
+        },
+        "OtherOperatingExpenses": {
+          "type": "number",
+          "example": 400000
+        },
+        "FederalTaxRate": {
+          "type": "number",
+          "example": 34
+        },
+        "StateTaxRate": {
+          "type": "number",
+          "format": "float",
+          "example": 9.6
+        },
+        "ProductionTaxCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 0.009
+        },
+        "DebtRatio": {
+          "type": "number",
+          "example": 75
+        },
+        "InterestRateOnDebt": {
+          "type": "number",
+          "example": 5
+        },
+        "EconomicLife": {
+          "type": "number",
+          "example": 20
+        },
+        "CostOfEquity": {
+          "type": "number",
+          "example": 15
+        },
+        "CapacityPayment": {
+          "type": "number",
+          "example": 166
+        },
+        "InterestRateonDebtReserve": {
+          "type": "number",
+          "example": 5
+        },
+        "GeneralInflation": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "EscalationFuel": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "EscalationForProductionTaxCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "EscalationOther": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "TaxCreditFrac": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "example": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "required": [
+        "model",
+        "CapitalCost",
+        "NetPlantCapacity",
+        "CapacityFactor",
+        "NetStationEfficiency",
+        "FuelHeatingValue",
+        "FuelAshConcentration",
+        "FuelCost",
+        "LaborCost",
+        "MaintenanceCost",
+        "InsurancePropertyTax",
+        "Utilities",
+        "AshDisposal",
+        "Management",
+        "OtherOperatingExpenses",
+        "FederalTaxRate",
+        "StateTaxRate",
+        "ProductionTaxCredit",
+        "DebtRatio",
+        "InterestRateOnDebt",
+        "EconomicLife",
+        "CostOfEquity",
+        "CapacityPayment",
+        "InterestRateonDebtReserve",
+        "GeneralInflation",
+        "EscalationFuel",
+        "EscalationForProductionTaxCredit",
+        "EscalationOther",
+        "TaxCreditFrac"
+      ],
+      "xml": {
+        "name": "GenericPowerOnlyInputMod"
+      }
+    },
+    "GenericPowerOnlyOutputMod": {
+      "type": "object",
+      "properties": {
+        "Annual Cash Flows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CashFlowGPO"
+          }
+        },
+        "Total Cash Flow": {
+          "$ref": "#/definitions/TotalCashFlowGPO"
+        },
+        "TotalPresentWorth": {
+          "type": "number",
+          "format": "float"
+        },
+        "CurrentLevelAnnualRevenueRequirements": {
+          "type": "number",
+          "format": "float"
+        },
+        "CurrentLACofEnergy": {
+          "type": "number",
+          "format": "float"
+        },
+        "RealCostOfMoney": {
+          "type": "number",
+          "format": "float"
+        },
+        "CapitalRecoveryFactorConstant": {
+          "type": "number",
+          "format": "float"
+        },
+        "ConstantLevelAnnualRevenueRequirements": {
+          "type": "number",
+          "format": "float"
+        },
+        "ConstantLACofEnergy": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "xml": {
+        "name": "GenericPowerOnlyOutputMod"
+      }
+    },
+    "CashFlowGPO": {
+      "type": "object",
+      "properties": {
+        "Year": {
+          "type": "number"
+        },
+        "EquityRecovery": {
+          "type": "number",
+          "format": "float"
+        },
+        "EquityInterest": {
+          "type": "number",
+          "format": "float"
+        },
+        "EquityPrincipalPaid": {
+          "type": "number",
+          "format": "float"
+        },
+        "EquityPrincipalRemaining": {
+          "type": "number",
+          "format": "float"
+        },
+        "DebtRecovery": {
+          "type": "number",
+          "format": "float"
+        },
+        "DebtInterest": {
+          "type": "number",
+          "format": "float"
+        },
+        "DebtPrincipalPaid": {
+          "type": "number",
+          "format": "float"
+        },
+        "DebtPrincipalRemaining": {
+          "type": "number",
+          "format": "float"
+        },
+        "FuelCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "NonFuelExpenses": {
+          "type": "number",
+          "format": "float"
+        },
+        "DebtReserve": {
+          "type": "number",
+          "format": "float"
+        },
+        "Depreciation": {
+          "type": "number",
+          "format": "float"
+        },
+        "CapacityIncome": {
+          "type": "number",
+          "format": "float"
+        },
+        "InterestOnDebtReserve": {
+          "type": "number",
+          "format": "float"
+        },
+        "TaxesWoCredit": {
+          "type": "number",
+          "format": "float"
+        },
+        "TaxCredit": {
+          "type": "number",
+          "format": "float"
+        },
+        "Taxes": {
+          "type": "number",
+          "format": "float"
+        },
+        "EnergyRevenueRequired": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "xml": {
+        "name": "CashFlowGPO"
+      }
+    },
+    "TotalCashFlowGPO": {
+      "type": "object",
+      "properties": {
+        "EquityRecovery": {
+          "type": "number",
+          "format": "float"
+        },
+        "EquityInterest": {
+          "type": "number",
+          "format": "float"
+        },
+        "EquityPrincipalPaid": {
+          "type": "number",
+          "format": "float"
+        },
+        "DebtRecovery": {
+          "type": "number",
+          "format": "float"
+        },
+        "DebtInterest": {
+          "type": "number",
+          "format": "float"
+        },
+        "DebtPrincipalPaid": {
+          "type": "number",
+          "format": "float"
+        },
+        "FuelCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "NonFuelExpenses": {
+          "type": "number",
+          "format": "float"
+        },
+        "DebtReserve": {
+          "type": "number",
+          "format": "float"
+        },
+        "Depreciation": {
+          "type": "number",
+          "format": "float"
+        },
+        "CapacityIncome": {
+          "type": "number",
+          "format": "float"
+        },
+        "InterestOnDebtReserve": {
+          "type": "number",
+          "format": "float"
+        },
+        "TaxesWoCredit": {
+          "type": "number",
+          "format": "float"
+        },
+        "TaxCredit": {
+          "type": "number",
+          "format": "float"
+        },
+        "Taxes": {
+          "type": "number",
+          "format": "float"
+        },
+        "EnergyRevenueRequired": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "xml": {
+        "name": "TotalCashFlowGPO"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Source code",
+    "url": "https://github.com/ucdavis/technoeconomic-assessment"
+  }
+}
