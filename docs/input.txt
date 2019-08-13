@@ -2,7 +2,6 @@ input params
 
 GenericPowerOnly
 {
-	"model": "generic-power-only",
 	"CapitalCost": 70000000,
 	"NetPlantCapacity": 25000,
 	"CapacityFactor": 85,
@@ -41,7 +40,6 @@ GenericPowerOnly
 
 GenericCombinedHeatPower
 {
-	"model": "generic-combined-heat-power",
 	"CapitalCost": 70000000,
 	"GrossElectricalCapacity": 28000,
 	"NetElectricalCapacity": 25000,
@@ -84,7 +82,6 @@ GenericCombinedHeatPower
 
 GasificationPower
 {
-	"model": "gasification-power",
     "BtuPerCubicFoot": 150,
     "BtuPerPound":  8000,
     "MetricTonsPerHour": 24,
@@ -171,7 +168,6 @@ GasificationPower
 
 Hydrogen
 {
-	"model": "hydrogen",
 	"GrossDesignHydrogenCapacity": 158366.518706405,
 	"HydrogenHHV": 141.93,
 	"HydrogenLHV": 119.98,
