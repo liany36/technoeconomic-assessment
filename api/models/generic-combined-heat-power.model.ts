@@ -1,6 +1,5 @@
 // GenericCombinedHeatPower
 export interface GenericCombinedHeatPowerInputMod {
-    model: string;
     CapitalCost: number;
     // Electrical and Fuel--base year
     GrossElectricalCapacity: number;

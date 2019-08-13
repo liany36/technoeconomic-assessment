@@ -1,6 +1,5 @@
 // GasificationPowerInputMod
 export interface GasificationPowerInputMod {
-    model: string;
     // Fuel Properties
     GasolineDensity: number;
     GasolineHigherHeatingMjPerKg: number;

@@ -1,6 +1,5 @@
 // GenericPowerOnly Input
 export interface GenericPowerOnlyInputMod {
-    model: string;
     CapitalCost: number;
     // Electrical and Fuel--base year
     NetPlantCapacity: number;
