@@ -1,4 +1,4 @@
-import { CashFlow, GenericPowerOnlyInputMod, TotalCashFlow } from './generic-power-only.model';
+import { CashFlowGPO, GenericPowerOnlyInputMod, TotalCashFlowGPO } from './generic-power-only.model';
 
 function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
     // Electrical and Fuel--base year
@@ -52,12 +52,12 @@ function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
     // Annual Cash Flows
     const cashFlow = [];
     for (let i = 0; i < input.EconomicLife; i++) {
-        const newCF: CashFlow = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
-                                  EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
-                                  DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
-                                  NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
-                                  InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
-                                  EnergyRevenueRequired: 0 };
+        const newCF: CashFlowGPO = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                     EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
+                                     DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
+                                     NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
+                                     InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
+                                     EnergyRevenueRequired: 0 };
         cashFlow.push(newCF);
     }
     // Year 1
@@ -93,13 +93,13 @@ function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
     // Last Year (20 in this case)
     cashFlow[input.EconomicLife - 1] = CalcCashFlowLast(cashFlow[input.EconomicLife - 2], input.EconomicLife);
 
-    function CalcCashFlow(CF: CashFlow, Year: number) {
-        const newCF: CashFlow = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
-                                  EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
-                                  DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
-                                  NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
-                                  InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
-                                  EnergyRevenueRequired: 0 };
+    function CalcCashFlow(CF: CashFlowGPO, Year: number) {
+        const newCF: CashFlowGPO = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                     EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
+                                     DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
+                                     NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
+                                     InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
+                                     EnergyRevenueRequired: 0 };
         newCF.Year = Year;
         newCF.EquityRecovery = AnnualEquityRecovery;
         newCF.EquityInterest = input.CostOfEquity / 100 * CF.EquityPrincipalRemaining;
@@ -131,13 +131,13 @@ function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
         return newCF;
     }
 
-    function CalcCashFlowLast(CF: CashFlow, Year: number) { // DebtReserve is calculated differently
-        const newCF: CashFlow = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
-                                  EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
-                                  DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
-                                  NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
-                                  InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
-                                  EnergyRevenueRequired: 0 };
+    function CalcCashFlowLast(CF: CashFlowGPO, Year: number) { // DebtReserve is calculated differently
+        const newCF: CashFlowGPO = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                     EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
+                                     DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
+                                     NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
+                                     InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
+                                     EnergyRevenueRequired: 0 };
         newCF.Year = Year;
         newCF.EquityRecovery = AnnualEquityRecovery;
         newCF.EquityInterest = input.CostOfEquity / 100 * CF.EquityPrincipalRemaining;
@@ -168,11 +168,11 @@ function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
 
         return newCF;
     }
-    const Total: TotalCashFlow = { EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
-                                   DebtRecovery: 0, DebtInterest: 0, DebtPrincipalPaid: 0, FuelCost: 0,
-                                   NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
-                                   InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
-                                   EnergyRevenueRequired: 0 };
+    const Total: TotalCashFlowGPO = { EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
+                                      DebtRecovery: 0, DebtInterest: 0, DebtPrincipalPaid: 0, FuelCost: 0,
+                                      NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
+                                      InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
+                                      EnergyRevenueRequired: 0 };
     for (let i = 0; i < cashFlow.length; i++) {
         Total.EquityRecovery += cashFlow[i].EquityRecovery;
         Total.EquityInterest += cashFlow[i].EquityInterest;
@@ -211,57 +211,15 @@ function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
     const ConstantLACofEnergy = ConstantLevelAnnualRevenueRequirements / AnnualGeneration;
 
     return {
-            'Sensitivity Analysis':
-                {
-                    'LAC Current': CurrentLACofEnergy,
-                    'LAC Constant': ConstantLACofEnergy
-                },
-            'Electrical and Fuel--base year':
-                {'AnnualHours': AnnualHours, 'FuelConsumptionRate': FuelConsumptionRate,
-                 'AnnualGeneration': AnnualGeneration, 'CapitalCostNEC': CapitalCostNEC,
-                 'AnnualFuelConsumption': AnnualFuelConsumption, 'AnnualAshDisposal': AnnualAshDisposal},
-            'Expenses--base year':
-                {'TotalNonFuelExpenses': TotalNonFuelExpenses, 'TotalExpensesIncludingFuel': TotalExpensesIncludingFuel,
-                 'FuelCostKwh': FuelCostKwh, 'LaborCostKwh': LaborCostKwh, 'MaintenanceCostKwh': MaintenanceCostKwh,
-                 'InsurancePropertyTaxKwh': InsurancePropertyTaxKwh, 'UtilitiesKwh': UtilitiesKwh,
-                 'AshDisposalKwh': AshDisposalKwh, 'ManagementKwh': ManagementKwh,
-                 'OtherOperatingExpensesKwh': OtherOperatingExpensesKwh,
-                 'TotalNonFuelExpensesKwh': TotalNonFuelExpensesKwh,
-                 'TotalExpensesIncludingFuelKwh': TotalExpensesIncludingFuelKwh},
-            'Taxes':
-                 {
-                    'CombinedTaxRate': CombinedTaxRate
-                 },
-            'Income other than energy':
-                {
-                    'AnnualCapacityPayment': AnnualCapacityPayment,
-                    'AnnualDebtReserveInterest': AnnualDebtReserveInterest
-                },
-            'Financing':
-                {
-                    'EquityRatio': EquityRatio,
-                    'CostOfMoney': CostOfMoney,
-                    'TotalCostOfPlant': TotalCostOfPlant,
-                    'TotalEquityCost': TotalEquityCost,
-                    'TotalDebtCost': TotalDebtCost,
-                    'CapitalRecoveryFactorEquity': CapitalRecoveryFactorEquity,
-                    'CapitalRecoveryFactorDebt': CapitalRecoveryFactorDebt,
-                    'AnnualEquityRecovery': AnnualEquityRecovery,
-                    'AnnualDebtPayment': AnnualDebtPayment,
-                    'DebtReserve': DebtReserve
-                },
             'Annual Cash Flows': cashFlow,
             'Total Cash Flow': Total,
-            'Current $ Level Annual Cost (LAC)':
-                {
-                    'TotalPresentWorth': TotalPresentWorth,
-                    'CurrentLevelAnnualRevenueRequirements': CurrentLevelAnnualRevenueRequirements,
-                    'CurrentLACofEnergy': CurrentLACofEnergy,
-                    'RealCostOfMoney': RealCostOfMoney / 100,
-                    'CapitalRecoveryFactorConstant': CapitalRecoveryFactorConstant,
-                    'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
-                    'ConstantLACofEnergy': ConstantLACofEnergy
-                },
+            'TotalPresentWorth': TotalPresentWorth,
+            'CurrentLevelAnnualRevenueRequirements': CurrentLevelAnnualRevenueRequirements,
+            'CurrentLACofEnergy': CurrentLACofEnergy,
+            'RealCostOfMoney': RealCostOfMoney / 100,
+            'CapitalRecoveryFactorConstant': CapitalRecoveryFactorConstant,
+            'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
+            'ConstantLACofEnergy': ConstantLACofEnergy
             };
 }
 
