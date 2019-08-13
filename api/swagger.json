@@ -15,18 +15,18 @@
   "tags": [
     {
       "name": "TEA",
-      "description": ""
+      "description": "Find out the orginal excel spreadsheets in [California Biomass Collaborative](https://biomass.ucdavis.edu/tools/energy-cost-calculator/)"
     }
   ],
   "paths": {
-    "/tearun": {
+    "/gpo": {
       "post": {
         "tags": [
-          "energy-cost-calculator"
+          "Generic biomass power plant model"
         ],
-        "summary": "Runs TEA from given input",
-        "description": "Find out the orginal excel spreadsheets in [California Biomass Collaborative](https://biomass.ucdavis.edu/tools/energy-cost-calculator/)",
-        "operationId": "runTEA",
+        "summary": "Runs GPO from given input",
+        "description": "This route is created for generic-power-only model (GPO)",
+        "operationId": "runGPO",
         "produces": [
           "application/json"
         ],
@@ -254,31 +254,38 @@
         },
         "TotalPresentWorth": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 93087350.70247778
         },
         "CurrentLevelAnnualRevenueRequirements": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 14871772.024403006
         },
         "CurrentLACofEnergy": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 0.07989133507603012
         },
         "RealCostOfMoney": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 0.0012634671890303629
         },
         "CapitalRecoveryFactorConstant": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 0.13923864551402346
         },
         "ConstantLevelAnnualRevenueRequirements": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 12961356.626301887
         },
         "ConstantLACofEnergy": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 0.06962856097932789
         }
       },
       "xml": {
@@ -289,79 +296,98 @@
       "type": "object",
       "properties": {
         "Year": {
-          "type": "number"
+          "type": "number",
+          "example": 1
         },
         "EquityRecovery": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 2795825.732100518
         },
         "EquityInterest": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 2625000
         },
         "EquityPrincipalPaid": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 170825.73210051795
         },
         "EquityPrincipalRemaining": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 17329174.267899483
         },
         "DebtRecovery": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 4212735.827511293
         },
         "DebtInterest": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 2625000
         },
         "DebtPrincipalPaid": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 1587735.8275112929
         },
         "DebtPrincipalRemaining": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 50912264.172488704
         },
         "FuelCost": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 3970493.0674978513
         },
         "NonFuelExpenses": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 5800000
         },
         "DebtReserve": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 4212735.827511293
         },
         "Depreciation": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 3500000
         },
         "CapacityIncome": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 4150000
         },
         "InterestOnDebtReserve": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 210636.79137556464
         },
         "TaxesWoCredit": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 3445364.9002245483
         },
         "TaxCredit": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 1675349.9999999998
         },
         "Taxes": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 2312740.242139271
         },
         "EnergyRevenueRequired": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 18943893.90538466
         }
       },
       "xml": {
@@ -373,67 +399,83 @@
       "properties": {
         "EquityRecovery": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 55916514.642010346
         },
         "EquityInterest": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 38416514.64201034
         },
         "EquityPrincipalPaid": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 17500000.00000003
         },
         "DebtRecovery": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 84254716.55022588
         },
         "DebtInterest": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 31754716.550225902
         },
         "DebtPrincipalPaid": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 52499999.999999955
         },
         "FuelCost": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 97439036.40771188
         },
         "NonFuelExpenses": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 142336581.7688925
         },
         "DebtReserve": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 0
         },
         "Depreciation": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 70000000
         },
         "CapacityIncome": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 83000000
         },
         "InterestOnDebtReserve": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 4212735.827511291
         },
         "TaxesWoCredit": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 25971583.10874443
         },
         "TaxCredit": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 8736039.69640549
         },
         "Taxes": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 20065561.09891921
         },
         "EnergyRevenueRequired": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "example": 312799674.64024854
         }
       },
       "xml": {
