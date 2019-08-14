@@ -82,12 +82,6 @@ GenericCombinedHeatPower
 
 GasificationPower
 {
-    "BtuPerCubicFoot": 150,
-    "BtuPerPound":  8000,
-    "MetricTonsPerHour": 24,
-    "DollarPerMetricTons": 20,
-    "CubicFootPerPonds": 5.6,
-    "DollarPerMillionBtu": 5,
     "GasolineDensity": 750,
     "GasolineHigherHeatingMjPerKg": 47.3,
     "GasolineLowerHeatingMjPerKg": 44,
