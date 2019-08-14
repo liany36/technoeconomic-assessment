@@ -67,8 +67,8 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
         const newCF: CashFlowCHP = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
                                      EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
                                      DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
-                                     NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
-                                     HeatSalesIncome: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0,
+                                     NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, IncomeCapacity: 0,
+                                     IncomeHeat: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0,
                                      Taxes: 0, EnergyRevenueRequired: 0 };
         cashFlow.push(newCF);
     }
@@ -86,8 +86,8 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
     cashFlow[0].NonFuelExpenses = TotalNonFuelExpenses;
     cashFlow[0].DebtReserve = DebtReserve;
     cashFlow[0].Depreciation = TotalCostOfPlant * DepreciationFraction;
-    cashFlow[0].CapacityIncome = AnnualCapacityPayment;
-    cashFlow[0].HeatSalesIncome = TotalIncomeFromHeatSales;
+    cashFlow[0].IncomeCapacity = AnnualCapacityPayment;
+    cashFlow[0].IncomeHeat = TotalIncomeFromHeatSales;
     cashFlow[0].InterestOnDebtReserve = AnnualDebtReserveInterest;
     cashFlow[0].TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
         * (cashFlow[0].EquityPrincipalPaid + cashFlow[0].DebtPrincipalPaid + cashFlow[0].EquityInterest
@@ -98,7 +98,7 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
             - cashFlow[0].Depreciation + DebtReserve - cashFlow[0].TaxCredit);
     cashFlow[0].EnergyRevenueRequired = cashFlow[0].EquityRecovery + cashFlow[0].DebtRecovery
         + cashFlow[0].FuelCost + cashFlow[0].NonFuelExpenses + cashFlow[0].Taxes + DebtReserve
-        - cashFlow[0].CapacityIncome - cashFlow[0].InterestOnDebtReserve - cashFlow[0].HeatSalesIncome;
+        - cashFlow[0].IncomeCapacity - cashFlow[0].InterestOnDebtReserve - cashFlow[0].IncomeHeat;
     // Year 2 to the last second Year (19 in this case)
     for (let i = 1; i < input.EconomicLife - 1; i++) {
         cashFlow[i] = CalcCashFlow(cashFlow[i - 1], i + 1);
@@ -110,8 +110,8 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
         const newCF: CashFlowCHP = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
                                      EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
                                      DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
-                                     NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
-                                     HeatSalesIncome: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0,
+                                     NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, IncomeCapacity: 0,
+                                     IncomeHeat: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0,
                                      Taxes: 0, EnergyRevenueRequired: 0 };
         newCF.Year = Year;
         newCF.EquityRecovery = AnnualEquityRecovery;
@@ -127,20 +127,20 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
         newCF.NonFuelExpenses = TotalNonFuelExpenses * Math.pow((1 + input.EscalationOther / 100), (Year - 1));
         newCF.DebtReserve = 0;
         newCF.Depreciation = TotalCostOfPlant * DepreciationFraction;
-        newCF.CapacityIncome = AnnualCapacityPayment;
-        newCF.HeatSalesIncome = TotalIncomeFromHeatSales * Math.pow((1 + input.EscalationHeatSales / 100), (Year - 1));
+        newCF.IncomeCapacity = AnnualCapacityPayment;
+        newCF.IncomeHeat = TotalIncomeFromHeatSales * Math.pow((1 + input.EscalationHeatSales / 100), (Year - 1));
         newCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
         newCF.TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
             * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
                 - newCF.Depreciation + newCF.DebtReserve);
         newCF.TaxCredit = AnnualNetGeneration * input.ProductionTaxCredit
-            * Math.pow((1 + input.EscalationForProductionTaxCredit / 100), (Year - 1)) * input.TaxCreditFrac[Year - 1];
+            * Math.pow((1 + input.EscalationProductionTaxCredit / 100), (Year - 1)) * input.TaxCreditFrac[Year - 1];
         newCF.Taxes = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
             * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
                 - newCF.Depreciation + newCF.DebtReserve - newCF.TaxCredit);
         newCF.EnergyRevenueRequired = newCF.EquityRecovery + newCF.DebtRecovery + newCF.FuelCost
-            + newCF.NonFuelExpenses + newCF.Taxes + newCF.DebtReserve - newCF.CapacityIncome
-            - newCF.InterestOnDebtReserve - newCF.HeatSalesIncome;
+            + newCF.NonFuelExpenses + newCF.Taxes + newCF.DebtReserve - newCF.IncomeCapacity
+            - newCF.InterestOnDebtReserve - newCF.IncomeHeat;
 
         return newCF;
     }
@@ -149,8 +149,8 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
         const newCF: CashFlowCHP = { Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
                                      EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
                                      DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, FuelCost: 0,
-                                     NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
-                                     HeatSalesIncome: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0,
+                                     NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, IncomeCapacity: 0,
+                                     IncomeHeat: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0,
                                      Taxes: 0, EnergyRevenueRequired: 0 };
         newCF.Year = Year;
         newCF.EquityRecovery = AnnualEquityRecovery;
@@ -166,27 +166,27 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
         newCF.NonFuelExpenses = TotalNonFuelExpenses * Math.pow((1 + input.EscalationOther / 100), (Year - 1));
         newCF.DebtReserve = -DebtReserve;
         newCF.Depreciation = TotalCostOfPlant * DepreciationFraction;
-        newCF.CapacityIncome = AnnualCapacityPayment;
-        newCF.HeatSalesIncome = TotalIncomeFromHeatSales * Math.pow((1 + input.EscalationHeatSales / 100), (Year - 1));
+        newCF.IncomeCapacity = AnnualCapacityPayment;
+        newCF.IncomeHeat = TotalIncomeFromHeatSales * Math.pow((1 + input.EscalationHeatSales / 100), (Year - 1));
         newCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
         newCF.TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
             * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
                 - newCF.Depreciation + newCF.DebtReserve);
         newCF.TaxCredit = AnnualNetGeneration * input.ProductionTaxCredit
-            * Math.pow((1 + input.EscalationForProductionTaxCredit / 100), (Year - 1)) * input.TaxCreditFrac[Year - 1];
+            * Math.pow((1 + input.EscalationProductionTaxCredit / 100), (Year - 1)) * input.TaxCreditFrac[Year - 1];
         newCF.Taxes = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
             * (newCF.EquityPrincipalPaid + newCF.DebtPrincipalPaid + newCF.EquityInterest
                 - newCF.Depreciation + newCF.DebtReserve - newCF.TaxCredit);
         newCF.EnergyRevenueRequired = newCF.EquityRecovery + newCF.DebtRecovery + newCF.FuelCost
-            + newCF.NonFuelExpenses + newCF.Taxes + newCF.DebtReserve - newCF.CapacityIncome
-            - newCF.InterestOnDebtReserve - newCF.HeatSalesIncome;
+            + newCF.NonFuelExpenses + newCF.Taxes + newCF.DebtReserve - newCF.IncomeCapacity
+            - newCF.InterestOnDebtReserve - newCF.IncomeHeat;
 
         return newCF;
     }
     const Total: TotalCashFlowCHP = { EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
                                       DebtRecovery: 0, DebtInterest: 0, DebtPrincipalPaid: 0, FuelCost: 0,
-                                      NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, CapacityIncome: 0,
-                                      HeatSalesIncome: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0,
+                                      NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, IncomeCapacity: 0,
+                                      IncomeHeat: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0,
                                       Taxes: 0, EnergyRevenueRequired: 0 };
     for (let i = 0; i < cashFlow.length; i++) {
         Total.EquityRecovery += cashFlow[i].EquityRecovery;
@@ -199,8 +199,8 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
         Total.NonFuelExpenses += cashFlow[i].NonFuelExpenses;
         Total.DebtReserve += cashFlow[i].DebtReserve;
         Total.Depreciation += cashFlow[i].Depreciation;
-        Total.CapacityIncome += cashFlow[i].CapacityIncome;
-        Total.HeatSalesIncome += cashFlow[i].HeatSalesIncome;
+        Total.IncomeCapacity += cashFlow[i].IncomeCapacity;
+        Total.IncomeHeat += cashFlow[i].IncomeHeat;
         Total.InterestOnDebtReserve += cashFlow[i].InterestOnDebtReserve;
         Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
         Total.TaxCredit += cashFlow[i].TaxCredit;

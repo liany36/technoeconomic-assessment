@@ -2,7 +2,7 @@
 export interface GenericPowerOnlyInputMod {
     CapitalCost: number;
     // Electrical and Fuel--base year
-    NetPlantCapacity: number;
+    NetElectricalCapacity: number;
     CapacityFactor: number;
     NetStationEfficiency: number;
     FuelHeatingValue: number;
@@ -31,7 +31,7 @@ export interface GenericPowerOnlyInputMod {
     // Escalation/Inflation
     GeneralInflation: number;
     EscalationFuel: number;
-    EscalationForProductionTaxCredit: number;
+    EscalationProductionTaxCredit: number;
     EscalationOther: number;
     // Tax Credit Schedule
     TaxCreditFrac: number[];
@@ -52,7 +52,7 @@ export interface CashFlowGPO {
     NonFuelExpenses: number;
     DebtReserve: number;
     Depreciation: number;
-    CapacityIncome: number;
+    IncomeCapacity: number;
     InterestOnDebtReserve: number;
     TaxesWoCredit: number;
     TaxCredit: number;
@@ -72,7 +72,7 @@ export interface TotalCashFlowGPO {
     NonFuelExpenses: number;
     DebtReserve: number;
     Depreciation: number;
-    CapacityIncome: number;
+    IncomeCapacity: number;
     InterestOnDebtReserve: number;
     TaxesWoCredit: number;
     TaxCredit: number;
