@@ -1,6 +1,5 @@
 // GasificationPowerInputMod
 export interface GasificationPowerInputMod {
-    model: string;
     // Fuel Properties
     GasolineDensity: number;
     GasolineHigherHeatingMjPerKg: number;
@@ -100,7 +99,7 @@ export interface CashFlowGas {
     CapacityIncome: number;
     HeatIncome: number;
     CharIncome: number;
-    InterstOnDebtReserve: number;
+    InterestOnDebtReserve: number;
     TaxWithoutCredit: number;
     TaxCredit: number;
     Taxes: number;
@@ -123,7 +122,7 @@ export interface TotalCashFlowGas {
     CapacityIncome: number;
     HeatIncome: number;
     CharIncome: number;
-    InterstOnDebtReserve: number;
+    InterestOnDebtReserve: number;
     TaxWithoutCredit: number;
     TaxCredit: number;
     Taxes: number;

@@ -1,6 +1,5 @@
 // Hydrogen Input
 export interface HydrogenInputMod {
-    model: string;
     // Hydrogen Generation
     GrossDesignHydrogenCapacity: number;
     HydrogenHHV: number;

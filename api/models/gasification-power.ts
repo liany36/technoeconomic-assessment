@@ -102,7 +102,7 @@ function GasificationPower(input: GasificationPowerInputMod) {
                                     DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, BiomassFuelCostCF: 0,
                                     DualFuelCostCF: 0, NonFuelExpensesCF: 0, DebtReserveCF: 0,
                                     Depreciation: 0, CapacityIncome: 0, HeatIncome: 0, CharIncome: 0,
-                                    InterstOnDebtReserve: 0, TaxWithoutCredit: 0, TaxCredit: 0, Taxes: 0,
+                                    InterestOnDebtReserve: 0, TaxWithoutCredit: 0, TaxCredit: 0, Taxes: 0,
                                     EnergyRevenueRequired: 0};
          CashFlow.push(tGCF);
         }
@@ -115,7 +115,7 @@ function GasificationPower(input: GasificationPowerInputMod) {
                                DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, BiomassFuelCostCF: 0,
                                DualFuelCostCF: 0, NonFuelExpensesCF: 0, DebtReserveCF: 0,
                                Depreciation: 0, CapacityIncome: 0, HeatIncome: 0, CharIncome: 0,
-                               InterstOnDebtReserve: 0, TaxWithoutCredit: 0, TaxCredit: 0, Taxes: 0,
+                               InterestOnDebtReserve: 0, TaxWithoutCredit: 0, TaxCredit: 0, Taxes: 0,
                                EnergyRevenueRequired: 0};
     NGCF.Year = Year;
     NGCF.EquityRecovery = AnnualEquityRecovery;
@@ -166,7 +166,7 @@ function GasificationPower(input: GasificationPowerInputMod) {
             NGCF.HeatIncome = GCF.HeatIncome * (1 + input.EscalationHeatSales / 100);
             NGCF.CharIncome = GCF.CharIncome * (1 + input.EscalationCharSales / 100);
         }
-    NGCF.InterstOnDebtReserve = AnnualDebtReserveInterest;
+    NGCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
     NGCF.TaxWithoutCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100)) * (NGCF.EquityPrincipalPaid
                 + NGCF.DebtPrincipalPaid + NGCF.EquityInterest - NGCF.Depreciation + NGCF.DebtReserveCF);
     if (Year === 1) {
@@ -179,7 +179,7 @@ function GasificationPower(input: GasificationPowerInputMod) {
             NGCF.DebtPrincipalPaid + NGCF.EquityInterest - NGCF.Depreciation + NGCF.DebtReserveCF - NGCF.TaxCredit);
     NGCF.EnergyRevenueRequired = NGCF.EquityRecovery + NGCF.DebtRecovery + NGCF.BiomassFuelCostCF +
             NGCF.DualFuelCostCF + NGCF.NonFuelExpensesCF + NGCF.Taxes + NGCF.DebtReserveCF - NGCF.CapacityIncome -
-            NGCF.InterstOnDebtReserve - NGCF.HeatIncome - NGCF.CharIncome;
+            NGCF.InterestOnDebtReserve - NGCF.HeatIncome - NGCF.CharIncome;
     return NGCF;
     }
     // Total Cash Flow
@@ -187,7 +187,7 @@ function GasificationPower(input: GasificationPowerInputMod) {
                                              DebtRecovery: 0, DebtInterest: 0, DebtPrincipalPaid: 0,
                                              BiomassFuelCostCF: 0, DualFuelCostCF: 0, NonFuelExpensesCF: 0,
                                              DebtReserveCF: 0, Depreciation: 0, CapacityIncome: 0, HeatIncome: 0,
-                                             CharIncome: 0, InterstOnDebtReserve: 0, TaxWithoutCredit: 0,
+                                             CharIncome: 0, InterestOnDebtReserve: 0, TaxWithoutCredit: 0,
                                              TaxCredit: 0, Taxes: 0, EnergyRevenueRequired: 0};
     for (let i = 0; i < input.EconomicLife; i++) {
         TotalCashFlow.EquityRecovery += CashFlow[i].EquityRecovery;
@@ -204,7 +204,7 @@ function GasificationPower(input: GasificationPowerInputMod) {
         TotalCashFlow.CapacityIncome += CashFlow[i].CapacityIncome;
         TotalCashFlow.HeatIncome += CashFlow[i].HeatIncome;
         TotalCashFlow.CharIncome += CashFlow[i].CharIncome;
-        TotalCashFlow.InterstOnDebtReserve += CashFlow[i].InterstOnDebtReserve;
+        TotalCashFlow.InterestOnDebtReserve += CashFlow[i].InterestOnDebtReserve;
         TotalCashFlow.TaxWithoutCredit += CashFlow[i].TaxWithoutCredit;
         TotalCashFlow.TaxCredit += CashFlow[i].TaxCredit;
         TotalCashFlow.Taxes += CashFlow[i].Taxes;
@@ -236,46 +236,12 @@ function GasificationPower(input: GasificationPowerInputMod) {
         * NewConstantLAC.ConstantCapitalRecoveryFactor;
     NewConstantLAC.ConstantLACPerKwh = NewConstantLAC.ConstantLevelAnnualRevenue / AnnualNetElectricityGeneration;
     return {
-        'Sensitivity Analysis': {
-            'LAC Current': NewCurrentLAC.CurrentLACPerKwh,
-            'LAC Constant': NewConstantLAC.ConstantLACPerKwh
-        },
-        'Capital Cost': {
-            'GasifierFeedstockCapitalCostPerKwe': GasifierSystemCapitalCostPerKwe,
-            'GasCleaningSystemCapitalCostPerKwe': GasCleaningSystemCapitalCostPerKwe,
-            'PowerGenerationCapitalCostPweKwe': PowerGenerationCapitalCostPerKwe,
-            'EmissionControlSystemCapitalCostPerKwe': EmissionControlSystemCapitalCostPerKwe,
-            'HeatRecoverySystemCapitalCostPerKwe': HeatRecoverySystemCapitalCostPerKwe,
-            'TotalFacilityCapitalCost': TotalFacilityCapitalCost,
-            'TotalFacilityCapitalCostPerKwe': TotalFacilityCapitalCostPerKwe
-        },
-        'Taxes': {
-            'CombinedTaxRate': CombinedTaxRate
-        },
-        'Income Other Than Energy': {
-            'AnnualCapacityPayment': AnnualCapacityPayment,
-            'AnnualDebtReserveInterest': AnnualDebtReserveInterest,
-            'AnnualIncomeFromChar': AnnualIncomeFromChar
-        },
-        'Financing': {
-            'EquityRatio': EquityRatio,
-            'CostOfMoney': CostOfMoney,
-            'TotalCostOfPlant': TotalCostOfPlant,
-            'TotalEquityCost': TotalEquityCost,
-            'TotalDebtCost': TotalDebtCost,
-            'CapitalRecoveryFactorEquity': CapitalRecoveryFactorEquity,
-            'CapitalRecoveryFactorDebt': CapitalRecoveryFactorDebt,
-            'AnnualEquityRecovery': AnnualEquityRecovery,
-            'AnnualDebtPayment': AnnualDebtPayment,
-            'DebtReserve': DebtReserve
-        },
-        'Depreciation Schedule': {
-            'DepreciationRate': DepreciationRate
-        },
-        'Annual Cash Flow': CashFlow,
-        'Total Cash Flow': TotalCashFlow,
-        'Current & Level Annual Cost (LAC)': NewCurrentLAC,
-        'Constant & Level Annual Cost(LAC)': NewConstantLAC
+        'AnnualCashFlow': CashFlow,
+        'TotalCashFlow': TotalCashFlow,
+        'CurrentLevelAnnualRevenueRequirements': NewCurrentLAC.CurrentAnnualRevenueRequirements,
+        'ConstantLevelAnnualRevenueRequirements': NewConstantLAC.ConstantLevelAnnualRevenue,
+        'CurrentLACofEnergy': NewCurrentLAC.CurrentLACPerKwh,
+        'ConstantLACofEnergy': NewConstantLAC.ConstantLACPerKwh
     };
 }
 export { GasificationPower };

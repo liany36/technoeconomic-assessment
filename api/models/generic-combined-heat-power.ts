@@ -227,67 +227,13 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
     const ConstantLACofEnergy = ConstantLevelAnnualRevenueRequirements / AnnualNetGeneration;
 
     return {
-            'Sensitivity Analysis':
-            {
-                'LAC Current': CurrentLACofEnergy,
-                'LAC Constant': ConstantLACofEnergy
-            },
-            'Electrical and Fuel--base year':
-                {'ParasiticLoad': ParasiticLoad, 'AnnualHours': AnnualHours, 'FuelConsumptionRate': FuelConsumptionRate,
-                 'FuelPower': FuelPower, 'GrossStationElectricalEfficiency': GrossStationElectricalEfficiency,
-                 'AnnualNetGeneration': AnnualNetGeneration, 'AnnualFuelConsumption': AnnualFuelConsumption,
-                 'CapitalCostNEC': CapitalCostNEC, 'AnnualAshDisposal': AnnualAshDisposal},
-            'Heat-base year':
-                {
-                    'TotalHeatProductionRate': TotalHeatProductionRate, 'RecoveredHeat': RecoveredHeat,
-                    'AnnualHeatSales': AnnualHeatSales, 'TotalIncomeFromHeatSales': TotalIncomeFromHeatSales,
-                    'HeatIncomePerUnitNEE': HeatIncomePerUnitNEE,
-                    'OverallCHPefficiencyGross': OverallCHPefficiencyGross,
-                    'OverallCHPefficiencyNet': OverallCHPefficiencyNet
-                },
-            'Expenses--base year':
-                {'TotalNonFuelExpenses': TotalNonFuelExpenses, 'TotalExpensesIncludingFuel': TotalExpensesIncludingFuel,
-                 'FuelCostKwh': FuelCostKwh, 'LaborCostKwh': LaborCostKwh, 'MaintenanceCostKwh': MaintenanceCostKwh,
-                 'InsurancePropertyTaxKwh': InsurancePropertyTaxKwh, 'UtilitiesKwh': UtilitiesKwh,
-                 'AshDisposalKwh': AshDisposalKwh, 'ManagementKwh': ManagementKwh,
-                 'OtherOperatingExpensesKwh': OtherOperatingExpensesKwh,
-                 'TotalNonFuelExpensesKwh': TotalNonFuelExpensesKwh,
-                 'TotalExpensesIncludingFuelKwh': TotalExpensesIncludingFuelKwh
-                },
-            'Taxes':
-                 {
-                    'CombinedTaxRate': CombinedTaxRate
-                 },
-            'Income other than energy':
-                {
-                    'AnnualCapacityPayment': AnnualCapacityPayment,
-                    'AnnualDebtReserveInterest': AnnualDebtReserveInterest
-                },
-            'Financing':
-                {
-                    'EquityRatio': EquityRatio,
-                    'CostOfMoney': CostOfMoney,
-                    'TotalCostOfPlant': TotalCostOfPlant,
-                    'TotalEquityCost': TotalEquityCost,
-                    'TotalDebtCost': TotalDebtCost,
-                    'CapitalRecoveryFactorEquity': CapitalRecoveryFactorEquity,
-                    'CapitalRecoveryFactorDebt': CapitalRecoveryFactorDebt,
-                    'AnnualEquityRecovery': AnnualEquityRecovery,
-                    'AnnualDebtPayment': AnnualDebtPayment,
-                    'DebtReserve': DebtReserve
-                },
-            'Annual Cash Flows': cashFlow,
-            'Total Cash Flow': Total,
-            'Current $ Level Annual Cost (LAC)':
-                {
-                    'TotalPresentWorth': TotalPresentWorth,
-                    'CurrentLevelAnnualRevenueRequirements': CurrentLevelAnnualRevenueRequirements,
-                    'CurrentLACofEnergy': CurrentLACofEnergy,
-                    'RealCostOfMoney': RealCostOfMoney / 100,
-                    'CapitalRecoveryFactorConstant': CapitalRecoveryFactorConstant,
-                    'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
-                    'ConstantLACofEnergy': ConstantLACofEnergy
-                },
+            'AnnualCashFlows': cashFlow,
+            'TotalCashFlow': Total,
+            'TotalPresentWorth': TotalPresentWorth,
+            'CurrentLevelAnnualRevenueRequirements': CurrentLevelAnnualRevenueRequirements,
+            'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
+            'CurrentLACofEnergy': CurrentLACofEnergy,
+            'ConstantLACofEnergy': ConstantLACofEnergy
             };
 }
 
