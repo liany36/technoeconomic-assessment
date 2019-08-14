@@ -160,7 +160,7 @@
           "type": "number",
           "example": 70000000
         },
-        "NetPlantCapacity": {
+        "NetElectricalCapacity": {
           "type": "number",
           "example": 25000
         },
@@ -261,7 +261,7 @@
           "format": "float",
           "example": 2.1
         },
-        "EscalationForProductionTaxCredit": {
+        "EscalationProductionTaxCredit": {
           "type": "number",
           "format": "float",
           "example": 2.1
@@ -443,7 +443,7 @@
           "format": "float",
           "example": 3500000
         },
-        "CapacityIncome": {
+        "IncomeCapacity": {
           "type": "number",
           "format": "float",
           "example": 4150000
@@ -531,7 +531,7 @@
           "format": "float",
           "example": 70000000
         },
-        "CapacityIncome": {
+        "IncomeCapacity": {
           "type": "number",
           "format": "float",
           "example": 83000000
@@ -688,7 +688,7 @@
           "format": "float",
           "example": 2.1
         },
-        "EscalationForProductionTaxCredit": {
+        "EscalationProductionTaxCredit": {
           "type": "number",
           "format": "float",
           "example": 2.1
@@ -879,12 +879,12 @@
           "format": "float",
           "example": 3500000
         },
-        "CapacityIncome": {
+        "IncomeCapacity": {
           "type": "number",
           "format": "float",
           "example": 4150000
         },
-        "HeatSalesIncome": {
+        "IncomeHeat": {
           "type": "number",
           "format": "float",
           "example": 4420243.44
@@ -972,12 +972,12 @@
           "format": "float",
           "example": 70000000
         },
-        "CapacityIncome": {
+        "IncomeCapacity": {
           "type": "number",
           "format": "float",
           "example": 83000000
         },
-        "HeatSalesIncome": {
+        "IncomeHeat": {
           "type": "number",
           "format": "float",
           "example": 108476265.83378807

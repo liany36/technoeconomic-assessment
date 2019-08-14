@@ -35,7 +35,7 @@ export interface GenericCombinedHeatPowerInputMod {
     // Escalation/Inflation
     GeneralInflation: number;
     EscalationFuel: number;
-    EscalationForProductionTaxCredit: number;
+    EscalationProductionTaxCredit: number;
     EscalationHeatSales: number;
     EscalationOther: number;
     // Tax Credit Schedule
@@ -57,8 +57,8 @@ export interface CashFlowCHP {
     NonFuelExpenses: number;
     DebtReserve: number;
     Depreciation: number;
-    CapacityIncome: number;
-    HeatSalesIncome: number;
+    IncomeCapacity: number;
+    IncomeHeat: number;
     InterestOnDebtReserve: number;
     TaxesWoCredit: number;
     TaxCredit: number;
@@ -78,8 +78,8 @@ export interface TotalCashFlowCHP {
     NonFuelExpenses: number;
     DebtReserve: number;
     Depreciation: number;
-    CapacityIncome: number;
-    HeatSalesIncome: number;
+    IncomeCapacity: number;
+    IncomeHeat: number;
     InterestOnDebtReserve: number;
     TaxesWoCredit: number;
     TaxCredit: number;
