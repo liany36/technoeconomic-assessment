@@ -1488,22 +1488,22 @@
           "format": "float",
           "example": 763683.9625873306
         },
-        "BiomassFuelCostCF": {
+        "BiomassFuelCost": {
           "type": "number",
           "format": "float",
           "example": 84987.14258189379
         },
-        "DualFuelCostCF": {
+        "DualFuelCost": {
           "type": "number",
           "format": "float",
           "example": 90404.20449116101
         },
-        "NonFuelExpensesCF": {
+        "NonFuelExpenses": {
           "type": "number",
           "format": "float",
           "example": 30000
         },
-        "DebtReserveCF": {
+        "DebtReserve": {
           "type": "number",
           "format": "float",
           "example": 63191.037412669386
@@ -1513,17 +1513,17 @@
           "format": "float",
           "example": 43750
         },
-        "CapacityIncome": {
+        "IncomeCapacity": {
           "type": "number",
           "format": "float",
           "example": 0
         },
-        "HeatIncome": {
+        "IncomeHeat": {
           "type": "number",
           "format": "float",
           "example": 56735.282608695656
         },
-        "CharIncome": {
+        "IncomeChar": {
           "type": "number",
           "format": "float",
           "example": 0
@@ -1533,7 +1533,7 @@
           "format": "float",
           "example": 1263.8207482533878
         },
-        "TaxWithoutCredit": {
+        "TaxesWoCredit": {
           "type": "number",
           "format": "float",
           "example": 38694.68194899599
@@ -1591,22 +1591,22 @@
           "format": "float",
           "example": 787499.9999999991
         },
-        "BiomassFuelCostCF": {
+        "BiomassFuelCost": {
           "type": "number",
           "format": "float",
           "example": 2085651.6154159054
         },
-        "DualFuelCostCF": {
+        "DualFuelCost": {
           "type": "number",
           "format": "float",
           "example": 2218590.5939323828
         },
-        "NonFuelExpensesCF": {
+        "NonFuelExpenses": {
           "type": "number",
           "format": "float",
           "example": 736223.6988046162
         },
-        "DebtReserveCF": {
+        "DebtReserve": {
           "type": "number",
           "format": "float",
           "example": 0
@@ -1616,17 +1616,17 @@
           "format": "float",
           "example": 875000
         },
-        "CapacityIncome": {
+        "IncomeCapacity": {
           "type": "number",
           "format": "float",
           "example": 0
         },
-        "HeatIncome": {
+        "IncomeHeat": {
           "type": "number",
           "format": "float",
           "example": 1392328.6538299709
         },
-        "CharIncome": {
+        "IncomeChar": {
           "type": "number",
           "format": "float",
           "example": 0
