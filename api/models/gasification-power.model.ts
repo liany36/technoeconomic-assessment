@@ -99,7 +99,7 @@ export interface CashFlowGas {
     CapacityIncome: number;
     HeatIncome: number;
     CharIncome: number;
-    InterstOnDebtReserve: number;
+    InterestOnDebtReserve: number;
     TaxWithoutCredit: number;
     TaxCredit: number;
     Taxes: number;
@@ -122,7 +122,7 @@ export interface TotalCashFlowGas {
     CapacityIncome: number;
     HeatIncome: number;
     CharIncome: number;
-    InterstOnDebtReserve: number;
+    InterestOnDebtReserve: number;
     TaxWithoutCredit: number;
     TaxCredit: number;
     Taxes: number;

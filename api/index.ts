@@ -35,7 +35,7 @@ app.post('/genericCombinedHeatPower', async (req: any, res: any) => {
   res.status(200).json(result);
 });
 
-app.post('/gasification-power', async (req: any, res: any) => {
+app.post('/gasificationPower', async (req: any, res: any) => {
   const params: GasificationPowerInputMod = req.body;
   const result = await GasificationPower(params);
   res.status(200).json(result);
