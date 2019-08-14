@@ -7,13 +7,13 @@ https://technoeconomic-assessment.azurewebsites.net/
 This is a service for running Technoeconomic Assessment API, funded by California Energy Commission.
 
 ## Install
-
+In api directory
 ```bash
 yarn install
 ```
 
 ## Usage
-
+In api directory
 ```bash
 yarn watch
 ```
