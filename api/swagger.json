@@ -22,7 +22,7 @@
     "/genericPowerOnly": {
       "post": {
         "tags": [
-          "Generic Biomass Power Plant"
+          "genericPowerOnly"
         ],
         "summary": "Runs GPO from given input",
         "description": "This route is used for generic-power-only (GPO) model",
@@ -55,7 +55,7 @@
     "/genericCombinedHeatPower": {
       "post": {
         "tags": [
-          "Generic Combined Heat And Power"
+          "genericCombinedHeatPower"
         ],
         "summary": "Runs CHP from given input",
         "description": "This route is used for generic-combine-heat-power (CHP) model",
@@ -88,7 +88,7 @@
     "/gasificationPower": {
       "post": {
         "tags": [
-          "Biomass Gasification/Power Generation"
+          "gasificationPower"
         ],
         "summary": "Runs GP from given input",
         "description": "This route is used for gasification-power (GP) model",
@@ -110,6 +110,39 @@
             "description": "successful operation",
             "schema": {
               "$ref": "#/definitions/GasificationPowerOutputMod"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters supplied"
+          }
+        }
+      }
+    },
+    "/hydrogen": {
+      "post": {
+        "tags": [
+          "hydrogen"
+        ],
+        "summary": "Runs Hydrogen from given input",
+        "description": "This route is used for hydrogen model",
+        "operationId": "runHydro",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "params",
+            "schema": {
+              "$ref": "#/definitions/HydrogenInputMod"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/HydrogenOutputMod"
             }
           },
           "400": {
@@ -1626,6 +1659,525 @@
       },
       "xml": {
         "name": "TotalCashFlowGP"
+      }
+    },
+    "HydrogenInputMod": {
+      "type": "object",
+      "properties": {
+        "GrossDesignHydrogenCapacity": {
+          "type": "number",
+          "example": 158366.518706405
+        },
+        "HydrogenHHV": {
+          "type": "number",
+          "example": 141.93
+        },
+        "HydrogenLHV": {
+          "type": "number",
+          "example": 119.98
+        },
+        "Feedstock": {
+          "type": "number",
+          "example": 19.3498437209302
+        },
+        "OverallProductionEfficiency": {
+          "type": "number",
+          "example": 60.5
+        },
+        "CapacityFactor": {
+          "type": "number",
+          "example": 91.324200913242
+        },
+        "CapitalCost": {
+          "type": "number",
+          "format": "float",
+          "example": 206500000
+        },
+        "FeedstockCost": {
+          "type": "number",
+          "example": 38.7
+        },
+        "OperatingExpensesRate": {
+          "type": "number",
+          "example": 4
+        },
+        "ElectricalEnergy": {
+          "type": "number",
+          "example": 2
+        },
+        "IncentivePayments": {
+          "type": "number",
+          "example": 2
+        },
+        "Capacity": {
+          "type": "number",
+          "example": 2
+        },
+        "Heat": {
+          "type": "number",
+          "example": 2
+        },
+        "Residues": {
+          "type": "number",
+          "example": 2
+        },
+        "FederalTaxRate": {
+          "type": "number",
+          "example": 34
+        },
+        "StateTaxRate": {
+          "type": "number",
+          "format": "float",
+          "example": 9.3
+        },
+        "ProductionTaxCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 0.09
+        },
+        "NegativeTaxesOffset": {
+          "type": "boolean",
+          "example": true
+        },
+        "GeneralInflation": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "EscalationFeedstock": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "EscalationElectricalEnergy": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "EscalationIncentivePayments": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "EscalationCapacityPayment": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "EscalationProductionTaxCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "EscalationHeatSales": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "EscalationResidueSales": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "EscalationOther": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1
+        },
+        "DebtRatio": {
+          "type": "number",
+          "example": 90
+        },
+        "InterestRateOnDebt": {
+          "type": "number",
+          "example": 5
+        },
+        "OneYearDebtReserveRequired": {
+          "type": "boolean",
+          "example": true
+        },
+        "MARR": {
+          "type": "number",
+          "example": 15
+        },
+        "EconomicLife": {
+          "type": "number",
+          "example": 15
+        },
+        "InterestRateOnDebtReserve": {
+          "type": "number",
+          "example": 2
+        },
+        "TaxCreditFrac": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "example": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "required": [
+        "GrossDesignHydrogenCapacity",
+        "HydrogenHHV",
+        "HydrogenLHV",
+        "Feedstock",
+        "OverallProductionEfficiency",
+        "CapacityFactor",
+        "CapitalCost",
+        "FeedstockCost",
+        "OperatingExpensesRate",
+        "ElectricalEnergy",
+        "IncentivePayments",
+        "Capacity",
+        "Heat",
+        "Residues",
+        "FederalTaxRate",
+        "StateTaxRate",
+        "ProductionTaxCredit",
+        "NegativeTaxesOffset",
+        "DebtRatio",
+        "InterestRateOnDebt",
+        "OneYearDebtReserveRequired",
+        "EconomicLife",
+        "CostOfEquity",
+        "CapacityPayment",
+        "InterestRateOnDebtReserve",
+        "GeneralInflation",
+        "EscalationFeedstock",
+        "EscalationElectricalEnergy",
+        "EscalationIncentivePayments",
+        "EscalationCapacityPayment",
+        "EscalationProductionTaxCredit",
+        "EscalationHeatSales",
+        "EscalationResidueSales",
+        "EscalationOther",
+        "TaxCreditFrac"
+      ],
+      "xml": {
+        "name": "HydrogenInputMod"
+      }
+    },
+    "HydrogenOutputMod": {
+      "type": "object",
+      "properties": {
+        "AnnualCashFlows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CashFlowHydrogen"
+          }
+        },
+        "TotalCashFlow": {
+          "$ref": "#/definitions/TotalCashFlowHydrogen"
+        },
+        "TotalPresentWorth": {
+          "type": "number",
+          "format": "float",
+          "example": 359939802.2256863
+        },
+        "CurrentLevelAnnualRevenueRequirements": {
+          "type": "number",
+          "format": "float",
+          "example": 61555844.1067294
+        },
+        "ConstantLevelAnnualRevenueRequirements": {
+          "type": "number",
+          "format": "float",
+          "example": 54650187.41767975
+        },
+        "CurrentLACofEnergy": {
+          "type": "number",
+          "format": "float",
+          "example": 1.1660768565768789
+        },
+        "ConstantLACofEnergy": {
+          "type": "number",
+          "format": "float",
+          "example": 1.0352602531914368
+        }
+      },
+      "xml": {
+        "name": "HydrogenOutputMod"
+      }
+    },
+    "CashFlowHydrogen": {
+      "type": "object",
+      "properties": {
+        "Year": {
+          "type": "number",
+          "example": 1
+        },
+        "EquityRecovery": {
+          "type": "number",
+          "format": "float",
+          "example": 3531502.1371461176
+        },
+        "EquityInterest": {
+          "type": "number",
+          "format": "float",
+          "example": 3097500
+        },
+        "EquityPrincipalPaid": {
+          "type": "number",
+          "format": "float",
+          "example": 434002.13714611763
+        },
+        "EquityPrincipalRemaining": {
+          "type": "number",
+          "format": "float",
+          "example": 20215997.86285388
+        },
+        "DebtRecovery": {
+          "type": "number",
+          "format": "float",
+          "example": 17905214.152178057
+        },
+        "DebtInterest": {
+          "type": "number",
+          "format": "float",
+          "example": 9292500
+        },
+        "DebtPrincipalPaid": {
+          "type": "number",
+          "format": "float",
+          "example": 8612714.152178057
+        },
+        "DebtPrincipalRemaining": {
+          "type": "number",
+          "format": "float",
+          "example": 177237285.84782195
+        },
+        "FuelCost": {
+          "type": "number",
+          "format": "float",
+          "example": 24768200.038825013
+        },
+        "NonFuelExpenses": {
+          "type": "number",
+          "format": "float",
+          "example": 8260000
+        },
+        "DebtReserve": {
+          "type": "number",
+          "format": "float",
+          "example": 17905214.152178057
+        },
+        "Expenses": {
+          "type": "number",
+          "format": "float",
+          "example": 33028200.038825013
+        },
+        "Depreciation": {
+          "type": "number",
+          "format": "float",
+          "example": 13766666.666666666
+        },
+        "IncomeElectricalEnergy": {
+          "type": "number",
+          "format": "float",
+          "example": 2
+        },
+        "IncomeIncentivePayments": {
+          "type": "number",
+          "format": "float",
+          "example": 2
+        },
+        "IncomeCapacity": {
+          "type": "number",
+          "format": "float",
+          "example": 2
+        },
+        "IncomeHeat": {
+          "type": "number",
+          "format": "float",
+          "example": 2
+        },
+        "IncomeResidue": {
+          "type": "number",
+          "format": "float",
+          "example": 2
+        },
+        "InterestOnDebtReserve": {
+          "type": "number",
+          "format": "float",
+          "example": 358104.28304356115
+        },
+        "TaxesWoCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 10917737.001676356
+        },
+        "TaxCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 674308.8000000019
+        },
+        "Taxes": {
+          "type": "number",
+          "format": "float",
+          "example": 10465606.992415054
+        },
+        "EnergyRevenueRequired": {
+          "type": "number",
+          "format": "float",
+          "example": 82477623.18969873
+        }
+      },
+      "xml": {
+        "name": "CashFlowHydrogen"
+      }
+    },
+    "TotalCashFlowHydrogen": {
+      "type": "object",
+      "properties": {
+        "EquityRecovery": {
+          "type": "number",
+          "format": "float",
+          "example": 52972532.05719176
+        },
+        "EquityInterest": {
+          "type": "number",
+          "format": "float",
+          "example": 32322532.05719171
+        },
+        "EquityPrincipalPaid": {
+          "type": "number",
+          "format": "float",
+          "example": 20650000.000000056
+        },
+        "DebtRecovery": {
+          "type": "number",
+          "format": "float",
+          "example": 268578212.2826708
+        },
+        "DebtInterest": {
+          "type": "number",
+          "format": "float",
+          "example": 82728212.28267111
+        },
+        "DebtPrincipalPaid": {
+          "type": "number",
+          "format": "float",
+          "example": 185849999.99999976
+        },
+        "FuelCost": {
+          "type": "number",
+          "format": "float",
+          "example": 431434831.7572434
+        },
+        "NonFuelExpenses": {
+          "type": "number",
+          "format": "float",
+          "example": 143880124.70541593
+        },
+        "DebtReserve": {
+          "type": "number",
+          "format": "float",
+          "example": 0
+        },
+        "Expenses": {
+          "type": "number",
+          "format": "float",
+          "example": 575314956.4626594
+        },
+        "Depreciation": {
+          "type": "number",
+          "format": "float",
+          "example": 206499999.99999997
+        },
+        "IncomeElectricalEnergy": {
+          "type": "number",
+          "format": "float",
+          "example": 34.8378025921104
+        },
+        "IncomeIncentivePayments": {
+          "type": "number",
+          "format": "float",
+          "example": 34.8378025921104
+        },
+        "IncomeCapacity": {
+          "type": "number",
+          "format": "float",
+          "example": 34.8378025921104
+        },
+        "IncomeHeat": {
+          "type": "number",
+          "format": "float",
+          "example": 34.8378025921104
+        },
+        "IncomeResidue": {
+          "type": "number",
+          "format": "float",
+          "example": 34.8378025921104
+        },
+        "InterestOnDebtReserve": {
+          "type": "number",
+          "format": "float",
+          "example": 5371564.245653418
+        },
+        "TaxesWoCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 21672543.378295973
+        },
+        "TaxCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 3516153.904817243
+        },
+        "Taxes": {
+          "type": "number",
+          "format": "float",
+          "example": 19314931.11289297
+        },
+        "EnergyRevenueRequired": {
+          "type": "number",
+          "format": "float",
+          "example": 910808893.4807485
+        }
+      },
+      "xml": {
+        "name": "TotalCashFlowHydrogen"
       }
     }
   },

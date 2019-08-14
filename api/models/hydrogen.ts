@@ -206,65 +206,14 @@ function Hydrogen(input: HydrogenInputMod) {
     const ConstantLACofEnergy = ConstantLevelAnnualRevenueRequirements / AnnualHydrogenProductionKg;
 
     return {
-        'Sensitivity Analysis':
-        {
-            'LAC Current': CurrentLACofEnergy,
-            'LAC Constant': ConstantLACofEnergy
-        },
-        'Hydrogen Generation': {
-            'HydrogenEnergy': HydrogenEnergy, 'DesignHydrogenProductionRateMW': DesignHydrogenProductionRateMW,
-            'DesignHydrogenProductionRateMg': DesignHydrogenProductionRateMg, 'FeedstockInput': FeedstockInput,
-            'FeedstockSupply': FeedstockSupply, 'AnnualHours': AnnualHours,
-            'AnnualFeedstockSupply': AnnualFeedstockSupply, 'AnnualFeedstockEnergyInput': AnnualFeedstockEnergyInput,
-            'AnnualHydrogenProductionMg': AnnualHydrogenProductionMg,
-            'AnnualHydrogenProductionKg': AnnualHydrogenProductionKg, 'AnnualHydrogenEnergy': AnnualHydrogenEnergy
-        },
-        'Capital Cost': {
-            'CapitalCostUnitDaily': CapitalCostUnitDaily, 'CapitalCostUnitYear': CapitalCostUnitYear
-        },
-        'Expenses--base year': {
-            'AnnualFeedstockCost': AnnualFeedstockCost, 'OperatingExpenses': OperatingExpenses,
-            'TotalAnnualExpenses': TotalAnnualExpenses
-        },
-        'Taxes and Tax credit': {
-            'CombinedTaxRate': CombinedTaxRate
-        },
-        'Financing': {
-            'AmountOfCapitalFinancing': AmountOfCapitalFinancing, 'EquityRatio': EquityRatio,
-            'WeightedCostOfMoney': WeightedCostOfMoney,
-            'WeightedCapitalRecoveryFactorCurrent': WeightedCapitalRecoveryFactorCurrent,
-            'RealCostOfMoney': RealCostOfMoney,
-            'WeightedCapitalRecoveryFactorConstant': WeightedCapitalRecoveryFactorConstant,
-            'Debt recovery': {
-                'TotalDebtPrincipal': TotalDebtPrincipal, 'CapitalRecoveryFactorDebt': CapitalRecoveryFactorDebt,
-                'AnnualDebtRepayment': AnnualDebtRepayment, 'TotalDebtRepayment': TotalDebtRepayment,
-                'DebtReserve': DebtReserve
-            },
-            'Equity recovery': {
-                'TotalEquityPrincipal': TotalEquityPrincipal,
-                'CapitalRecoveryFactorEquity': CapitalRecoveryFactorEquity,
-                'AnnualEquityRepayment': AnnualEquityRepayment, 'TotalEquityRepayment': TotalEquityRepayment,
-                'RealCostOfEquityConstant': RealCostOfEquityConstant,
-                'CapitalRecoveryFactorEquityConstant': CapitalRecoveryFactorEquityConstant
-            },
-            'Total Debt + Equity Recovery': {
-                'AnnualTotalCapitalRecovery': AnnualTotalCapitalRecovery, 'TotalCapitalRecovery': TotalCapitalRecovery
-            },
-            'Debt reserve': {
-                'AnnualDebtReserveInterest': AnnualDebtReserveInterest
-            },
-            'Annual Cash Flows': cashFlow,
-            'Total Cash Flow': Total,
-            'Current $ Level Annual Cost (LAC)':
-                {
-                    'TotalPresentWorth': TotalPresentWorth,
-                    'CurrentLevelAnnualRevenueRequirements': CurrentLevelAnnualRevenueRequirements,
-                    'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
-                    'CurrentLACofEnergy': CurrentLACofEnergy,
-                    'ConstantLACofEnergy': ConstantLACofEnergy
-                },
-        }
-    };
+            'AnnualCashFlows': cashFlow,
+            'TotalCashFlow': Total,
+            'TotalPresentWorth': TotalPresentWorth,
+            'CurrentLevelAnnualRevenueRequirements': CurrentLevelAnnualRevenueRequirements,
+            'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
+            'CurrentLACofEnergy': CurrentLACofEnergy,
+            'ConstantLACofEnergy': ConstantLACofEnergy
+        };
 }
 
 export { Hydrogen };
