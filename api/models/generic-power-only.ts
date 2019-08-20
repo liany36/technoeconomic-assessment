@@ -199,6 +199,7 @@ function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
         PresentWorth.push(newPW);
         TotalPresentWorth += newPW;
     }
+    const CostOfMoney2 = input.CostOfEquity / 100;
     const CapitalRecoveryFactorCurrent = CapitalRecoveryFactorEquity;
     const CurrentLevelAnnualRevenueRequirements = CapitalRecoveryFactorCurrent * TotalPresentWorth;
     const CurrentLACofEnergy = CurrentLevelAnnualRevenueRequirements / AnnualGeneration;
@@ -211,14 +212,65 @@ function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
     const ConstantLACofEnergy = ConstantLevelAnnualRevenueRequirements / AnnualGeneration;
 
     return {
-            'AnnualCashFlows': cashFlow,
-            'TotalCashFlow': Total,
+        'Sensitivity Analysis':
+        {
+            'LAC Current': CurrentLACofEnergy,
+            'LAC Constant': ConstantLACofEnergy
+        },
+        'Electrical and Fuel--base year':
+        {'AnnualHours': AnnualHours, 'FuelConsumptionRate': FuelConsumptionRate,
+         'AnnualGeneration': AnnualGeneration, 'CapitalCostNEC': CapitalCostNEC,
+         'AnnualFuelConsumption': AnnualFuelConsumption, 'AnnualAshDisposal': AnnualAshDisposal},
+        'Expenses--base year':
+        {'TotalNonFuelExpenses': TotalNonFuelExpenses, 'TotalExpensesIncludingFuel': TotalExpensesIncludingFuel,
+         'FuelCostKwh': FuelCostKwh, 'LaborCostKwh': LaborCostKwh, 'MaintenanceCostKwh': MaintenanceCostKwh,
+         'InsurancePropertyTaxKwh': InsurancePropertyTaxKwh, 'UtilitiesKwh': UtilitiesKwh,
+         'AshDisposalKwh': AshDisposalKwh, 'ManagementKwh': ManagementKwh,
+         'OtherOperatingExpensesKwh': OtherOperatingExpensesKwh,
+         'TotalNonFuelExpensesKwh': TotalNonFuelExpensesKwh,
+         'TotalExpensesIncludingFuelKwh': TotalExpensesIncludingFuelKwh},
+        'Taxes':
+         {
+            'CombinedTaxRate': CombinedTaxRate
+         },
+        'Income other than energy':
+        {
+            'AnnualCapacityPayment': AnnualCapacityPayment,
+            'AnnualDebtReserveInterest': AnnualDebtReserveInterest
+        },
+        'Financing':
+        {
+            'EquityRatio': EquityRatio,
+            'CostOfMoney': CostOfMoney,
+            'TotalCostOfPlant': TotalCostOfPlant,
+            'TotalEquityCost': TotalEquityCost,
+            'TotalDebtCost': TotalDebtCost,
+            'CapitalRecoveryFactorEquity': CapitalRecoveryFactorEquity,
+            'CapitalRecoveryFactorDebt': CapitalRecoveryFactorDebt,
+            'AnnualEquityRecovery': AnnualEquityRecovery,
+            'AnnualDebtPayment': AnnualDebtPayment,
+            'DebtReserve': DebtReserve
+        },
+
+        'AnnualCashFlows': cashFlow,
+        'TotalCashFlow': Total,
+        'Current $ Level Annual Cost (LAC)':
+        {
+            'CostOfMoney': CostOfMoney2,
+            'PresentWorth': PresentWorth,
             'TotalPresentWorth': TotalPresentWorth,
+            'CapitalRecoveryFactorCurrent': CapitalRecoveryFactorCurrent,
             'CurrentLevelAnnualRevenueRequirements': CurrentLevelAnnualRevenueRequirements,
-            'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
             'CurrentLACofEnergy': CurrentLACofEnergy,
+        },
+        'Constant $ Level Annual Cost (LAC)':
+        {
+            'RealCostOfMoney': RealCostOfMoney,
+            'CapitalRecoveryFactorConstant': CapitalRecoveryFactorConstant,
+            'ConstantLevelAnnualRevenueRequirements': ConstantLevelAnnualRevenueRequirements,
             'ConstantLACofEnergy': ConstantLACofEnergy
-            };
+        }
+    };
 }
 
 export { GenericPowerOnly };
