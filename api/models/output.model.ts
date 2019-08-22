@@ -223,3 +223,13 @@ export interface TotalCashFlowHydrogen { // hydrogen
     IncomeHeat: number;
     IncomeResidue: number;
 }
+
+export interface CapitalCostMod { // combined-heat-power
+    TotalFacilityCapitalCost: number;
+    GasifierSystemCapitalCostPerKwe: number;
+    GasCleaningSystemCapitalCostPerKwe: number;
+    PowerGenerationCapitalCostPerKwe: number;
+    EmissionControlSystemCapitalCostPerKwe: number;
+    HeatRecoverySystemCapitalCostPerKwe: number;
+    TotalFacilityCapitalCostPerKwe: number;
+}
