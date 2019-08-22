@@ -4,13 +4,11 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
 import { GasificationPower } from './models/gasification-power';
-import { GasificationPowerInputMod } from './models/gasification-power.model';
 import { GenericCombinedHeatPower } from './models/generic-combined-heat-power';
-import { GenericCombinedHeatPowerInputMod } from './models/generic-combined-heat-power.model';
 import { GenericPowerOnly } from './models/generic-power-only';
-import { GenericPowerOnlyInputMod } from './models/generic-power-only.model';
 import { Hydrogen } from './models/hydrogen';
-import { HydrogenInputMod } from './models/hydrogen.model';
+import { GasificationPowerInputMod, GenericCombinedHeatPowerInputMod,
+  GenericPowerOnlyInputMod, HydrogenInputMod } from './models/input.model';
 
 // tslint:disable-next-line: no-var-requires
 const swaggerDocument = require('../swagger.json');
