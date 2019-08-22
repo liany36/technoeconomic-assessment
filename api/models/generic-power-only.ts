@@ -161,7 +161,6 @@ function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
         PresentWorth.push(newPW);
         TotalPresentWorth += newPW;
     }
-    const CostOfMoney2 = input.CostOfEquity / 100;
     const CapitalRecoveryFactorCurrent = CapitalRecoveryFactorEquity;
     const CurrentLevelAnnualRevenueRequirements = CapitalRecoveryFactorCurrent * TotalPresentWorth;
     const CurrentLACofEnergy = CurrentLevelAnnualRevenueRequirements / AnnualGeneration;
@@ -221,7 +220,7 @@ function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
     const CurrentLevelAnnualCost: CurrentLevelAnnualCostMod
     = { 'CostOfMoney': 0, 'PresentWorth': [], 'TotalPresentWorth': 0, 'CapitalRecoveryFactorCurrent': 0,
         'CurrentLevelAnnualRevenueRequirements': 0, 'CurrentLACofEnergy': 0 };
-    CurrentLevelAnnualCost.CostOfMoney = CostOfMoney2;
+    CurrentLevelAnnualCost.CostOfMoney = input.CostOfEquity / 100;
     CurrentLevelAnnualCost.PresentWorth = PresentWorth;
     CurrentLevelAnnualCost.TotalPresentWorth = TotalPresentWorth;
     CurrentLevelAnnualCost.CapitalRecoveryFactorCurrent = CapitalRecoveryFactorCurrent;
