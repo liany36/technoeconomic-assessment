@@ -120,7 +120,7 @@ export interface ConstantLevelAnnualCostMod { // Shared // All
     ConstantLACofEnergy: number;
 }
 
-export interface SensitivityAnalysisMod { // Shared // All
+export interface SensyAnalysisMod { // Shared // All
     LACcurrent: number;
     LACconstant: number;
 }
@@ -169,6 +169,7 @@ export interface CashFlowGP { // gasification-power
 
 export interface CashFlowHydrogen { // hydrogen
     Shared: CashFlow;
+    FuelCost: number;
     Expenses: number;
     IncomeElectricalEnergy: number;
     IncomeIncentivePayments: number;
@@ -217,11 +218,17 @@ export interface TotalCashFlowGP { // gasification-power
 
 export interface TotalCashFlowHydrogen { // hydrogen
     Shared: TotalCashFlow;
+    FuelCost: number;
     Expenses: number;
     IncomeElectricalEnergy: number;
     IncomeIncentivePayments: number;
     IncomeHeat: number;
     IncomeResidue: number;
+}
+
+export interface SensitivityAnalysisMod {
+    LACcurrent: number;
+    LACconstant: number;
 }
 
 export interface CapitalCostMod { // combined-heat-power
@@ -232,4 +239,18 @@ export interface CapitalCostMod { // combined-heat-power
     EmissionControlSystemCapitalCostPerKwe: number;
     HeatRecoverySystemCapitalCostPerKwe: number;
     TotalFacilityCapitalCostPerKwe: number;
+}
+
+export interface HydrogenGenerationMod {
+    HydrogenEnergy: number;
+    DesignHydrogenProductionRateMW: number;
+    DesignHydrogenProductionRateMg: number;
+    FeedstockInput: number;
+    FeedstockSupply: number;
+    AnnualHours: number;
+    AnnualFeedstockSupply: number;
+    AnnualFeedstockEnergyInput: number;
+    AnnualHydrogenProductionMg: number;
+    AnnualHydrogenProductionKg: number;
+    AnnualHydrogenEnergy: number;
 }
