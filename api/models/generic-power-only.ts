@@ -1,4 +1,4 @@
-import { GenericPowerOnlyInputMod } from './generic-power-only.model';
+import { GenericPowerOnlyInputMod } from './input.model';
 import { CashFlowGPO, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod, ElectricalFuelBaseYearMod,
     ExpensesBaseYearModGPO, FinancingMod, IncomeOtherThanEnergyMod, SensitivityAnalysisMod,
     TotalCashFlowGPO } from './output.model';

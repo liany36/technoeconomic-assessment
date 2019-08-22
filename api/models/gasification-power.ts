@@ -1,4 +1,4 @@
-import { GasificationPowerInputMod } from './gasification-power.model';
+import { GasificationPowerInputMod } from './input.model';
 import { CapitalCostMod, CashFlowGP, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod,
     ElectricalFuelBaseYearModGP, ExpensesBaseYearModGP, FinancingMod, HeatBaseYearMod,
     IncomeOtherThanEnergyModGP, SensitivityAnalysisMod, TotalCashFlowGP } from './output.model';

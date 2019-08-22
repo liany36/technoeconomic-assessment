@@ -1,4 +1,4 @@
-import { HydrogenInputMod } from './hydrogen.model';
+import { HydrogenInputMod } from './input.model';
 import { CashFlowHydrogen, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod, ExpensesBaseYearModHydrogen,
     FinancingMod, HydrogenGenerationMod, SensitivityAnalysisMod, TotalCashFlowHydrogen } from './output.model';
 

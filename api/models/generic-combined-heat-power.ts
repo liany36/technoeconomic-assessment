@@ -1,4 +1,4 @@
-import { GenericCombinedHeatPowerInputMod } from './generic-combined-heat-power.model';
+import { GenericCombinedHeatPowerInputMod } from './input.model';
 import { CashFlowCHP, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod, ElectricalFuelBaseYearModCHP,
     ExpensesBaseYearModGPO, FinancingMod, HeatBaseYearMod, IncomeOtherThanEnergyMod, SensitivityAnalysisMod,
     TotalCashFlowCHP } from './output.model';
