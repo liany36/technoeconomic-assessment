@@ -1,5 +1,7 @@
-import { CashFlowGas, ConstantLAC, CurrentLAC, GasificationPowerInputMod,
-    TotalCashFlowGas, } from './gasification-power.model';
+import { GasificationPowerInputMod } from './input.model';
+import { CapitalCostMod, CashFlowGP, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod,
+    ElectricalFuelBaseYearModGP, ExpensesBaseYearModGP, FinancingMod, HeatBaseYearMod,
+    IncomeOtherThanEnergyModGP, SensitivityAnalysisMod, TotalCashFlowGP } from './output.model';
 function GasificationPower(input: GasificationPowerInputMod) {
      // Fuel Properties
     const CODensity = 101325 * 28 / 8314 / 298;
@@ -13,14 +15,19 @@ function GasificationPower(input: GasificationPowerInputMod) {
     const CH4HHeating = input.CH4HigherHeatingMjPerKg * CH4Density * 1000;
     const CH4LHeating = input.CH4LowerHeatingMjPerKg * CH4Density * 1000;
     // Capital Cost
-    const GasifierSystemCapitalCostPerKwe = input.GasifierSystemCapitalCost / input.NetElectricalCapacity;
-    const GasCleaningSystemCapitalCostPerKwe = input.GasCleaningSystemCapitalCost / input.NetElectricalCapacity;
-    const PowerGenerationCapitalCostPerKwe = input.PowerGenerationCapitalCost / input.NetElectricalCapacity;
-    const EmissionControlSystemCapitalCostPerKwe = input.EmissionControlSystemCapitalCost / input.NetElectricalCapacity;
-    const HeatRecoverySystemCapitalCostPerKwe = input.HeatRecoverySystemCapitalCost / input.NetElectricalCapacity;
-    const TotalFacilityCapitalCost = input.GasifierSystemCapitalCost + input.GasCleaningSystemCapitalCost +
+    const CapitalCost: CapitalCostMod
+    = { TotalFacilityCapitalCost: 0, GasifierSystemCapitalCostPerKwe: 0, GasCleaningSystemCapitalCostPerKwe: 0,
+        PowerGenerationCapitalCostPerKwe: 0, EmissionControlSystemCapitalCostPerKwe: 0,
+        HeatRecoverySystemCapitalCostPerKwe: 0, TotalFacilityCapitalCostPerKwe: 0 };
+    CapitalCost.GasifierSystemCapitalCostPerKwe = input.GasifierSystemCapitalCost / input.NetElectricalCapacity;
+    CapitalCost.GasCleaningSystemCapitalCostPerKwe = input.GasCleaningSystemCapitalCost / input.NetElectricalCapacity;
+    CapitalCost.PowerGenerationCapitalCostPerKwe = input.PowerGenerationCapitalCost / input.NetElectricalCapacity;
+    CapitalCost.EmissionControlSystemCapitalCostPerKwe
+    = input.EmissionControlSystemCapitalCost / input.NetElectricalCapacity;
+    CapitalCost.HeatRecoverySystemCapitalCostPerKwe = input.HeatRecoverySystemCapitalCost / input.NetElectricalCapacity;
+    CapitalCost.TotalFacilityCapitalCost = input.GasifierSystemCapitalCost + input.GasCleaningSystemCapitalCost +
         input.PowerGenerationCapitalCost + input.EmissionControlSystemCapitalCost + input.HeatRecoverySystemCapitalCost;
-    const TotalFacilityCapitalCostPerKwe = TotalFacilityCapitalCost / input.NetElectricalCapacity;
+    CapitalCost.TotalFacilityCapitalCostPerKwe = CapitalCost.TotalFacilityCapitalCost / input.NetElectricalCapacity;
     // Electrical and Fuel--base year
     const ParasiticLoad = input.GrossElectricalCapacity - input.NetElectricalCapacity;
     const AnnualHours = input.CapacityFactor / 100 * 8760;
@@ -46,39 +53,39 @@ function GasificationPower(input: GasificationPowerInputMod) {
     const CharProductionRate = input.AshContent / 100 * BiomassFeedRate / (1 - input.CarbonConcentration / 100);
     const AnnualCharProduction = CharProductionRate * AnnualHours / 1000;
     // Heat--base year
-    const TotalHearProductionRate = TotalFuelPowerInput - input.GrossElectricalCapacity;
-    const RecoveredHeat = TotalHearProductionRate * input.AggregateFractionOfHeatRecovered / 100;
+    const TotalHeatProductionRate = TotalFuelPowerInput - input.GrossElectricalCapacity;
+    const RecoveredHeat = TotalHeatProductionRate * input.AggregateFractionOfHeatRecovered / 100;
     const AnnualHeatSales = RecoveredHeat * AnnualHours;
     const TotalIncomeFromHeatSales = AnnualHeatSales * input.AggregateSalesPriceForHeat;
-    const IncomeHeatPerUnitElecEnergy = TotalIncomeFromHeatSales / AnnualNetElectricityGeneration;
-    const GrossCHPEfficiency = (input.GrossElectricalCapacity * AnnualHours + AnnualHeatSales)
+    const HeatIncomePerUnitNEE = TotalIncomeFromHeatSales / AnnualNetElectricityGeneration;
+    const OverallCHPefficiencyGross = (input.GrossElectricalCapacity * AnnualHours + AnnualHeatSales)
         / (TotalFuelPowerInput * AnnualHours) * 100;
-    const  NetCHPEfficiency = (AnnualNetElectricityGeneration + AnnualHeatSales)
+    const  OverallCHPefficiencyNet = (AnnualNetElectricityGeneration + AnnualHeatSales)
         / (TotalFuelPowerInput * AnnualHours) * 100;
     // Expenses--base year
     const BiomassFuelCostPerKwh = AnnualBiomassConsumptionDry * input.BiomassFuelCost
         / AnnualNetElectricityGeneration;
     const DualFuelPerKwh = input.DualFuelCost * AnnualDualFuelConsumption / AnnualNetElectricityGeneration;
-    const LaborCostPerKwh = input.LaborCost / AnnualNetElectricityGeneration;
-    const MaintenanceCostPerKwh = input.MaintenanceCost / AnnualNetElectricityGeneration;
-    const WasteTreatmentPerKwh = input.WasteTreatment / AnnualNetElectricityGeneration;
-    const InsurancePerKwh = input.Insurance / AnnualNetElectricityGeneration;
-    const UtilitiesPerKwh = input.Utilities / AnnualNetElectricityGeneration;
-    const ManagementPerKwh = input.Management / AnnualNetElectricityGeneration;
-    const OtherOperatingExpensesPerKwh = input.OtherOperatingExpenses / AnnualNetElectricityGeneration;
+    const LaborCostKwh = input.LaborCost / AnnualNetElectricityGeneration;
+    const MaintenanceCostKwh = input.MaintenanceCost / AnnualNetElectricityGeneration;
+    const WasteTreatmentKwh = input.WasteTreatment / AnnualNetElectricityGeneration;
+    const InsurancePropertyTaxKwh = input.Insurance / AnnualNetElectricityGeneration;
+    const UtilitiesKwh = input.Utilities / AnnualNetElectricityGeneration;
+    const ManagementKwh = input.Management / AnnualNetElectricityGeneration;
+    const OtherOperatingExpensesKwh = input.OtherOperatingExpenses / AnnualNetElectricityGeneration;
     const TotalNonFuelExpenses = input.LaborCost + input.MaintenanceCost + input.WasteTreatment + input.Insurance
         + input.Utilities + input.Management + input.OtherOperatingExpenses;
-    const TotalNonFuelExpensesPerKwh = LaborCostPerKwh + MaintenanceCostPerKwh + WasteTreatmentPerKwh + InsurancePerKwh
-        + UtilitiesPerKwh + ManagementPerKwh + OtherOperatingExpensesPerKwh;
+    const TotalNonFuelExpensesKwh = LaborCostKwh + MaintenanceCostKwh + WasteTreatmentKwh + InsurancePropertyTaxKwh
+        + UtilitiesKwh + ManagementKwh + OtherOperatingExpensesKwh;
     const TotalExpensesIncludingFuel = input.BiomassFuelCost * AnnualBiomassConsumptionDry + input.DualFuelCost
         * AnnualDualFuelConsumption + TotalNonFuelExpenses;
-    const TotalExpensesIncludingFuelPerKwh = BiomassFuelCostPerKwh + DualFuelPerKwh + TotalNonFuelExpensesPerKwh;
+    const TotalExpensesIncludingFuelKwh = BiomassFuelCostPerKwh + DualFuelPerKwh + TotalNonFuelExpensesKwh;
     // Taxes
     const CombinedTaxRate = input.StateTaxRate + input.FederalTaxRate * (1 - input.StateTaxRate / 100);
     // Financing
     const EquityRatio = 100 - input.DebtRatio;
     const CostOfMoney = input.DebtRatio / 100 * input.InterestRateOnDebt + EquityRatio / 100 * input.CostOfEquity;
-    const TotalCostOfPlant = TotalFacilityCapitalCost;
+    const TotalCostOfPlant = CapitalCost.TotalFacilityCapitalCost;
     const TotalEquityCost = TotalCostOfPlant * EquityRatio / 100;
     const TotalDebtCost = TotalCostOfPlant * input.DebtRatio / 100;
     const CapitalRecoveryFactorEquity = input.CostOfEquity / 100 * (1 + input.CostOfEquity / 100) ** input.EconomicLife
@@ -93,155 +100,197 @@ function GasificationPower(input: GasificationPowerInputMod) {
     const AnnualDebtReserveInterest = DebtReserve * input.InterestRateOnDebtReserve / 100;
     const AnnualIncomeFromChar = input.SalesPriceForChar * AnnualCharProduction;
     // Depreciation Schedule
-    const DepreciationRate = 1 / input.EconomicLife;
+    const DepreciationFraction = 1 / input.EconomicLife;
     // Annual Cash Flows
-    const CashFlow = [];
+    const cashFlow = [];
     for (let i = 0; i < input.EconomicLife; i++) {
-         const tGCF: CashFlowGas = {Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
-                                    EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
-                                    DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, BiomassFuelCost: 0,
-                                    DualFuelCost: 0, NonFuelExpenses: 0, DebtReserve: 0,
-                                    Depreciation: 0, IncomeCapacity: 0, IncomeHeat: 0, IncomeChar: 0,
-                                    InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
-                                    EnergyRevenueRequired: 0};
-         CashFlow.push(tGCF);
-        }
+        const newCF: CashFlowGP
+        = { Shared:
+            {Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0, EquityPrincipalRemaining: 0,
+             DebtRecovery: 0, DebtInterest: 0, DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, NonFuelExpenses: 0,
+             DebtReserve: 0, Depreciation: 0, IncomeCapacity: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0,
+             TaxCredit: 0, Taxes: 0, EnergyRevenueRequired: 0 },
+            BiomassFuelCost: 0, DualFuelCost: 0, IncomeHeat: 0, IncomeChar: 0 };
+        cashFlow.push(newCF);
+    }
     for (let i = 0; i < input.EconomicLife; i++) {
-            CashFlow[i] = CalcCashFlow(CashFlow[i - 1], i + 1);
+        cashFlow[i] = CalcCashFlow(cashFlow[i - 1], i + 1);
     }
-    function CalcCashFlow(GCF: CashFlowGas, Year: number) {
-    const NGCF: CashFlowGas = {Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
-                               EquityPrincipalRemaining: 0, DebtRecovery: 0, DebtInterest: 0,
-                               DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, BiomassFuelCost: 0,
-                               DualFuelCost: 0, NonFuelExpenses: 0, DebtReserve: 0,
-                               Depreciation: 0, IncomeCapacity: 0, IncomeHeat: 0, IncomeChar: 0,
-                               InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0,
-                               EnergyRevenueRequired: 0};
-    NGCF.Year = Year;
-    NGCF.EquityRecovery = AnnualEquityRecovery;
-    if (Year === 1) {
-        NGCF.EquityInterest = input.CostOfEquity / 100 * TotalEquityCost;
-    } else {
-            NGCF.EquityInterest = input.CostOfEquity / 100 * GCF.EquityPrincipalRemaining;
-        }
-    NGCF.EquityPrincipalPaid = NGCF.EquityRecovery - NGCF.EquityInterest;
-    if (Year === 1) {
-            NGCF.EquityPrincipalRemaining = TotalEquityCost - NGCF.EquityPrincipalPaid;
+    function CalcCashFlow(CF: CashFlowGP, Year: number) {
+        const newCF: CashFlowGP
+        = { Shared:
+            {Year: 0, EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0, EquityPrincipalRemaining: 0,
+             DebtRecovery: 0, DebtInterest: 0, DebtPrincipalPaid: 0, DebtPrincipalRemaining: 0, NonFuelExpenses: 0,
+             DebtReserve: 0, Depreciation: 0, IncomeCapacity: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0,
+             TaxCredit: 0, Taxes: 0, EnergyRevenueRequired: 0 },
+            BiomassFuelCost: 0, DualFuelCost: 0, IncomeHeat: 0, IncomeChar: 0 };
+        newCF.Shared.Year = Year;
+        newCF.Shared.EquityRecovery = AnnualEquityRecovery;
+        if (Year === 1) {
+            newCF.Shared.EquityInterest = input.CostOfEquity / 100 * TotalEquityCost;
         } else {
-            NGCF.EquityPrincipalRemaining = GCF.EquityPrincipalRemaining - NGCF.EquityPrincipalPaid;
-        }
-    NGCF.DebtRecovery = AnnualDebtPayment;
-    if (Year === 1) {
-            NGCF.DebtInterest = input.InterestRateOnDebt / 100 * TotalDebtCost;
+            newCF.Shared.EquityInterest = input.CostOfEquity / 100 * CF.Shared.EquityPrincipalRemaining; }
+        newCF.Shared.EquityPrincipalPaid = newCF.Shared.EquityRecovery - newCF.Shared.EquityInterest;
+        if (Year === 1) {
+            newCF.Shared.EquityPrincipalRemaining = TotalEquityCost - newCF.Shared.EquityPrincipalPaid;
         } else {
-            NGCF.DebtInterest = (input.InterestRateOnDebt / 100) * GCF.DebtPrincipalRemaining;
-        }
-    NGCF.DebtPrincipalPaid = NGCF.DebtRecovery - NGCF.DebtInterest;
-    if (Year === 1) {
-            NGCF.DebtPrincipalRemaining = TotalDebtCost - NGCF.DebtPrincipalPaid;
-            NGCF.BiomassFuelCost = AnnualBiomassConsumptionDry * input.BiomassFuelCost;
-            NGCF.DualFuelCost = AnnualDualFuelConsumption * input.DualFuelCost;
-            NGCF.NonFuelExpenses = TotalNonFuelExpenses;
-
+            newCF.Shared.EquityPrincipalRemaining
+            = CF.Shared.EquityPrincipalRemaining - newCF.Shared.EquityPrincipalPaid; }
+        newCF.Shared.DebtRecovery = AnnualDebtPayment;
+        if (Year === 1) {
+            newCF.Shared.DebtInterest = input.InterestRateOnDebt / 100 * TotalDebtCost;
         } else {
-            NGCF.DebtPrincipalRemaining = GCF.DebtPrincipalRemaining - NGCF.DebtPrincipalPaid;
-            NGCF.BiomassFuelCost = GCF.BiomassFuelCost * (1 + input.EscalationBiomassFuel / 100);
-            NGCF.DualFuelCost = GCF.DualFuelCost * (1 + input.EscalationDualFuel / 100);
-            NGCF.NonFuelExpenses = GCF.NonFuelExpenses * (1 + input.EscalationOther / 100);
-        }
-    if (Year === 1) {
-            NGCF.DebtReserve = DebtReserve;
-        } else if (Year === 20) {
-            NGCF.DebtReserve = -DebtReserve;
+            newCF.Shared.DebtInterest = input.InterestRateOnDebt / 100 * CF.Shared.DebtPrincipalRemaining; }
+        newCF.Shared.DebtPrincipalPaid = newCF.Shared.DebtRecovery - newCF.Shared.DebtInterest;
+        if (Year === 1) {
+            newCF.Shared.DebtPrincipalRemaining = TotalDebtCost - newCF.Shared.DebtPrincipalPaid;
+            newCF.BiomassFuelCost = AnnualBiomassConsumptionDry * input.BiomassFuelCost;
+            newCF.DualFuelCost = AnnualDualFuelConsumption * input.DualFuelCost;
         } else {
-            NGCF.DebtReserve = 0;
-        }
-    NGCF.Depreciation = TotalCostOfPlant * DepreciationRate;
-    NGCF.IncomeCapacity = AnnualCapacityPayment;
-    if (Year === 1) {
-        NGCF.IncomeHeat = TotalIncomeFromHeatSales;
-        NGCF.IncomeChar = AnnualIncomeFromChar;
-
+            newCF.Shared.DebtPrincipalRemaining = CF.Shared.DebtPrincipalRemaining - newCF.Shared.DebtPrincipalPaid;
+            newCF.BiomassFuelCost = CF.BiomassFuelCost * (1 + input.EscalationBiomassFuel / 100);
+            newCF.DualFuelCost = CF.DualFuelCost * (1 + input.EscalationDualFuel / 100); }
+        newCF.Shared.NonFuelExpenses = TotalNonFuelExpenses * Math.pow((1 + input.EscalationOther / 100), (Year - 1));
+        if (Year === 1) {
+            newCF.Shared.DebtReserve = DebtReserve;
+        } else if (Year < input.EconomicLife) {
+            newCF.Shared.DebtReserve = 0;
         } else {
-            NGCF.IncomeHeat = GCF.IncomeHeat * (1 + input.EscalationHeatSales / 100);
-            NGCF.IncomeChar = GCF.IncomeChar * (1 + input.EscalationCharSales / 100);
-        }
-    NGCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
-    NGCF.TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100)) * (NGCF.EquityPrincipalPaid
-                + NGCF.DebtPrincipalPaid + NGCF.EquityInterest - NGCF.Depreciation + NGCF.DebtReserve);
-    if (Year === 1) {
-        NGCF.TaxCredit = AnnualNetElectricityGeneration * input.ProductionTaxCredit * input.TaxCreditFrac[Year - 1];
+            newCF.Shared.DebtReserve = -DebtReserve; }
+        newCF.Shared.Depreciation = TotalCostOfPlant * DepreciationFraction;
+        newCF.Shared.IncomeCapacity = AnnualCapacityPayment;
+        if (Year === 1) {
+            newCF.IncomeHeat = TotalIncomeFromHeatSales;
+            newCF.IncomeChar = AnnualIncomeFromChar;
         } else {
-        NGCF.TaxCredit = AnnualNetElectricityGeneration * input.ProductionTaxCredit
-                * (1 + input.EscalationProductionTaxCredit / 100) ** (NGCF.Year - 1) * input.TaxCreditFrac[Year - 1];
-        }
-    NGCF.Taxes = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100)) * (NGCF.EquityPrincipalPaid +
-            NGCF.DebtPrincipalPaid + NGCF.EquityInterest - NGCF.Depreciation + NGCF.DebtReserve - NGCF.TaxCredit);
-    NGCF.EnergyRevenueRequired = NGCF.EquityRecovery + NGCF.DebtRecovery + NGCF.BiomassFuelCost +
-            NGCF.DualFuelCost + NGCF.NonFuelExpenses + NGCF.Taxes + NGCF.DebtReserve - NGCF.IncomeCapacity -
-            NGCF.InterestOnDebtReserve - NGCF.IncomeHeat - NGCF.IncomeChar;
-    return NGCF;
+            newCF.IncomeHeat = TotalIncomeFromHeatSales * Math.pow((1 + input.EscalationHeatSales / 100), (Year - 1));
+            newCF.IncomeChar = CF.IncomeChar * (1 + input.EscalationCharSales / 100); }
+        newCF.Shared.InterestOnDebtReserve = AnnualDebtReserveInterest;
+        newCF.Shared.TaxesWoCredit = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+            * (newCF.Shared.EquityPrincipalPaid + newCF.Shared.DebtPrincipalPaid + newCF.Shared.EquityInterest
+                - newCF.Shared.Depreciation + newCF.Shared.DebtReserve);
+        newCF.Shared.TaxCredit = AnnualNetElectricityGeneration * input.ProductionTaxCredit
+            * Math.pow((1 + input.EscalationProductionTaxCredit / 100), (Year - 1)) * input.TaxCreditFrac[Year - 1];
+        newCF.Shared.Taxes = ((CombinedTaxRate / 100) / (1 - CombinedTaxRate / 100))
+            * (newCF.Shared.EquityPrincipalPaid + newCF.Shared.DebtPrincipalPaid + newCF.Shared.EquityInterest
+                - newCF.Shared.Depreciation + newCF.Shared.DebtReserve - newCF.Shared.TaxCredit);
+        newCF.Shared.EnergyRevenueRequired = newCF.Shared.EquityRecovery + newCF.Shared.DebtRecovery
+        + newCF.BiomassFuelCost + newCF.DualFuelCost + newCF.Shared.NonFuelExpenses + newCF.Shared.Taxes
+        + newCF.Shared.DebtReserve - newCF.Shared.IncomeCapacity - newCF.Shared.InterestOnDebtReserve
+        - newCF.IncomeHeat - newCF.IncomeChar;
+        return newCF;
     }
-    // Total Cash Flow
-    const TotalCashFlow: TotalCashFlowGas = {EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0,
-                                             DebtRecovery: 0, DebtInterest: 0, DebtPrincipalPaid: 0,
-                                             BiomassFuelCost: 0, DualFuelCost: 0, NonFuelExpenses: 0,
-                                             DebtReserve: 0, Depreciation: 0, IncomeCapacity: 0, IncomeHeat: 0,
-                                             IncomeChar: 0, InterestOnDebtReserve: 0, TaxesWoCredit: 0,
-                                             TaxCredit: 0, Taxes: 0, EnergyRevenueRequired: 0};
-    for (let i = 0; i < input.EconomicLife; i++) {
-        TotalCashFlow.EquityRecovery += CashFlow[i].EquityRecovery;
-        TotalCashFlow.EquityInterest += CashFlow[i].EquityInterest;
-        TotalCashFlow.EquityPrincipalPaid += CashFlow[i].EquityPrincipalPaid;
-        TotalCashFlow.DebtRecovery += CashFlow[i].DebtRecovery;
-        TotalCashFlow.DebtInterest += CashFlow[i].DebtInterest;
-        TotalCashFlow.DebtPrincipalPaid += CashFlow[i].DebtPrincipalPaid;
-        TotalCashFlow.BiomassFuelCost += CashFlow[i].BiomassFuelCost;
-        TotalCashFlow.DualFuelCost += CashFlow[i].DualFuelCost;
-        TotalCashFlow.NonFuelExpenses += CashFlow[i].NonFuelExpenses;
-        TotalCashFlow.DebtReserve += CashFlow[i].DebtReserve;
-        TotalCashFlow.Depreciation += CashFlow[i].Depreciation;
-        TotalCashFlow.IncomeCapacity += CashFlow[i].IncomeCapacity;
-        TotalCashFlow.IncomeHeat += CashFlow[i].IncomeHeat;
-        TotalCashFlow.IncomeChar += CashFlow[i].IncomeChar;
-        TotalCashFlow.InterestOnDebtReserve += CashFlow[i].InterestOnDebtReserve;
-        TotalCashFlow.TaxesWoCredit += CashFlow[i].TaxesWoCredit;
-        TotalCashFlow.TaxCredit += CashFlow[i].TaxCredit;
-        TotalCashFlow.Taxes += CashFlow[i].Taxes;
-        TotalCashFlow.EnergyRevenueRequired += CashFlow[i].EnergyRevenueRequired;
-    }
+    const Total: TotalCashFlowGP
+    = { Shared:
+        { EquityRecovery: 0, EquityInterest: 0, EquityPrincipalPaid: 0, DebtRecovery: 0, DebtInterest: 0,
+          DebtPrincipalPaid: 0, NonFuelExpenses: 0, DebtReserve: 0, Depreciation: 0, IncomeCapacity: 0,
+          InterestOnDebtReserve: 0, TaxesWoCredit: 0, TaxCredit: 0, Taxes: 0, EnergyRevenueRequired: 0 },
+        BiomassFuelCost: 0, DualFuelCost: 0, IncomeHeat: 0, IncomeChar: 0 };
+    for (let i = 0; i < cashFlow.length; i++) {
+        Total.Shared.EquityRecovery += cashFlow[i].Shared.EquityRecovery;
+        Total.Shared.EquityInterest += cashFlow[i].Shared.EquityInterest;
+        Total.Shared.EquityPrincipalPaid += cashFlow[i].Shared.EquityPrincipalPaid;
+        Total.Shared.DebtRecovery += cashFlow[i].Shared.DebtRecovery;
+        Total.Shared.DebtInterest += cashFlow[i].Shared.DebtInterest;
+        Total.Shared.DebtPrincipalPaid += cashFlow[i].Shared.DebtPrincipalPaid;
+        Total.BiomassFuelCost += cashFlow[i].BiomassFuelCost;
+        Total.DualFuelCost += cashFlow[i].DualFuelCost;
+        Total.Shared.NonFuelExpenses += cashFlow[i].Shared.NonFuelExpenses;
+        Total.Shared.DebtReserve += cashFlow[i].Shared.DebtReserve;
+        Total.Shared.Depreciation += cashFlow[i].Shared.Depreciation;
+        Total.Shared.IncomeCapacity += cashFlow[i].Shared.IncomeCapacity;
+        Total.IncomeHeat += cashFlow[i].IncomeHeat;
+        Total.IncomeChar += cashFlow[i].IncomeChar;
+        Total.Shared.InterestOnDebtReserve += cashFlow[i].Shared.InterestOnDebtReserve;
+        Total.Shared.TaxesWoCredit += cashFlow[i].Shared.TaxesWoCredit;
+        Total.Shared.TaxCredit += cashFlow[i].Shared.TaxCredit;
+        Total.Shared.Taxes += cashFlow[i].Shared.Taxes;
+        Total.Shared.EnergyRevenueRequired += cashFlow[i].Shared.EnergyRevenueRequired; }
     // Current $ Level Annual Cost (LAC)
-    const NewCurrentLAC: CurrentLAC = {CostOfMoney: 0, PresentWorth: [], TotalPresentWorth: 0,
-                                       CurrentCapitalRecoveryFactor: 0, CurrentAnnualRevenueRequirements: 0,
-                                       CurrentLACPerKwh: 0};
-    NewCurrentLAC.CostOfMoney = input.CostOfEquity / 100;
+    const CurrentLevelAnnualCost: CurrentLevelAnnualCostMod
+    = { CostOfMoney: 0, PresentWorth: [], TotalPresentWorth: 0, CapitalRecoveryFactorCurrent: 0,
+        CurrentLevelAnnualRevenueRequirements: 0, CurrentLACofEnergy: 0 };
+    CurrentLevelAnnualCost.CostOfMoney = input.CostOfEquity / 100;
     let TempPresentWorth: number;
     for (let i = 0; i < input.EconomicLife; i++) {
-        TempPresentWorth = CashFlow[i].EnergyRevenueRequired * (1 + NewCurrentLAC.CostOfMoney) ** (- CashFlow[i].Year);
-        NewCurrentLAC.TotalPresentWorth += TempPresentWorth;
-        NewCurrentLAC.PresentWorth.push(TempPresentWorth);
-    }
-    NewCurrentLAC.CurrentCapitalRecoveryFactor = NewCurrentLAC.CostOfMoney * (1 + NewCurrentLAC.CostOfMoney)
-        ** input.EconomicLife / ((1 + NewCurrentLAC.CostOfMoney) ** input.EconomicLife - 1);
-    NewCurrentLAC.CurrentAnnualRevenueRequirements = NewCurrentLAC.TotalPresentWorth
-        * NewCurrentLAC.CurrentCapitalRecoveryFactor;
-    NewCurrentLAC.CurrentLACPerKwh = NewCurrentLAC.CurrentAnnualRevenueRequirements / AnnualNetElectricityGeneration;
+        TempPresentWorth
+        = cashFlow[i].Shared.EnergyRevenueRequired * (1 + CurrentLevelAnnualCost.CostOfMoney)
+        ** (- cashFlow[i].Shared.Year);
+        CurrentLevelAnnualCost.TotalPresentWorth += TempPresentWorth;
+        CurrentLevelAnnualCost.PresentWorth.push(TempPresentWorth); }
+    CurrentLevelAnnualCost.CapitalRecoveryFactorCurrent
+    = CurrentLevelAnnualCost.CostOfMoney * (1 + CurrentLevelAnnualCost.CostOfMoney)
+        ** input.EconomicLife / ((1 + CurrentLevelAnnualCost.CostOfMoney) ** input.EconomicLife - 1);
+    CurrentLevelAnnualCost.CurrentLevelAnnualRevenueRequirements = CurrentLevelAnnualCost.TotalPresentWorth
+        * CurrentLevelAnnualCost.CapitalRecoveryFactorCurrent;
+    CurrentLevelAnnualCost.CurrentLACofEnergy
+    = CurrentLevelAnnualCost.CurrentLevelAnnualRevenueRequirements / AnnualNetElectricityGeneration;
     // Constant & Level Annual Cost (LAC)
-    const NewConstantLAC: ConstantLAC = {RealCostOfMoney: 0, ConstantCapitalRecoveryFactor: 0,
-                                         ConstantLevelAnnualRevenue: 0, ConstantLACPerKwh: 0};
-    NewConstantLAC.RealCostOfMoney = (1 + NewCurrentLAC.CostOfMoney) / (1 + input.GeneralInflation / 100) - 1;
-    NewConstantLAC.ConstantCapitalRecoveryFactor = NewConstantLAC.RealCostOfMoney * (1 + NewConstantLAC.RealCostOfMoney)
-        ** input.EconomicLife / ((1 + NewConstantLAC.RealCostOfMoney) ** input.EconomicLife - 1);
-    NewConstantLAC.ConstantLevelAnnualRevenue = NewCurrentLAC.TotalPresentWorth
-        * NewConstantLAC.ConstantCapitalRecoveryFactor;
-    NewConstantLAC.ConstantLACPerKwh = NewConstantLAC.ConstantLevelAnnualRevenue / AnnualNetElectricityGeneration;
-    return {
-        'AnnualCashFlow': CashFlow,
-        'TotalCashFlow': TotalCashFlow,
-        'CurrentLevelAnnualRevenueRequirements': NewCurrentLAC.CurrentAnnualRevenueRequirements,
-        'ConstantLevelAnnualRevenueRequirements': NewConstantLAC.ConstantLevelAnnualRevenue,
-        'CurrentLACofEnergy': NewCurrentLAC.CurrentLACPerKwh,
-        'ConstantLACofEnergy': NewConstantLAC.ConstantLACPerKwh
+    const ConstantLevelAnnualCost: ConstantLevelAnnualCostMod
+    = { RealCostOfMoney: 0, CapitalRecoveryFactorConstant: 0, ConstantLevelAnnualRevenueRequirements: 0,
+        ConstantLACofEnergy: 0 };
+    ConstantLevelAnnualCost.RealCostOfMoney
+    = (1 + CurrentLevelAnnualCost.CostOfMoney) / (1 + input.GeneralInflation / 100) - 1;
+    ConstantLevelAnnualCost.CapitalRecoveryFactorConstant
+    = ConstantLevelAnnualCost.RealCostOfMoney * (1 + ConstantLevelAnnualCost.RealCostOfMoney)
+        ** input.EconomicLife / ((1 + ConstantLevelAnnualCost.RealCostOfMoney) ** input.EconomicLife - 1);
+    ConstantLevelAnnualCost.ConstantLevelAnnualRevenueRequirements = CurrentLevelAnnualCost.TotalPresentWorth
+        * ConstantLevelAnnualCost.CapitalRecoveryFactorConstant;
+    ConstantLevelAnnualCost.ConstantLACofEnergy
+    = ConstantLevelAnnualCost.ConstantLevelAnnualRevenueRequirements / AnnualNetElectricityGeneration;
+    const ElectricalFuelBaseYear: ElectricalFuelBaseYearModGP
+    = { ParasiticLoad: ParasiticLoad, AnnualHours: AnnualHours,
+        AnnualNetElectricityGeneration: AnnualNetElectricityGeneration,
+        OverallNetSystemEfficiency: OverallNetSystemEfficiency, NitrogenGas: N2,
+        CleanGasMolecularMass: CleanGasMolecularMass, CleanGasDensity: CleanGasDensity,
+        CleanGasHigherHeatingValue: CleanGasHHeating, CleanGasLowerHeatingValue: CleanGasLHeating,
+        TotalFuelPowerInput: TotalFuelPowerInput, CleanGasPowerInput: CleanGasPowerInput,
+        DualFuelPowerInput: DualFuelPowerInput, CleanGasFlowRateVolume: CleanGasFlowRateVolume,
+        CleanGasFlowRateMass: CleanGasFlowRateMass, AnnualCleanGasConsumption: AnnualCleanGasConsumption,
+        DualFuelFlowRate: DualFuelFlowRate, AnnualDualFuelConsumption: AnnualDualFuelConsumption,
+        BiomassFeedRate: BiomassFeedRate, AnnualBiomassConsumptionDryMass: AnnualBiomassConsumptionDry,
+        AnnualBiomassConsumptionWetMass: AnnualBiomassConsumptionWet, CharProductionRate: CharProductionRate,
+        AnnualCharProduction: AnnualCharProduction };
+    const HeatBaseYear: HeatBaseYearMod
+    = { TotalHeatProductionRate: TotalHeatProductionRate, RecoveredHeat: RecoveredHeat,
+        AnnualHeatSales: AnnualHeatSales, TotalIncomeFromHeatSales: TotalIncomeFromHeatSales,
+        HeatIncomePerUnitNEE: HeatIncomePerUnitNEE, OverallCHPefficiencyGross: OverallCHPefficiencyGross,
+        OverallCHPefficiencyNet: OverallCHPefficiencyNet };
+    const ExpensesBaseYear: ExpensesBaseYearModGP
+    = { Shared: {
+        TotalNonFuelExpenses: TotalNonFuelExpenses, TotalExpensesIncludingFuel: TotalExpensesIncludingFuel,
+        LaborCostKwh: LaborCostKwh, MaintenanceCostKwh: MaintenanceCostKwh,
+        InsurancePropertyTaxKwh: InsurancePropertyTaxKwh, UtilitiesKwh: UtilitiesKwh, ManagementKwh: ManagementKwh,
+        OtherOperatingExpensesKwh: OtherOperatingExpensesKwh, TotalNonFuelExpensesKwh: TotalNonFuelExpensesKwh,
+        TotalExpensesIncludingFuelKwh: TotalExpensesIncludingFuelKwh},
+        BiomassFuelCostKwh: BiomassFuelCostPerKwh, DualFuelCostKwh: DualFuelPerKwh,
+        WasteTreatmentKwh: WasteTreatmentKwh
     };
+    const IncomeOtherThanEnergy: IncomeOtherThanEnergyModGP
+    = { Shared: { AnnualCapacityPayment: 0, AnnualDebtReserveInterest: 0 }, AnnualIncomeFromChar: 0 };
+    IncomeOtherThanEnergy.Shared.AnnualCapacityPayment = AnnualCapacityPayment;
+    IncomeOtherThanEnergy.Shared.AnnualDebtReserveInterest = AnnualDebtReserveInterest;
+    IncomeOtherThanEnergy.AnnualIncomeFromChar = AnnualIncomeFromChar;
+    const Financing: FinancingMod
+    = { EquityRatio: EquityRatio, CostOfMoney: CostOfMoney, TotalCostOfPlant: TotalCostOfPlant,
+        TotalEquityCost: TotalEquityCost, TotalDebtCost: TotalDebtCost,
+        CapitalRecoveryFactorEquity: CapitalRecoveryFactorEquity, CapitalRecoveryFactorDebt: CapitalRecoveryFactorDebt,
+        AnnualEquityRecovery: AnnualEquityRecovery, AnnualDebtPayment: AnnualDebtPayment, DebtReserve: DebtReserve
+    };
+    const SensitivityAnalysis: SensitivityAnalysisMod
+    = { LACcurrent: CurrentLevelAnnualCost.CurrentLACofEnergy,
+        LACconstant: ConstantLevelAnnualCost.ConstantLACofEnergy };
+    return {
+        'Sensitivity Analysis': SensitivityAnalysis,
+        'Capital Cost': CapitalCost,
+        'Electrical and Fuel--base year': ElectricalFuelBaseYear,
+        'Heat--base year': HeatBaseYear,
+        'Expenses--base year': ExpensesBaseYear,
+        'Combined Tax Rate (%)': CombinedTaxRate,
+        'Financing': Financing,
+        'AnnualCashFlow': cashFlow,
+        'TotalCashFlow': Total,
+        'Current $ Level Annual Cost (LAC)': CurrentLevelAnnualCost,
+        'Constant $ Level Annual Cost (LAC)': ConstantLevelAnnualCost };
 }
 export { GasificationPower };
