@@ -1,9 +1,9 @@
 input params
 
-GenericPowerOnly
+http://localhost:3000/genericPowerOnly
 {
 	"CapitalCost": 70000000,
-	"NetPlantCapacity": 25000,
+	"NetElectricalCapacity": 25000,
 	"CapacityFactor": 85,
 	"NetStationEfficiency": 20,
 	"FuelHeatingValue": 18608,
@@ -32,13 +32,13 @@ GenericPowerOnly
 
     "GeneralInflation": 2.1,
     "EscalationFuel": 2.1,
-    "EscalationForProductionTaxCredit": 2.1,
+    "EscalationProductionTaxCredit": 2.1,
     "EscalationOther": 2.1,
     
     "TaxCreditFrac": [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 }
 
-GenericCombinedHeatPower
+http://localhost:3000/genericCombinedHeatPower
 {
 	"CapitalCost": 70000000,
 	"GrossElectricalCapacity": 28000,
@@ -73,14 +73,14 @@ GenericCombinedHeatPower
 
     "GeneralInflation": 2.1,
     "EscalationFuel": 2.1,
-    "EscalationForProductionTaxCredit": 2.1,
+    "EscalationProductionTaxCredit": 2.1,
     "EscalationHeatSales": 2.1,
     "EscalationOther": 2.1,
     
     "TaxCreditFrac": [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 }
 
-GasificationPower
+http://localhost:3000/gasificationPower
 {
     "GasolineDensity": 750,
     "GasolineHigherHeatingMjPerKg": 47.3,
@@ -160,7 +160,7 @@ GasificationPower
     "TaxCreditFrac": [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 }
 
-Hydrogen
+http://localhost:3000/hydrogen
 {
 	"GrossDesignHydrogenCapacity": 158366.518706405,
 	"HydrogenHHV": 141.93,
