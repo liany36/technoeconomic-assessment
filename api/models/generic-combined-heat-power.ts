@@ -1,7 +1,7 @@
 import { GenericCombinedHeatPowerInputMod } from './input.model';
 import { CashFlowCHP, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod, ElectricalFuelBaseYearModCHP,
-    ExpensesBaseYearModGPO, FinancingMod, HeatBaseYearMod, IncomeOtherThanEnergyMod, SensitivityAnalysisMod,
-    TotalCashFlowCHP } from './output.model';
+    ExpensesBaseYearModGPO, FinancingMod, HeatBaseYearMod, IncomeOtherThanEnergyMod, OutputModCHP,
+    SensitivityAnalysisMod, TotalCashFlowCHP } from './output.model';
 
 function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
     // Electrical and Fuel--base year
@@ -268,19 +268,17 @@ function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
     ConstantLevelAnnualCost.ConstantLACofEnergy = ConstantLACofEnergy;
     const SensitivityAnalysis: SensitivityAnalysisMod
     = { LACcurrent: CurrentLACofEnergy, LACconstant: ConstantLACofEnergy };
-    return {
-        'Sensitivity Analysis': SensitivityAnalysis,
-        'Electrical and Fuel--base year': ElectricalFuelBaseYear,
-        'Heat--base year': HeatBaseYear,
-        'Expenses--base year': ExpensesBaseYear,
-        'Combined Tax Rate (%)': CombinedTaxRate,
-        'Income other than energy': IncomeOtherThanEnergy,
-        'Financing': Financing,
-        'AnnualCashFlows': cashFlow,
-        'TotalCashFlow': Total,
-        'Current $ Level Annual Cost (LAC)': CurrentLevelAnnualCost,
-        'Constant $ Level Annual Cost (LAC)': ConstantLevelAnnualCost
+
+    const Output: OutputModCHP
+    = { Shared:
+        { SensitivityAnalysis: SensitivityAnalysis, CombinedTaxRate: CombinedTaxRate,
+          Financing: Financing, CurrentLAC: CurrentLevelAnnualCost, ConstantLAC: ConstantLevelAnnualCost },
+        ElectricalAndFuelBaseYear: ElectricalFuelBaseYear, HeatBaseYear: HeatBaseYear,
+        ExpensesBaseYear: ExpensesBaseYear, IncomeOtherThanEnergy: IncomeOtherThanEnergy,
+        AnnualCashFlows: cashFlow, TotalCashFlow: Total
     };
+
+    return Output;
 }
 
 export { GenericCombinedHeatPower };

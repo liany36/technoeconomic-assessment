@@ -1,7 +1,7 @@
 import { GenericPowerOnlyInputMod } from './input.model';
 import { CashFlowGPO, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod, ElectricalFuelBaseYearMod,
-    ExpensesBaseYearModGPO, FinancingMod, IncomeOtherThanEnergyMod, SensitivityAnalysisMod,
-    TotalCashFlowGPO } from './output.model';
+    ExpensesBaseYearModGPO, FinancingMod, IncomeOtherThanEnergyMod, OutputModGPO,
+    SensitivityAnalysisMod, TotalCashFlowGPO } from './output.model';
 
 function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
     // Electrical and Fuel--base year
@@ -236,18 +236,15 @@ function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
     const SensitivityAnalysis: SensitivityAnalysisMod
     = { LACcurrent: CurrentLACofEnergy, LACconstant: ConstantLACofEnergy };
 
-    return {
-        'Sensitivity Analysis': SensitivityAnalysis,
-        'Electrical and Fuel--base year': ElectricalFuelBaseYear,
-        'Expenses--base year': ExpensesBaseYear,
-        'Combined Tax Rate (%)': CombinedTaxRate,
-        'Income other than energy': IncomeOtherThanEnergy,
-        'Financing': Financing,
-        'AnnualCashFlows': cashFlow,
-        'TotalCashFlow': Total,
-        'Current $ Level Annual Cost (LAC)': CurrentLevelAnnualCost,
-        'Constant $ Level Annual Cost (LAC)': ConstantLevelAnnualCost
+    const Output: OutputModGPO
+    = { Shared:
+        { SensitivityAnalysis: SensitivityAnalysis, CombinedTaxRate: CombinedTaxRate,
+          Financing: Financing, CurrentLAC: CurrentLevelAnnualCost, ConstantLAC: ConstantLevelAnnualCost },
+        ElectricalAndFuelBaseYear: ElectricalFuelBaseYear, ExpensesBaseYear: ExpensesBaseYear,
+        IncomeOtherThanEnergy: IncomeOtherThanEnergy, AnnualCashFlows: cashFlow, TotalCashFlow: Total
     };
+
+    return Output;
 }
 
 export { GenericPowerOnly };
