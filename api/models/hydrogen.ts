@@ -1,6 +1,7 @@
 import { HydrogenInputMod } from './input.model';
 import { CashFlowHydrogen, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod, ExpensesBaseYearModHydrogen,
-    FinancingMod, HydrogenGenerationMod, SensitivityAnalysisMod, TotalCashFlowHydrogen } from './output.model';
+    FinancingMod, HydrogenGenerationMod, OutputModHydrogen, SensitivityAnalysisMod,
+    TotalCashFlowHydrogen } from './output.model';
 
 function Hydrogen(input: HydrogenInputMod) {
     // Hydrogen Generation
@@ -250,17 +251,16 @@ function Hydrogen(input: HydrogenInputMod) {
     ConstantLevelAnnualCost.ConstantLACofEnergy = ConstantLACofEnergy;
     const SensitivityAnalysis: SensitivityAnalysisMod
     = { LACcurrent: CurrentLACofEnergy, LACconstant: ConstantLACofEnergy };
-    return {
-        'Sensitivity Analysis': SensitivityAnalysis,
-        'Hydrogen Generation': HydrogenGeneration,
-        'Expenses--base year': ExpensesBaseYear,
-        'Combined Tax Rate (%)': CombinedTaxRate,
-        'Financing': Financing,
-        'AnnualCashFlows': cashFlow,
-        'TotalCashFlow': Total,
-        'Current $ Level Annual Cost (LAC)': CurrentLevelAnnualCost,
-        'Constant $ Level Annual Cost (LAC)': ConstantLevelAnnualCost
+
+    const Output: OutputModHydrogen
+    = { Shared:
+        { SensitivityAnalysis: SensitivityAnalysis, CombinedTaxRate: CombinedTaxRate,
+          Financing: Financing, CurrentLAC: CurrentLevelAnnualCost, ConstantLAC: ConstantLevelAnnualCost },
+        HydrogenGeneration: HydrogenGeneration, ExpensesBaseYear: ExpensesBaseYear,
+        AnnualCashFlows: cashFlow, TotalCashFlow: Total
     };
+
+    return Output;
 }
 
 export { Hydrogen };

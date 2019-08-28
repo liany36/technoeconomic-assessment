@@ -1,7 +1,7 @@
 import { GasificationPowerInputMod } from './input.model';
 import { CapitalCostMod, CashFlowGP, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod,
     ElectricalFuelBaseYearModGP, ExpensesBaseYearModGP, FinancingMod, HeatBaseYearMod,
-    IncomeOtherThanEnergyModGP, SensitivityAnalysisMod, TotalCashFlowGP } from './output.model';
+    IncomeOtherThanEnergyModGP, OutputModGP, SensitivityAnalysisMod, TotalCashFlowGP } from './output.model';
 function GasificationPower(input: GasificationPowerInputMod) {
      // Fuel Properties
     const CODensity = 101325 * 28 / 8314 / 298;
@@ -280,17 +280,16 @@ function GasificationPower(input: GasificationPowerInputMod) {
     const SensitivityAnalysis: SensitivityAnalysisMod
     = { LACcurrent: CurrentLevelAnnualCost.CurrentLACofEnergy,
         LACconstant: ConstantLevelAnnualCost.ConstantLACofEnergy };
-    return {
-        'Sensitivity Analysis': SensitivityAnalysis,
-        'Capital Cost': CapitalCost,
-        'Electrical and Fuel--base year': ElectricalFuelBaseYear,
-        'Heat--base year': HeatBaseYear,
-        'Expenses--base year': ExpensesBaseYear,
-        'Combined Tax Rate (%)': CombinedTaxRate,
-        'Financing': Financing,
-        'AnnualCashFlow': cashFlow,
-        'TotalCashFlow': Total,
-        'Current $ Level Annual Cost (LAC)': CurrentLevelAnnualCost,
-        'Constant $ Level Annual Cost (LAC)': ConstantLevelAnnualCost };
+
+    const Output: OutputModGP
+    = { Shared:
+        { SensitivityAnalysis: SensitivityAnalysis, CombinedTaxRate: CombinedTaxRate,
+          Financing: Financing, CurrentLAC: CurrentLevelAnnualCost, ConstantLAC: ConstantLevelAnnualCost },
+        CapitalCost: CapitalCost, ElectricalAndFuelBaseYear: ElectricalFuelBaseYear, HeatBaseYear: HeatBaseYear,
+        ExpensesBaseYear: ExpensesBaseYear, IncomeOtherThanEnergy: IncomeOtherThanEnergy,
+        AnnualCashFlows: cashFlow, TotalCashFlow: Total
+    };
+
+    return Output;
 }
 export { GasificationPower };

@@ -254,3 +254,45 @@ export interface HydrogenGenerationMod {
     AnnualHydrogenProductionKg: number;
     AnnualHydrogenEnergy: number;
 }
+
+export interface OutputMod {
+    SensitivityAnalysis: SensitivityAnalysisMod;
+    CombinedTaxRate: number;
+    Financing: FinancingMod;
+    CurrentLAC: CurrentLevelAnnualCostMod;
+    ConstantLAC: ConstantLevelAnnualCostMod;
+}
+export interface OutputModGPO {
+    Shared: OutputMod;
+    ElectricalAndFuelBaseYear: ElectricalFuelBaseYearMod;
+    ExpensesBaseYear: ExpensesBaseYearModGPO;
+    IncomeOtherThanEnergy: IncomeOtherThanEnergyMod;
+    AnnualCashFlows: CashFlowGPO[];
+    TotalCashFlow: TotalCashFlowGPO;
+}
+export interface OutputModCHP {
+    Shared: OutputMod;
+    ElectricalAndFuelBaseYear: ElectricalFuelBaseYearModCHP;
+    HeatBaseYear: HeatBaseYearMod;
+    ExpensesBaseYear: ExpensesBaseYearModGPO;
+    IncomeOtherThanEnergy: IncomeOtherThanEnergyMod;
+    AnnualCashFlows: CashFlowCHP[];
+    TotalCashFlow: TotalCashFlowCHP;
+}
+export interface OutputModGP {
+    Shared: OutputMod;
+    CapitalCost: CapitalCostMod;
+    ElectricalAndFuelBaseYear: ElectricalFuelBaseYearModGP;
+    HeatBaseYear: HeatBaseYearMod;
+    ExpensesBaseYear: ExpensesBaseYearModGP;
+    IncomeOtherThanEnergy: IncomeOtherThanEnergyModGP;
+    AnnualCashFlows: CashFlowGP[];
+    TotalCashFlow: TotalCashFlowGP;
+}
+export interface OutputModHydrogen {
+    Shared: OutputMod;
+    HydrogenGeneration: HydrogenGenerationMod;
+    ExpensesBaseYear: ExpensesBaseYearModHydrogen;
+    AnnualCashFlows: CashFlowHydrogen[];
+    TotalCashFlow: TotalCashFlowHydrogen;
+}
