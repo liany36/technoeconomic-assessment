@@ -1,9 +1,9 @@
-import { GenericCombinedHeatPowerInputMod } from './input.model';
+import { InputModCHP } from './input.model';
 import { CashFlowCHP, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod, ElectricalFuelBaseYearModCHP,
     ExpensesBaseYearModGPO, FinancingMod, HeatBaseYearMod, IncomeOtherThanEnergyMod, OutputModCHP,
     SensitivityAnalysisMod, TotalCashFlowCHP } from './output.model';
 
-function GenericCombinedHeatPower(input: GenericCombinedHeatPowerInputMod) {
+function GenericCombinedHeatPower(input: InputModCHP) {
     // Electrical and Fuel--base year
     const ParasiticLoad = input.GrossElectricalCapacity - input.NetElectricalCapacity;
     const AnnualHours = input.CapacityFactor / 100 * 8760;

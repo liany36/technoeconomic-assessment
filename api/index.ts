@@ -7,8 +7,8 @@ import { GasificationPower } from './models/gasification-power';
 import { GenericCombinedHeatPower } from './models/generic-combined-heat-power';
 import { GenericPowerOnly } from './models/generic-power-only';
 import { Hydrogen } from './models/hydrogen';
-import { GasificationPowerInputMod, GenericCombinedHeatPowerInputMod,
-  GenericPowerOnlyInputMod, HydrogenInputMod } from './models/input.model';
+import { InputModCHP, InputModGP,
+  InputModGPO, InputModHydrogen } from './models/input.model';
 
 // tslint:disable-next-line: no-var-requires
 const swaggerDocument = require('../swagger.json');
@@ -31,25 +31,25 @@ app.use((req, res, next) => {
 const port = process.env.PORT || 3000;
 
 app.post('/genericPowerOnly', async (req: any, res: any) => {
-  const params: GenericPowerOnlyInputMod = req.body;
+  const params: InputModGPO = req.body;
   const result = await GenericPowerOnly(params);
   res.status(200).json(result);
 });
 
 app.post('/genericCombinedHeatPower', async (req: any, res: any) => {
-  const params: GenericCombinedHeatPowerInputMod = req.body;
+  const params: InputModCHP = req.body;
   const result = await GenericCombinedHeatPower(params);
   res.status(200).json(result);
 });
 
 app.post('/gasificationPower', async (req: any, res: any) => {
-  const params: GasificationPowerInputMod = req.body;
+  const params: InputModGP = req.body;
   const result = await GasificationPower(params);
   res.status(200).json(result);
 });
 
 app.post('/hydrogen', async (req: any, res: any) => {
-  const params: HydrogenInputMod = req.body;
+  const params: InputModHydrogen = req.body;
   const result = await Hydrogen(params);
   res.status(200).json(result);
 });

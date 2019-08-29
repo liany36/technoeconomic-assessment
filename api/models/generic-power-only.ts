@@ -1,9 +1,9 @@
-import { GenericPowerOnlyInputMod } from './input.model';
+import { InputModGPO } from './input.model';
 import { CashFlowGPO, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod, ElectricalFuelBaseYearMod,
     ExpensesBaseYearModGPO, FinancingMod, IncomeOtherThanEnergyMod, OutputModGPO,
     SensitivityAnalysisMod, TotalCashFlowGPO } from './output.model';
 
-function GenericPowerOnly(input: GenericPowerOnlyInputMod) {
+function GenericPowerOnly(input: InputModGPO) {
     // Electrical and Fuel--base year
     const AnnualHours = input.CapacityFactor / 100 * 8760;
     const FuelConsumptionRate = input.NetElectricalCapacity / (input.NetStationEfficiency / 100) * 3600

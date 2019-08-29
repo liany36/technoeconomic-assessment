@@ -1,9 +1,9 @@
-import { HydrogenInputMod } from './input.model';
+import { InputModHydrogen } from './input.model';
 import { CashFlowHydrogen, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod, ExpensesBaseYearModHydrogen,
     FinancingMod, HydrogenGenerationMod, OutputModHydrogen, SensitivityAnalysisMod,
     TotalCashFlowHydrogen } from './output.model';
 
-function Hydrogen(input: HydrogenInputMod) {
+function Hydrogen(input: InputModHydrogen) {
     // Hydrogen Generation
     const HydrogenEnergy = input.GrossDesignHydrogenCapacity * input.HydrogenHHV;
     const DesignHydrogenProductionRateMW = HydrogenEnergy / 24 / 3600;
