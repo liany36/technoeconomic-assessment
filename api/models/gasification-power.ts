@@ -1,8 +1,8 @@
-import { GasificationPowerInputMod } from './input.model';
+import { InputModGP } from './input.model';
 import { CapitalCostMod, CashFlowGP, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod,
     ElectricalFuelBaseYearModGP, ExpensesBaseYearModGP, FinancingMod, HeatBaseYearMod,
     IncomeOtherThanEnergyModGP, OutputModGP, SensitivityAnalysisMod, TotalCashFlowGP } from './output.model';
-function GasificationPower(input: GasificationPowerInputMod) {
+function GasificationPower(input: InputModGP) {
      // Fuel Properties
     const CODensity = 101325 * 28 / 8314 / 298;
     const H2Density = 101325 * 2 / 8314 / 298;

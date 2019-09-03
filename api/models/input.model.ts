@@ -1,5 +1,5 @@
 // GenericPowerOnly
-export interface GenericPowerOnlyInputMod {
+export interface InputModGPO {
     CapitalCost: number;
     // Electrical and Fuel--base year
     NetElectricalCapacity: number;
@@ -38,7 +38,7 @@ export interface GenericPowerOnlyInputMod {
 }
 
 // GenericCombinedHeatPower
-export interface GenericCombinedHeatPowerInputMod {
+export interface InputModCHP {
     CapitalCost: number;
     // Electrical and Fuel--base year
     GrossElectricalCapacity: number;
@@ -82,7 +82,7 @@ export interface GenericCombinedHeatPowerInputMod {
 }
 
 // GasificationPower
-export interface GasificationPowerInputMod {
+export interface InputModGP {
     // Fuel Properties
     GasolineDensity: number;
     GasolineHigherHeatingMjPerKg: number;
@@ -164,7 +164,7 @@ export interface GasificationPowerInputMod {
 }
 
 // Hydrogen
-export interface HydrogenInputMod {
+export interface InputModHydrogen {
     // Hydrogen Generation
     GrossDesignHydrogenCapacity: number;
     HydrogenHHV: number;
