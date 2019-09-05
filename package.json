@@ -1,16 +1,18 @@
 {
-  "name": "technoeconomic-assessment",
+  "name": "@ucdavis/tea",
   "version": "1.0.0",
   "main": "./out/index.js",
+  "types": "./out/index.d.ts",
   "author": "Yi Lian",
   "license": "MIT",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
-    "dev": "yarn build && node .",
-    "watch": "nodemon --watch . -e ts --exec yarn dev",
-    "start": "npm run-script build && node ./out/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run build && node ./out/server.js",
+    "watch": "nodemon --watch . -i out -e ts --exec npm run dev",
+    "start": "node ./out/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "tsc -p ./ --outDir out/"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -28,5 +30,22 @@
     "tslint": "^5.12.1",
     "tslint-eslint-rules": "^5.4.0",
     "typescript": "^3.5.3"
-  }
+  },
+  "description": "https://technoeconomic-assessment.azurewebsites.net/",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ucdavis/technoeconomic-assessment.git"
+  },
+  "keywords": [
+    "technoeconomic",
+    "california",
+    "biomass"
+  ],
+  "bugs": {
+    "url": "https://github.com/ucdavis/technoeconomic-assessment/issues"
+  },
+  "homepage": "https://github.com/ucdavis/technoeconomic-assessment#readme"
 }
