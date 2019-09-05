@@ -7,8 +7,12 @@ import { GasificationPower } from './models/gasification-power';
 import { GenericCombinedHeatPower } from './models/generic-combined-heat-power';
 import { GenericPowerOnly } from './models/generic-power-only';
 import { Hydrogen } from './models/hydrogen';
-import { InputModCHP, InputModGP,
-  InputModGPO, InputModHydrogen } from './models/input.model';
+import {
+  InputModCHP,
+  InputModGP,
+  InputModGPO,
+  InputModHydrogen
+} from './models/input.model';
 
 // tslint:disable-next-line: no-var-requires
 const swaggerDocument = require('../swagger.json');
