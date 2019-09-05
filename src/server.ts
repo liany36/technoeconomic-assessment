@@ -36,26 +36,42 @@ const port = process.env.PORT || 3000;
 
 app.post('/genericPowerOnly', async (req: any, res: any) => {
   const params: InputModGPO = req.body;
-  const result = await GenericPowerOnly(params);
-  res.status(200).json(result);
+  try {
+    const result = await GenericPowerOnly(params);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
 });
 
 app.post('/genericCombinedHeatPower', async (req: any, res: any) => {
   const params: InputModCHP = req.body;
-  const result = await GenericCombinedHeatPower(params);
-  res.status(200).json(result);
+  try {
+    const result = await GenericCombinedHeatPower(params);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
 });
 
 app.post('/gasificationPower', async (req: any, res: any) => {
   const params: InputModGP = req.body;
-  const result = await GasificationPower(params);
-  res.status(200).json(result);
+  try {
+    const result = await GasificationPower(params);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
 });
 
 app.post('/hydrogen', async (req: any, res: any) => {
   const params: InputModHydrogen = req.body;
-  const result = await Hydrogen(params);
-  res.status(200).json(result);
+  try {
+    const result = await Hydrogen(params);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
 });
 
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
