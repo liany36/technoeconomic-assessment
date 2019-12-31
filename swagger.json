@@ -1343,27 +1343,33 @@
       "properties": {
         "AnnualHours": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Hours"
         },
         "FuelConsumptionRate": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Fuel consumption rate (dry metric tons/hour)"
         },
         "AnnualGeneration": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Generation (kWh)"
         },
         "CapitalCostNEC": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Capital cost per net electrical capacity ($/kWe)"
         },
         "AnnualFuelConsumption": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual fuel consumption (dry metric tons/year)"
         },
         "AnnualAshDisposal": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Ash Disposal (dry metric tons/year)"
         }
       },
       "xml": {
@@ -1378,15 +1384,18 @@
         },
         "ParasiticLoad": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Electrical power used to operate facility (kWe)"
         },
         "FuelPower": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Fuel Power (kW)"
         },
         "GrossStationElectricalEfficiency": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Gross Station Electrical Efficiency (%)"
         }
       },
       "xml": {
@@ -1398,91 +1407,113 @@
       "properties": {
         "ParasiticLoad": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Electrical power used to operate system (kWe)"
         },
         "AnnualHours": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Hours"
         },
         "AnnualNetElectricityGeneration": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Net Electricity Generation (kWh)"
         },
         "OverallNetSystemEfficiency": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Overall system efficiency (%) -> biomass into gasifier to electricity"
         },
         "NitrogenGas": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Nitrogen"
         },
         "CleanGasMolecularMass": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Clean Gas Molecular Mass (kg/kmol)"
         },
         "CleanGasDensity": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Clean Gas Density 298K, 1 atm (kg/m3)"
         },
         "CleanGasHigherHeatingValue": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Clean Gas Higher Heating Value (kJ/m3)"
         },
         "CleanGasLowerHeatingValue": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Clean Gas Lower Heating Value (MJ/m3)"
         },
         "TotalFuelPowerInput": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total Fuel Power Input (kW)"
         },
         "CleanGasPowerInput": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Clean Gas Power Input (kW)"
         },
         "DualFuelPowerInput": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Dual Fuel Power Input (kW)"
         },
         "CleanGasFlowRateVolume": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Clean Gas Flow Rate (m3/h)"
         },
         "CleanGasFlowRateMass": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Clean Gas Flow Rate (kg/h)"
         },
         "AnnualCleanGasConsumption": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Clean Gas Consumption (dry metric tons/year)"
         },
         "DualFuelFlowRate": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Dual Fuel Flow Rate (L/h) * Default assumes heavy diesel fuel"
         },
         "AnnualDualFuelConsumption": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Dual Fuel Consumption (L/year)"
         },
         "BiomassFeedRate": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Biomass Feed Rate (kg/h)--dry basis"
         },
         "AnnualBiomassConsumptionDryMass": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Biomass Consumption (t/year)--dry basis"
         },
         "AnnualBiomassConsumptionWetMass": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Biomass Consumption (t/year)--wet basis"
         },
         "CharProductionRate": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Char Production Rate (kg/h)--dry"
         },
         "AnnualCharProduction": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Char Production (t/y)--dry"
         }
       },
       "xml": {
@@ -1494,43 +1525,53 @@
       "properties": {
         "TotalNonFuelExpenses": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total Non-Fuel Expenses ($/kWh)"
         },
         "TotalExpensesIncludingFuel": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total Expenses Including Fuel ($/year)"
         },
         "LaborCostKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Cost of labor to operate facility ($/kWh-net electrical)"
         },
         "MaintenanceCostKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Cost of maintaining the plant ($/kWh-net electrical)"
         },
         "InsurancePropertyTaxKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Cost of insurance for the plant plus any property or other local taxes ($/kWh-net electrical)"
         },
         "UtilitiesKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Purchased utilities including power, gas, water, waste disposal ($/kWh-net electrical)"
         },
         "ManagementKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Cost for administrative personnel and other administration ($/kWh-net electrical)"
         },
         "OtherOperatingExpensesKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "All other expenses for operating the plant, for example natural gas not included in utilities, chemicals, or additives ($/kWh-net electrical)"
         },
         "TotalNonFuelExpensesKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total Non-Fuel Expenses ($/kWh-net electrical)"
         },
         "TotalExpensesIncludingFuelKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total Expenses Including Fuel ($/kWh-net electrical)"
         }
       },
       "xml": {
@@ -1545,11 +1586,13 @@
         },
         "FuelCostKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Cost of fuel ($/kWh-net electrical)"
         },
         "AshDisposalKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Cost of ash disposal from plant ($/kWh-net electrical), use negative value when ash is sold at value"
         }
       },
       "xml": {
@@ -1564,15 +1607,18 @@
         },
         "BiomassFuelCostKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Cost of biomass fuel for gasifier ($/kWh-net electrical)"
         },
         "DualFuelCostKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Dual Fuel Cost ($/kWh-net electrical)"
         },
         "WasteTreatmentKwh": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Waste Treatment/Disposal ($/kWh-net electrical)"
         }
       },
       "xml": {
@@ -1584,15 +1630,18 @@
       "properties": {
         "AnnualFeedstockCost": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual feedstock cost ($)"
         },
         "OperatingExpenses": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Operating expenses ($)"
         },
         "TotalAnnualExpenses": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total annual expenses including feedstock ($)"
         }
       },
       "xml": {
@@ -1604,11 +1653,13 @@
       "properties": {
         "AnnualCapacityPayment": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Capacity Payment ($/year)"
         },
         "AnnualDebtReserveInterest": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Debt Reserve Interest ($/year)"
         }
       },
       "xml": {
@@ -1623,7 +1674,8 @@
         },
         "AnnualIncomeFromChar": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Income from Char/Ash Sales ($/year)"
         }
       },
       "xml": {
@@ -1640,92 +1692,110 @@
         "EquityRecovery": {
           "type": "number",
           "format": "float",
-          "example": 2795825.732100518
+          "example": 2795825.732100518,
+          "description": "Equity Recovery ($)"
         },
         "EquityInterest": {
           "type": "number",
           "format": "float",
-          "example": 2625000
+          "example": 2625000,
+          "description": "Equity Interest ($)"
         },
         "EquityPrincipalPaid": {
           "type": "number",
           "format": "float",
-          "example": 170825.73210051795
+          "example": 170825.73210051795,
+          "description": "Equity Principal Paid ($)"
         },
         "EquityPrincipalRemaining": {
           "type": "number",
           "format": "float",
-          "example": 17329174.267899483
+          "example": 17329174.267899483,
+          "description": "Equity Principal Remaining ($)"
         },
         "DebtRecovery": {
           "type": "number",
           "format": "float",
-          "example": 4212735.827511293
+          "example": 4212735.827511293,
+          "description": "Debt Recovery ($)"
         },
         "DebtInterest": {
           "type": "number",
           "format": "float",
-          "example": 2625000
+          "example": 2625000,
+          "description": "Debt Interest ($)"
         },
         "DebtPrincipalPaid": {
           "type": "number",
           "format": "float",
-          "example": 1587735.8275112929
+          "example": 1587735.8275112929,
+          "description": "Debt Principal Paid ($)"
         },
         "DebtPrincipalRemaining": {
           "type": "number",
           "format": "float",
-          "example": 50912264.172488704
+          "example": 50912264.172488704,
+          "description": "Debt Principal Remaining ($)"
         },
         "FuelCost": {
           "type": "number",
           "format": "float",
-          "example": 3970493.0674978513
+          "example": 3970493.0674978513,
+          "description": "Fuel Cost ($)"
         },
         "NonFuelExpenses": {
           "type": "number",
           "format": "float",
-          "example": 5800000
+          "example": 5800000,
+          "description": "Non-fuel Expenses ($)"
         },
         "DebtReserve": {
           "type": "number",
           "format": "float",
-          "example": 4212735.827511293
+          "example": 4212735.827511293,
+          "description": "Debt Reserve ($)"
         },
         "Depreciation": {
           "type": "number",
           "format": "float",
-          "example": 3500000
+          "example": 3500000,
+          "description": "Depreciation ($)"
         },
         "IncomeCapacity": {
           "type": "number",
           "format": "float",
-          "example": 4150000
+          "example": 4150000,
+          "description": "Income--Capacity ($)"
         },
         "InterestOnDebtReserve": {
           "type": "number",
           "format": "float",
-          "example": 210636.79137556464
+          "example": 210636.79137556464,
+          "description": "Interest on Debt Reserve ($)"
         },
         "TaxesWoCredit": {
           "type": "number",
           "format": "float",
-          "example": 3445364.9002245483
+          "example": 3445364.9002245483,
+          "description": "Taxes w/o credit ($)"
         },
         "TaxCredit": {
           "type": "number",
           "format": "float",
-          "example": 1675349.9999999998
+          "example": 1675349.9999999998,
+          "description": "Tax Credit ($)"
         },
         "Taxes": {
           "type": "number",
           "format": "float",
-          "example": 2312740.242139271
+          "example": 2312740.242139271,
+          "description": "Taxes ($)"
         },
         "EnergyRevenueRequired": {
           "type": "number",
           "format": "float",
-          "example": 18943893.90538466
+          "example": 18943893.90538466,
+          "description": "Energy Revenue Required ($)"
         }
       },
       "xml": {
@@ -1742,97 +1812,116 @@
         "EquityRecovery": {
           "type": "number",
           "format": "float",
-          "example": 2795825.732100518
+          "example": 2795825.732100518,
+          "description": "Equity Recovery ($)"
         },
         "EquityInterest": {
           "type": "number",
           "format": "float",
-          "example": 2625000
+          "example": 2625000,
+          "description": "Equity Interest ($)"
         },
         "EquityPrincipalPaid": {
           "type": "number",
           "format": "float",
-          "example": 170825.73210051795
+          "example": 170825.73210051795,
+          "description": "Equity Principal Paid ($)"
         },
         "EquityPrincipalRemaining": {
           "type": "number",
           "format": "float",
-          "example": 17329174.267899483
+          "example": 17329174.267899483,
+          "description": "Equity Principal Remaining ($)"
         },
         "DebtRecovery": {
           "type": "number",
           "format": "float",
-          "example": 4212735.827511293
+          "example": 4212735.827511293,
+          "description": "Debt Recovery ($)"
         },
         "DebtInterest": {
           "type": "number",
           "format": "float",
-          "example": 2625000
+          "example": 2625000,
+          "description": "Debt Interest ($)"
         },
         "DebtPrincipalPaid": {
           "type": "number",
           "format": "float",
-          "example": 1587735.8275112929
+          "example": 1587735.8275112929,
+          "description": "Debt Principal Paid ($)"
         },
         "DebtPrincipalRemaining": {
           "type": "number",
           "format": "float",
-          "example": 50912264.172488704
+          "example": 50912264.172488704,
+          "description": "Debt Principal Remaining ($)"
         },
         "FuelCost": {
           "type": "number",
           "format": "float",
-          "example": 3970493.0674978513
+          "example": 3970493.0674978513,
+          "description": "Fuel Cost ($)"
         },
         "NonFuelExpenses": {
           "type": "number",
           "format": "float",
-          "example": 5800000
+          "example": 5800000,
+          "description": "Non-fuel Expenses ($)"
         },
         "DebtReserve": {
           "type": "number",
           "format": "float",
-          "example": 4212735.827511293
+          "example": 4212735.827511293,
+          "description": "Debt Reserve ($)"
         },
         "Depreciation": {
           "type": "number",
           "format": "float",
-          "example": 3500000
+          "example": 3500000,
+          "description": "Depreciation ($)"
         },
         "IncomeCapacity": {
           "type": "number",
           "format": "float",
-          "example": 4150000
+          "example": 4150000,
+          "description": "Income--Capacity ($)"
         },
         "IncomeHeat": {
           "type": "number",
           "format": "float",
-          "example": 4420243.44
+          "example": 4420243.44,
+          "description": "Income--Heat ($)"
         },
         "InterestOnDebtReserve": {
           "type": "number",
           "format": "float",
-          "example": 210636.79137556464
+          "example": 210636.79137556464,
+          "description": "Interest on Debt Reserve ($)"
         },
         "TaxesWoCredit": {
           "type": "number",
           "format": "float",
-          "example": 3445364.9002245483
+          "example": 3445364.9002245483,
+          "description": "Taxes w/o credit ($)"
         },
         "TaxCredit": {
           "type": "number",
           "format": "float",
-          "example": 1675349.9999999998
+          "example": 1675349.9999999998,
+          "description": "Tax Credit ($)"
         },
         "Taxes": {
           "type": "number",
           "format": "float",
-          "example": 2312740.242139271
+          "example": 2312740.242139271,
+          "description": "Taxes ($)"
         },
         "EnergyRevenueRequired": {
           "type": "number",
           "format": "float",
-          "example": 14523650.465384658
+          "example": 14523650.465384658,
+          "description": "Energy Revenue Required ($)"
         }
       },
       "xml": {
@@ -1849,107 +1938,128 @@
         "EquityRecovery": {
           "type": "number",
           "format": "float",
-          "example": 13979.128660502589
+          "example": 13979.128660502589,
+          "description": "Equity Recovery ($)"
         },
         "EquityInterest": {
           "type": "number",
           "format": "float",
-          "example": 13125
+          "example": 13125,
+          "description": "Equity Interest ($)"
         },
         "EquityPrincipalPaid": {
           "type": "number",
           "format": "float",
-          "example": 854.1286605025889
+          "example": 854.1286605025889,
+          "description": "Equity Principal Paid ($)"
         },
         "EquityPrincipalRemaining": {
           "type": "number",
           "format": "float",
-          "example": 86645.87133949742
+          "example": 86645.87133949742,
+          "description": "Equity Principal Remaining ($)"
         },
         "DebtRecovery": {
           "type": "number",
           "format": "float",
-          "example": 63191.037412669386
+          "example": 63191.037412669386,
+          "description": "Debt Recovery ($)"
         },
         "DebtInterest": {
           "type": "number",
           "format": "float",
-          "example": 39375
+          "example": 39375,
+          "description": "Debt Interest ($)"
         },
         "DebtPrincipalPaid": {
           "type": "number",
           "format": "float",
-          "example": 23816.037412669386
+          "example": 23816.037412669386,
+          "description": "Debt Principal Paid ($)"
         },
         "DebtPrincipalRemaining": {
           "type": "number",
           "format": "float",
-          "example": 763683.9625873306
+          "example": 763683.9625873306,
+          "description": "Debt Principal Remaining ($)"
         },
         "BiomassFuelCost": {
           "type": "number",
           "format": "float",
-          "example": 84987.14258189379
+          "example": 84987.14258189379,
+          "description": "Biomass Fuel Cost ($)"
         },
         "DualFuelCost": {
           "type": "number",
           "format": "float",
-          "example": 90404.20449116101
+          "example": 90404.20449116101,
+          "description": "Dual Fuel Cost ($)"
         },
         "NonFuelExpenses": {
           "type": "number",
           "format": "float",
-          "example": 30000
+          "example": 30000,
+          "description": "Non-fuel Expenses ($)"
         },
         "DebtReserve": {
           "type": "number",
           "format": "float",
-          "example": 63191.037412669386
+          "example": 63191.037412669386,
+          "description": "Debt Reserve ($)"
         },
         "Depreciation": {
           "type": "number",
           "format": "float",
-          "example": 43750
+          "example": 43750,
+          "description": "Depreciation ($)"
         },
         "IncomeCapacity": {
           "type": "number",
           "format": "float",
-          "example": 0
+          "example": 0,
+          "description": "Income--Capacity ($)"
         },
         "IncomeHeat": {
           "type": "number",
           "format": "float",
-          "example": 56735.282608695656
+          "example": 56735.282608695656,
+          "description": "Income--Heat ($)"
         },
         "IncomeChar": {
           "type": "number",
           "format": "float",
-          "example": 0
+          "example": 0,
+          "description": "Income--Char ($)"
         },
         "InterestOnDebtReserve": {
           "type": "number",
           "format": "float",
-          "example": 1263.8207482533878
+          "example": 1263.8207482533878,
+          "description": "Interest on Debt Reserve ($)"
         },
         "TaxesWoCredit": {
           "type": "number",
           "format": "float",
-          "example": 38694.68194899599
+          "example": 38694.68194899599,
+          "description": "Taxes w/o credit ($)"
         },
         "TaxCredit": {
           "type": "number",
           "format": "float",
-          "example": 33507
+          "example": 33507,
+          "description": "Tax Credit ($)"
         },
         "Taxes": {
           "type": "number",
           "format": "float",
-          "example": 16042.188787290443
+          "example": 16042.188787290443,
+          "description": "Taxes ($)"
         },
         "EnergyRevenueRequired": {
           "type": "number",
           "format": "float",
-          "example": 303795.6359892375
+          "example": 303795.6359892375,
+          "description": "Energy Revenue Required ($)"
         }
       },
       "xml": {
@@ -1966,117 +2076,140 @@
         "EquityRecovery": {
           "type": "number",
           "format": "float",
-          "example": 3531502.1371461176
+          "example": 3531502.1371461176,
+          "description": "Equity Recovery ($)"
         },
         "EquityInterest": {
           "type": "number",
           "format": "float",
-          "example": 3097500
+          "example": 3097500,
+          "description": "Equity Interest ($)"
         },
         "EquityPrincipalPaid": {
           "type": "number",
           "format": "float",
-          "example": 434002.13714611763
+          "example": 434002.13714611763,
+          "description": "Equity Principal Paid ($)"
         },
         "EquityPrincipalRemaining": {
           "type": "number",
           "format": "float",
-          "example": 20215997.86285388
+          "example": 20215997.86285388,
+          "description": "Equity Principal Remaining ($)"
         },
         "DebtRecovery": {
           "type": "number",
           "format": "float",
-          "example": 17905214.152178057
+          "example": 17905214.152178057,
+          "description": "Debt Recovery ($)"
         },
         "DebtInterest": {
           "type": "number",
           "format": "float",
-          "example": 9292500
+          "example": 9292500,
+          "description": "Debt Interest ($)"
         },
         "DebtPrincipalPaid": {
           "type": "number",
           "format": "float",
-          "example": 8612714.152178057
+          "example": 8612714.152178057,
+          "description": "Debt Principal Paid ($)"
         },
         "DebtPrincipalRemaining": {
           "type": "number",
           "format": "float",
-          "example": 177237285.84782195
+          "example": 177237285.84782195,
+          "description": "Debt Principal Remaining ($)"
         },
         "FuelCost": {
           "type": "number",
           "format": "float",
-          "example": 24768200.038825013
+          "example": 24768200.038825013,
+          "description": "Fuel Cost ($)"
         },
         "NonFuelExpenses": {
           "type": "number",
           "format": "float",
-          "example": 8260000
+          "example": 8260000,
+          "description": "Non-fuel Expenses ($)"
         },
         "DebtReserve": {
           "type": "number",
           "format": "float",
-          "example": 17905214.152178057
+          "example": 17905214.152178057,
+          "description": "Debt Reserve ($)"
         },
         "Expenses": {
           "type": "number",
           "format": "float",
-          "example": 33028200.038825013
+          "example": 33028200.038825013,
+          "description": "Expenses ($)"
         },
         "Depreciation": {
           "type": "number",
           "format": "float",
-          "example": 13766666.666666666
+          "example": 13766666.666666666,
+          "description": "Depreciation ($)"
         },
         "IncomeElectricalEnergy": {
           "type": "number",
           "format": "float",
-          "example": 2
+          "example": 2,
+          "description": "Income--Electrical energy ($)"
         },
         "IncomeIncentivePayments": {
           "type": "number",
           "format": "float",
-          "example": 2
+          "example": 2,
+          "description": "Income--Incentive payments ($)"
         },
         "IncomeCapacity": {
           "type": "number",
           "format": "float",
-          "example": 2
+          "example": 2,
+          "description": "Income--Capacity ($)"
         },
         "IncomeHeat": {
           "type": "number",
           "format": "float",
-          "example": 2
+          "example": 2,
+          "description": "Income--Heat ($)"
         },
         "IncomeResidue": {
           "type": "number",
           "format": "float",
-          "example": 2
+          "example": 2,
+          "description": "Income--Residue ($)"
         },
         "InterestOnDebtReserve": {
           "type": "number",
           "format": "float",
-          "example": 358104.28304356115
+          "example": 358104.28304356115,
+          "description": "Interest on Debt Reserve ($)"
         },
         "TaxesWoCredit": {
           "type": "number",
           "format": "float",
-          "example": 10917737.001676356
+          "example": 10917737.001676356,
+          "description": "Taxes w/o credit ($)"
         },
         "TaxCredit": {
           "type": "number",
           "format": "float",
-          "example": 674308.8000000019
+          "example": 674308.8000000019,
+          "description": "Tax Credit ($)"
         },
         "Taxes": {
           "type": "number",
           "format": "float",
-          "example": 10465606.992415054
+          "example": 10465606.992415054,
+          "description": "Taxes ($)"
         },
         "EnergyRevenueRequired": {
           "type": "number",
           "format": "float",
-          "example": 82477623.18969873
+          "example": 82477623.18969873,
+          "description": "Energy Revenue Required ($)"
         }
       },
       "xml": {
@@ -2488,7 +2621,8 @@
         },
         "CombinedTaxRate": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Combined federal and state tax rate to which project is subject (%)"
         },
         "Financing": {
           "$ref": "#/definitions/FinancingMod"
@@ -2509,11 +2643,13 @@
       "properties": {
         "LACcurrent": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Current $ Level Annual Cost of Energy ($/kWh)"
         },
         "LACconstant": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Constant $ Level Annual Cost of Energy ($/kWh)"
         }
       },
       "xml": {
@@ -2525,43 +2661,53 @@
       "properties": {
         "EquityRatio": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Fraction of financing covered by corporate investment (%)"
         },
         "CostOfMoney": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Weighted cost of investment for full investment including both debt and equity (%/year)"
         },
         "TotalCostOfPlant": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total Cost of Plant ($)"
         },
         "TotalEquityCost": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total Equity Cost ($)"
         },
         "TotalDebtCost": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total Debt Cost ($)"
         },
         "CapitalRecoveryFactorEquity": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Capital Recovery Factor (Equity)"
         },
         "CapitalRecoveryFactorDebt": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Capital Recovery Factor (Debt)"
         },
         "AnnualEquityRecovery": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Uniform annual revenue required to earn stipulated rate of return on equity ($/year)"
         },
         "AnnualDebtPayment": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Uniform annual payment needed to pay off debt ($/year)"
         },
         "DebtReserve": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Funds placed in reserve account as security deposit ($).  Sometimes required by financing institution to ensure debt repayment if plant operation is stopped for some period, typically up to one year"
         }
       },
       "xml": {
@@ -2573,9 +2719,11 @@
       "properties": {
         "CostOfMoney": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Cost of Money ($)"
         },
         "PresentWorth": {
+          "description": "Present Worth ($)",
           "type": "array",
           "items": {
             "type": "number"
@@ -2583,19 +2731,23 @@
         },
         "TotalPresentWorth": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total Present Worth ($)"
         },
         "CapitalRecoveryFactorCurrent": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Capital Recovery Factor (current)"
         },
         "CurrentLevelAnnualRevenueRequirements": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Current $ Level Annual Revenue Requirements ($/year)"
         },
         "CurrentLACofEnergy": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Current $ Level Annual Cost of Energy ($/kWh)"
         }
       },
       "xml": {
@@ -2607,9 +2759,11 @@
       "properties": {
         "RealCostOfMoney": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Real Cost of Money (inflation adjusted) ($)"
         },
         "CapitalRecoveryFactorConstant": {
+          "description": "Capital Recovery Factor (constant)",
           "type": "array",
           "items": {
             "type": "number"
@@ -2617,11 +2771,13 @@
         },
         "ConstantLevelAnnualRevenueRequirements": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Constant $ Level Annual Revenue Requirements ($/year)"
         },
         "ConstantLACofEnergy": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Constant $ Level Annual Cost of Energy ($/kWh)"
         }
       },
       "xml": {
@@ -2633,31 +2789,38 @@
       "properties": {
         "TotalHeatProductionRate": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total heat production rate equal to fuel power less gross electrical power (kWth)"
         },
         "RecoveredHeat": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Recovered heat production rate (kWth)"
         },
         "AnnualHeatSales": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total annual heat energy sales (kWh/year)"
         },
         "TotalIncomeFromHeatSales": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total income from heat sales ($/year)"
         },
         "HeatIncomePerUnitNEE": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Heat income per unit net electrical energy ($/kWh-net)"
         },
         "OverallCHPefficiencyGross": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Overall CHP Efficiency--Gross (%)"
         },
         "OverallCHPefficiencyNet": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Overall CHP Efficiency--Net (%)"
         }
       },
       "xml": {
@@ -2669,31 +2832,38 @@
       "properties": {
         "TotalFacilityCapitalCost": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total installed cost of plant including electrical plus heat recovery and distribution ($)"
         },
         "GasifierSystemCapitalCostPerKwe": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Gasifier and Feedstock Handling System Capital Cost ($/kWe-net)"
         },
         "GasCleaningSystemCapitalCostPerKwe": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Gas Cleaning System Capital Cost ($/kWe-net)"
         },
         "PowerGenerationCapitalCostPerKwe": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Power Generation/Interconnect System Capital Cost ($/kWe-net)"
         },
         "EmissionControlSystemCapitalCostPerKwe": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Emission Control System Capital Cost ($/kWe-net)"
         },
         "HeatRecoverySystemCapitalCostPerKwe": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Heat Recovery System Capital Cost ($/kWe-net)"
         },
         "TotalFacilityCapitalCostPerKwe": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Total Facility Capital Cost ($/kWe-net)"
         }
       },
       "xml": {
@@ -2705,47 +2875,58 @@
       "properties": {
         "HydrogenEnergy": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Hydrogen energy (MJ HHV/day)"
         },
         "DesignHydrogenProductionRateMW": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Design hydrogen production rate (HHV, MWf)"
         },
         "DesignHydrogenProductionRateMg": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Design hydrogen production rate (Mg/hour)"
         },
         "FeedstockInput": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Feedstock  input (dry, MWth)"
         },
         "FeedstockSupply": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Feedstock supply (dry, Mg/operating hour)"
         },
         "AnnualHours": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual Hours"
         },
         "AnnualFeedstockSupply": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual feedstock supply (dry, Mg/year)"
         },
         "AnnualFeedstockEnergyInput": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual feedstock energy input (PJ/year)"
         },
         "AnnualHydrogenProductionMg": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual hydrogen production (Mg/year)"
         },
         "AnnualHydrogenProductionKg": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual hydrogen production (kg/year)"
         },
         "AnnualHydrogenEnergy": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Annual hydrogen energy (GJ/year)"
         }
       },
       "xml": {
