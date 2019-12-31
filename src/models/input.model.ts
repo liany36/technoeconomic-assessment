@@ -83,25 +83,6 @@ export interface InputModCHP {
 
 // GasificationPower
 export interface InputModGP {
-    // Fuel Properties
-    GasolineDensity: number;
-    GasolineHigherHeatingMjPerKg: number;
-    GasolineLowerHeatingMjPerKg: number;
-    LightDieselDensity: number;
-    LightDieselHigherHeatingMjPerKg: number;
-    LightDieselLowerHeatingMjPerKg: number;
-    HeavyDieselDensity: number;
-    HeavyDieselHigherHeatingMjPerKg: number;
-    HeavyDieselLowerHeatingMjPerKg: number;
-    NaturalGasDensity: number;
-    NaturalGasHigherHeatingMjPerKg: number;
-    NaturalGasLowerHeatingMjPerKg: number;
-    COHigherHeatingMjPerKg: number;
-    COLowerHeatingMjPerKg: number;
-    H2HigherHeatingMjPerKg: number;
-    H2LowerHeatingMjPerKg: number;
-    CH4HigherHeatingMjPerKg: number;
-    CH4LowerHeatingMjPerKg: number;
     // Capital Cost from Gasification Power Generation
     GasifierSystemCapitalCost: number;
     GasCleaningSystemCapitalCost: number;

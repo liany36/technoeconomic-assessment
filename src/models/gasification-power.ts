@@ -2,18 +2,28 @@ import { InputModGP } from './input.model';
 import { CapitalCostMod, CashFlowGP, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod,
     ElectricalFuelBaseYearModGP, ExpensesBaseYearModGP, FinancingMod, HeatBaseYearMod,
     IncomeOtherThanEnergyModGP, OutputModGP, SensitivityAnalysisMod, TotalCashFlowGP } from './output.model';
+
 function GasificationPower(input: InputModGP) {
+    // Constants
+    const HeavyDieselDensity = 850; // Heavy Diesel Density 298K, 1 atm (kg/m3)
+    const HeavyDieselHHV = 45.5; // Heavy Diesel Higher Heating Value (MJ/kg)
+    const CO_HHV = 10.1; // CO Higher Heating Value (MJ/kg)
+    const CO_LHV = 10.1; // CO Lower Heating Value (MJ/kg)
+    const H2_HHV = 142; // H2 Higher Heating Value (MJ/kg)
+    const H2_LHV = 120; // H2 Lower Heating Value (MJ/kg)
+    const CH4_HHV = 55.5; // CH4 Higher Heating Value (MJ/kg)
+    const CH4_LHV = 50; // CH4 Lower Heating Value (MJ/kg)
      // Fuel Properties
-    const CODensity = 101325 * 28 / 8314 / 298;
-    const H2Density = 101325 * 2 / 8314 / 298;
-    const CH4Density = 101325 * 16 / 8314 / 298;
-    const HeavyDieselHigherHeatingKjPerL = input.HeavyDieselHigherHeatingMjPerKg * input.HeavyDieselDensity;
-    const COHHeating = input.COHigherHeatingMjPerKg * CODensity * 1000;
-    const COLHeating = input.COLowerHeatingMjPerKg * CODensity * 1000;
-    const H2HiHeating = input.H2HigherHeatingMjPerKg * H2Density * 1000;
-    const H2LHeating = input.H2LowerHeatingMjPerKg * H2Density * 1000;
-    const CH4HHeating = input.CH4HigherHeatingMjPerKg * CH4Density * 1000;
-    const CH4LHeating = input.CH4LowerHeatingMjPerKg * CH4Density * 1000;
+    const CODensity = 101325 * 28 / 8314 / 298; // CO Density 298K, 1 atm (kg/m3)
+    const H2Density = 101325 * 2 / 8314 / 298; // H2 Diesel Density 298K, 1 atm (kg/m3)
+    const CH4Density = 101325 * 16 / 8314 / 298; // CH4 Diesel Density 298K, 1 atm (kg/m3)
+    const HeavyDieselHHVkJL = HeavyDieselHHV * HeavyDieselDensity; // Heavy Diesel Higher Heating Value (kJ/L)
+    const CO_HHV_KJL = CO_HHV * CODensity * 1000; // CO Higher Heating Value (kJ/L)
+    const CO_LHV_KJL = CO_LHV * CODensity * 1000; // CO Lower Heating Value (kJ/L)
+    const H2_HHV_KJL = H2_HHV * H2Density * 1000; // H2 Higher Heating Value (kJ/L)
+    const H2_LHV_KJL = H2_LHV * H2Density * 1000; // H2 Lower Heating Value (kJ/L)
+    const CH4_HHV_KJL = CH4_HHV * CH4Density * 1000; // CH4 Higher Heating Value (kJ/L)
+    const CH4_LHV_KJL = CH4_LHV * CH4Density * 1000; // CH4 Lower Heating Value (kJ/L)
     // Capital Cost
     const CapitalCost: CapitalCostMod
     = { TotalFacilityCapitalCost: 0, GasifierSystemCapitalCostPerKwe: 0, GasCleaningSystemCapitalCostPerKwe: 0,
@@ -37,15 +47,15 @@ function GasificationPower(input: InputModGP) {
     const CleanGasMolecularMass = (input.CO * 28 + input.H2 * 2 + input.Hydrocarbons * 16 + input.CO2 * 44 + input.O2 *
         32 + N2 * 28) / 100;
     const CleanGasDensity = 101325 * CleanGasMolecularMass / 8314 / 298;
-    const CleanGasHHeating = (input.CO * COHHeating + input.H2 * H2HiHeating + input.Hydrocarbons * CH4HHeating) / 100;
-    const CleanGasLHeating = (input.CO * COLHeating + input.H2 * H2LHeating + input.Hydrocarbons * CH4LHeating) / 100;
+    const CleanGasHHeating = (input.CO * CO_HHV_KJL + input.H2 * H2_HHV_KJL + input.Hydrocarbons * CH4_HHV_KJL) / 100;
+    const CleanGasLHeating = (input.CO * CO_LHV_KJL + input.H2 * H2_LHV_KJL + input.Hydrocarbons * CH4_LHV_KJL) / 100;
     const TotalFuelPowerInput = input.NetElectricalCapacity / (input.NetHHVEfficiency / 100);
     const CleanGasPowerInput = TotalFuelPowerInput * (1 - input.FractionOfInputEnergy / 100);
     const DualFuelPowerInput = TotalFuelPowerInput * input.FractionOfInputEnergy / 100;
     const CleanGasFlowRateVolume = CleanGasPowerInput / CleanGasHHeating * 3600;
     const CleanGasFlowRateMass = CleanGasFlowRateVolume * CleanGasDensity;
     const AnnualCleanGasConsumption = CleanGasFlowRateMass * AnnualHours / 1000;
-    const DualFuelFlowRate = DualFuelPowerInput / HeavyDieselHigherHeatingKjPerL * 3600;
+    const DualFuelFlowRate = DualFuelPowerInput / HeavyDieselHHVkJL * 3600;
     const AnnualDualFuelConsumption = DualFuelFlowRate * AnnualHours;
     const BiomassFeedRate = CleanGasPowerInput / (input.HHVEfficiency / 100) / input.HigherHeating * 3600;
     const AnnualBiomassConsumptionDry = BiomassFeedRate * AnnualHours / 1000;
