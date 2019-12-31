@@ -962,149 +962,173 @@
       "properties": {
         "GrossDesignHydrogenCapacity": {
           "type": "number",
-          "example": 158366.518706405
-        },
-        "HydrogenHHV": {
-          "type": "number",
-          "example": 141.93
-        },
-        "HydrogenLHV": {
-          "type": "number",
-          "example": 119.98
+          "example": 158366.518706405,
+          "description": "Gross design hydrogen capacity (kg/day)"
         },
         "Feedstock": {
           "type": "number",
-          "example": 19.3498437209302
+          "example": 19.3498437209302,
+          "description": "Feedstock (dry) heating value (MJ/kg)"
         },
         "OverallProductionEfficiency": {
           "type": "number",
-          "example": 60.5
+          "example": 60.5,
+          "description": "Overall production efficiency (%, HHV)"
         },
         "CapacityFactor": {
           "type": "number",
-          "example": 91.324200913242
+          "example": 91.324200913242,
+          "description": "Capacity Factor (%)"
         },
         "CapitalCost": {
           "type": "number",
           "format": "float",
-          "example": 206500000
+          "example": 206500000,
+          "description": "Total facility capital cost ($)"
         },
         "FeedstockCost": {
           "type": "number",
-          "example": 38.7
+          "example": 38.7,
+          "description": "Delivered feedstock cost (dry, $/Mg)"
         },
         "OperatingExpensesRate": {
           "type": "number",
-          "example": 4
+          "example": 4,
+          "description": "Operating expenses rate (% of capital investment)"
         },
         "ElectricalEnergy": {
           "type": "number",
-          "example": 2
+          "example": 2,
+          "description": "Other Revenues or Cost Savings -> Electrical energy ($/year)"
         },
         "IncentivePayments": {
           "type": "number",
-          "example": 2
+          "example": 2,
+          "description": "Other Revenues or Cost Savings -> Incentive payments ($/year)"
         },
         "Capacity": {
           "type": "number",
-          "example": 2
+          "example": 2,
+          "description": "Other Revenues or Cost Savings -> Capacity ($/year)"
         },
         "Heat": {
           "type": "number",
-          "example": 2
+          "example": 2,
+          "description": "Other Revenues or Cost Savings -> Heat ($/year)"
         },
         "Residues": {
           "type": "number",
-          "example": 2
+          "example": 2,
+          "description": "Other Revenues or Cost Savings -> Residues ($/year)"
         },
         "FederalTaxRate": {
           "type": "number",
-          "example": 34
+          "example": 34,
+          "description": "Federal Tax Rate (%)"
         },
         "StateTaxRate": {
           "type": "number",
           "format": "float",
-          "example": 9.3
+          "example": 9.3,
+          "description": "State Tax Rate (%)"
         },
         "ProductionTaxCredit": {
           "type": "number",
           "format": "float",
-          "example": 0.09
+          "example": 0.09,
+          "description": "Production Tax Credit ($/GJ)"
         },
         "NegativeTaxesOffset": {
           "type": "boolean",
-          "example": true
+          "example": true,
+          "description": "Negative taxes allowed to offset taxes elsewhere? true if yes, false if no"
         },
         "GeneralInflation": {
           "type": "number",
           "format": "float",
-          "example": 2.1
+          "example": 2.1,
+          "description": "General Inflation (%/year)"
         },
         "EscalationFeedstock": {
           "type": "number",
           "format": "float",
-          "example": 2.1
+          "example": 2.1,
+          "description": "Escalation--Fuel (%/year)"
         },
         "EscalationElectricalEnergy": {
           "type": "number",
           "format": "float",
-          "example": 2.1
+          "example": 2.1,
+          "description": "Escalation--electrical energy (%/year)"
         },
         "EscalationIncentivePayments": {
           "type": "number",
           "format": "float",
-          "example": 2.1
+          "example": 2.1,
+          "description": "Escalation--incentive payments (%/year)"
         },
         "EscalationCapacityPayment": {
           "type": "number",
           "format": "float",
-          "example": 2.1
+          "example": 2.1,
+          "description": "Escalation--capacity payment (%/year)"
         },
         "EscalationProductionTaxCredit": {
           "type": "number",
           "format": "float",
-          "example": 2.1
+          "example": 2.1,
+          "description": "Escalation--Production Tax Credit (%/year)"
         },
         "EscalationHeatSales": {
           "type": "number",
           "format": "float",
-          "example": 2.1
+          "example": 2.1,
+          "description": "Escalation--heat sales (%/year)"
         },
         "EscalationResidueSales": {
           "type": "number",
           "format": "float",
-          "example": 2.1
+          "example": 2.1,
+          "description": "Escalation--residue sales (%/year)"
         },
         "EscalationOther": {
           "type": "number",
           "format": "float",
-          "example": 2.1
+          "example": 2.1,
+          "description": "Escalation--other (%/year)"
         },
         "DebtRatio": {
           "type": "number",
-          "example": 90
+          "example": 90,
+          "description": "Debt ratio (%)"
         },
         "InterestRateOnDebt": {
           "type": "number",
-          "example": 5
+          "example": 5,
+          "description": "Interest rate on debt (%/year)"
         },
         "OneYearDebtReserveRequired": {
           "type": "boolean",
-          "example": true
+          "example": true,
+          "description": "One year debt reserve required? true if yes, false if no"
         },
         "MARR": {
           "type": "number",
-          "example": 15
+          "example": 15,
+          "description": "Minimum attractive rate of return on equity (MARR) (%/year)"
         },
         "EconomicLife": {
           "type": "number",
-          "example": 15
+          "example": 15,
+          "description": "Life of Loan (years)"
         },
         "InterestRateOnDebtReserve": {
           "type": "number",
-          "example": 2
+          "example": 2,
+          "description": "Interest rate on debt reserve (%/year)"
         },
         "TaxCreditFrac": {
+          "description": "Tax Credit Schedule -> Fraction is 1 if received in year, 0 if not",
           "type": "array",
           "items": {
             "type": "number"
@@ -1155,8 +1179,6 @@
       },
       "required": [
         "GrossDesignHydrogenCapacity",
-        "HydrogenHHV",
-        "HydrogenLHV",
         "Feedstock",
         "OverallProductionEfficiency",
         "CapacityFactor",

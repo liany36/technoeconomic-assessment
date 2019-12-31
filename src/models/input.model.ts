@@ -147,8 +147,6 @@ export interface InputModGP {
 export interface InputModHydrogen {
     // Hydrogen Generation
     GrossDesignHydrogenCapacity: number;
-    HydrogenHHV: number;
-    HydrogenLHV: number;
     Feedstock: number;
     OverallProductionEfficiency: number;
     CapacityFactor: number;
