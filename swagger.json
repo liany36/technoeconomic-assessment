@@ -158,116 +158,143 @@
       "properties": {
         "CapitalCost": {
           "type": "number",
+          "description": "Total installed cost of plant in $",
           "example": 70000000
         },
         "NetElectricalCapacity": {
           "type": "number",
+          "description": "Size of plant in kWe based on net power output to grid",
           "example": 25000
         },
         "CapacityFactor": {
           "type": "number",
+          "description": "Annual fraction in % that rated capacity is available from plant",
           "example": 85
         },
         "NetStationEfficiency": {
           "type": "number",
+          "description": "Ratio of net energy output from plant to fuel energy input to plant in %",
           "example": 20
         },
         "FuelHeatingValue": {
           "type": "number",
+          "description": "Higher heating value (heat of combustion) in kJ/kg of fuel expressed on a dry basis input in SI units",
           "example": 18608
         },
         "FuelAshConcentration": {
           "type": "number",
+          "description": "Fraction of ash in fuel, percent dry basis",
           "example": 5
         },
         "FuelCost": {
           "type": "number",
+          "description": "Cost of fuel in $/dry metric ton",
           "format": "float",
           "example": 22.05
         },
         "LaborCost": {
           "type": "number",
+          "description": "Cost of labor to operate facility in $/year",
           "example": 2000000
         },
         "MaintenanceCost": {
           "type": "number",
+          "description": "Cost of maintaining the plant in $/year",
           "example": 1500000
         },
         "InsurancePropertyTax": {
           "type": "number",
+          "description": "Cost of insurance for the plant plus any property or other local taxes, in $/year",
           "example": 1400000
         },
         "Utilities": {
           "type": "number",
+          "description": "Purchased utilities including power, gas, water, waste disposal, in $/year",
           "example": 200000
         },
         "AshDisposal": {
           "type": "number",
+          "description": "Cost of ash disposal from plant in $/year, use negative value when ash is sold at value",
           "example": 100000
         },
         "Management": {
           "type": "number",
+          "description": "Cost for administrative personnel and other administration, in $/year",
           "example": 200000
         },
         "OtherOperatingExpenses": {
           "type": "number",
+          "description": "All other expenses for operating the plant, for example natural gas not included in utilities, chemicals, or additives, in $/year",
           "example": 400000
         },
         "FederalTaxRate": {
           "type": "number",
+          "description": "Federal tax rate in %",
           "example": 34
         },
         "StateTaxRate": {
           "type": "number",
+          "description": "State tax rate in %",
           "format": "float",
           "example": 9.6
         },
         "ProductionTaxCredit": {
           "type": "number",
+          "description": "Production tax credit in $/kWh",
           "format": "float",
           "example": 0.009
         },
         "DebtRatio": {
           "type": "number",
+          "description": "Fraction of financing covered by debt borrowing in %",
           "example": 75
         },
         "InterestRateOnDebt": {
           "type": "number",
+          "description": "Interest rate applied to debt portion of investment in %",
           "example": 5
         },
         "EconomicLife": {
           "type": "number",
+          "description": "Life of Loan in years",
           "example": 20
         },
         "CostOfEquity": {
           "type": "number",
+          "description": "Rate of return on equity portion of investment, in %/year",
           "example": 15
         },
         "CapacityPayment": {
           "type": "number",
+          "description": "Payment in $/kW-year made from power purchaser if plant can guarantee capacity (depends on contract)",
           "example": 166
         },
         "InterestRateonDebtReserve": {
           "type": "number",
+          "description": "Interest income earned on reserve account if financing institution requires security deposit, in %/year",
           "example": 5
         },
         "GeneralInflation": {
           "type": "number",
+          "description": "Overall inflation rate in % used to adjust current dollar result to constant dollars",
           "format": "float",
           "example": 2.1
         },
         "EscalationFuel": {
           "type": "number",
+          "description": "Rate in % at which fuel cost escalates over time",
           "format": "float",
           "example": 2.1
         },
         "EscalationProductionTaxCredit": {
           "type": "number",
+          "description": "Specified index in % for production tax credit",
           "format": "float",
           "example": 2.1
         },
         "EscalationOther": {
           "type": "number",
+          "description": "Rate in % at which other expenses escalate over time",
           "format": "float",
           "example": 2.1
         },
