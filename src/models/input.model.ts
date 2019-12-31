@@ -95,13 +95,12 @@ export interface InputModGP {
     HHVEfficiency: number;
     NetHHVEfficiency: number;
     FractionOfInputEnergy: number; // Dual Fuel if ant, default set to heavy disele
-    CleanGasComposition: number;
     CO: number;
     H2: number;
     Hydrocarbons: number;
     CO2: number;
     O2: number;
-    HigherHeating: number;
+    HHV: number; // Higher Heating Value of Biomass Feedstock to Gasifier (kJ/kg)
     MoistureContent: number;
     AshContent: number;
     CarbonConcentration: number;

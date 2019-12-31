@@ -57,7 +57,7 @@ function GasificationPower(input: InputModGP) {
     const AnnualCleanGasConsumption = CleanGasFlowRateMass * AnnualHours / 1000;
     const DualFuelFlowRate = DualFuelPowerInput / HeavyDieselHHVkJL * 3600;
     const AnnualDualFuelConsumption = DualFuelFlowRate * AnnualHours;
-    const BiomassFeedRate = CleanGasPowerInput / (input.HHVEfficiency / 100) / input.HigherHeating * 3600;
+    const BiomassFeedRate = CleanGasPowerInput / (input.HHVEfficiency / 100) / input.HHV * 3600;
     const AnnualBiomassConsumptionDry = BiomassFeedRate * AnnualHours / 1000;
     const AnnualBiomassConsumptionWet = AnnualBiomassConsumptionDry / (1 - input.MoistureContent / 100);
     const CharProductionRate = input.AshContent / 100 * BiomassFeedRate / (1 - input.CarbonConcentration / 100);
