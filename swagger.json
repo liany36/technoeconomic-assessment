@@ -601,289 +601,261 @@
     "InputModGP": {
       "type": "object",
       "properties": {
-        "GasolineDensity": {
-          "type": "number",
-          "example": 750
-        },
-        "GasolineHigherHeatingMjPerKg": {
-          "type": "number",
-          "example": 47.3
-        },
-        "GasolineLowerHeatingMjPerKg": {
-          "type": "number",
-          "example": 44
-        },
-        "LightDieselDensity": {
-          "type": "number",
-          "example": 810
-        },
-        "LightDieselHigherHeatingMjPerKg": {
-          "type": "number",
-          "example": 46.1
-        },
-        "LightDieselLowerHeatingMjPerKg": {
-          "type": "number",
-          "example": 43.2
-        },
-        "HeavyDieselDensity": {
-          "type": "number",
-          "example": 850
-        },
-        "HeavyDieselHigherHeatingMjPerKg": {
-          "type": "number",
-          "example": 45.5
-        },
-        "HeavyDieselLowerHeatingMjPerKg": {
-          "type": "number",
-          "example": 42.8
-        },
-        "NaturalGasDensity": {
-          "type": "number",
-          "example": 0.724
-        },
-        "NaturalGasHigherHeatingMjPerKg": {
-          "type": "number",
-          "example": 50
-        },
-        "NaturalGasLowerHeatingMjPerKg": {
-          "type": "number",
-          "example": 45
-        },
-        "COHigherHeatingMjPerKg": {
-          "type": "number",
-          "example": 10.1
-        },
-        "COLowerHeatingMjPerKg": {
-          "type": "number",
-          "example": 10.1
-        },
-        "H2HigherHeatingMjPerKg": {
-          "type": "number",
-          "example": 142
-        },
-        "H2LowerHeatingMjPerKg": {
-          "type": "number",
-          "example": 120
-        },
-        "CH4HigherHeatingMjPerKg": {
-          "type": "number",
-          "example": 55.5
-        },
-        "CH4LowerHeatingMjPerKg": {
-          "type": "number",
-          "example": 50
-        },
         "GasifierSystemCapitalCost": {
           "type": "number",
+          "description": "Gasifier and Feedstock Handling System Capital Cost ($)",
           "example": 300000
         },
         "GasCleaningSystemCapitalCost": {
           "type": "number",
+          "description": "Gas Cleaning System Capital Cost ($)",
           "example": 50000
         },
         "PowerGenerationCapitalCost": {
           "type": "number",
+          "description": "Power Generation/Interconnect System Capital Cost ($)",
           "example": 450000
         },
         "EmissionControlSystemCapitalCost": {
           "type": "number",
+          "description": "Emission Control System Capital Cost ($)",
           "example": 25000
         },
         "HeatRecoverySystemCapitalCost": {
           "type": "number",
+          "description": "Heat Recovery System Capital Cost ($)",
           "example": 50000
         },
         "GrossElectricalCapacity": {
           "type": "number",
+          "description": "Total gross generating capacity (kWe)",
           "example": 650
         },
         "NetElectricalCapacity": {
           "type": "number",
+          "description": "Net power available for on-site use or grid sales (kWe)",
           "example": 500
         },
         "CapacityFactor": {
           "type": "number",
+          "description": "Annual fraction that rated capacity is available from plant (kWe)",
           "example": 85
         },
         "HHVEfficiency": {
           "type": "number",
+          "description": "HHV Efficiency of Gasification System--Biomass to Clean Gas (%)",
           "example": 65
         },
         "NetHHVEfficiency": {
           "type": "number",
+          "description": "Net HHV Efficiency of Power Generation incl. Dual Fuel (%)",
           "example": 23
         },
         "FractionOfInputEnergy": {
           "type": "number",
+          "description": "Dual Fuel -> Fraction of Input Energy (%)",
           "example": 20
-        },
-        "CleanGasComposition": {
-          "type": "number",
-          "format": "float",
-          "example": 0
         },
         "CO": {
           "type": "number",
+          "description": "Clean Gas Composition -> CO (% by volume, dry)",
           "example": 20
         },
         "H2": {
           "type": "number",
+          "description": "Clean Gas Composition -> H2 (% by volume, dry)",
           "example": 12
         },
         "Hydrocarbons": {
           "type": "number",
+          "description": "Clean Gas Composition -> Hydrocarbons (as CH4) (% by volume, dry)",
           "example": 5
         },
         "CO2": {
           "type": "number",
+          "description": "Clean Gas Composition -> CO2 (% by volume, dry)",
           "example": 12
         },
         "O2": {
           "type": "number",
+          "description": "Clean Gas Composition -> O2 (% by volume, dry)",
           "example": 0
         },
-        "HigherHeating": {
+        "HHV": {
           "type": "number",
+          "description": "Higher Heating Value of Biomass Feedstock to Gasifier (kJ/kg)",
           "example": 18608
         },
         "MoistureContent": {
           "type": "number",
+          "description": "Moisture Content of Biomass Feedstock to Gasifier (% wet basis)",
           "example": 15
         },
         "AshContent": {
           "type": "number",
+          "description": "Ash Content of Biomass (% dry matter)",
           "example": 5
         },
         "CarbonConcentration": {
           "type": "number",
+          "description": "Carbon Concentration of Char (% dry basis)",
           "example": 30
         },
         "AggregateFractionOfHeatRecovered": {
           "type": "number",
+          "description": "Aggregate fraction of heat recovered (%)",
           "example": 50
         },
         "AggregateSalesPriceForHeat": {
           "type": "number",
+          "description": "Aggregate sales price for heat ($/kWh)",
           "example": 0.01
         },
         "BiomassFuelCost": {
           "type": "number",
+          "description": "Biomass Fuel Cost ($/t)--use negative value for tipping fee",
           "example": 22.05
         },
         "DualFuelCost": {
           "type": "number",
+          "description": "Dual Fuel Cost ($/L) * Default assumes heavy diesel fuel",
           "example": 0.3
         },
         "LaborCost": {
           "type": "number",
+          "description": "Cost of labor to operate facility ($/y)",
           "example": 20000
         },
         "MaintenanceCost": {
           "type": "number",
+          "description": "Cost of maintaining the plant ($/y)",
           "example": 4000
         },
         "WasteTreatment": {
           "type": "number",
+          "description": "Waste Treatment/Disposal ($/y)",
           "example": 2000
         },
         "Insurance": {
           "type": "number",
+          "description": "Cost of insurance for the plant plus any property or other local taxes ($/y)",
           "example": 1000
         },
         "Utilities": {
           "type": "number",
+          "description": "Purchased utilities including power, gas, water, waste disposal ($/y)",
           "example": 1000
         },
         "Management": {
           "type": "number",
+          "description": "Cost for administrative personnel and other administration ($/y)",
           "example": 1000
         },
         "OtherOperatingExpenses": {
           "type": "number",
+          "description": "All other expenses for operating the plant, for example natural gas not included in utilities, chemicals, or additives ($/y)",
           "example": 1000
         },
         "FederalTaxRate": {
           "type": "number",
+          "description": "Federal Tax Rate (%)",
           "example": 34
         },
         "StateTaxRate": {
           "type": "number",
+          "description": "State Tax Rate (%)",
           "format": "float",
           "example": 9.6
         },
         "ProductionTaxCredit": {
           "type": "number",
+          "description": "Production Tax Credit ($/kWh)",
           "format": "float",
           "example": 0.009
         },
         "ElectricityCapacityPayment": {
           "type": "number",
+          "description": "Payment made from power purchaser if plant can guarantee capacity (depends on contract) ($/kW-y)",
           "format": "float",
           "example": 0
         },
         "InterestRateOnDebtReserve": {
           "type": "number",
+          "description": "Interest income earned on reserve account if financing institution requires security deposit (%/y)",
           "format": "float",
           "example": 2
         },
         "SalesPriceForChar": {
           "type": "number",
+          "description": "Sales Price for Char/Ash ($/t)--for disposal",
           "format": "float",
           "example": 0
         },
         "GeneralInflation": {
           "type": "number",
+          "description": "Overall inflation rate used to adjust current dollar result to constant dollars (%/y)",
           "format": "float",
           "example": 2.1
         },
         "EscalationBiomassFuel": {
           "type": "number",
+          "description": "Rate at which biomass fuel cost escalates over time (%/y)",
           "format": "float",
           "example": 2.1
         },
         "EscalationDualFuel": {
           "type": "number",
+          "description": "Rate at which dual fuel cost escalates over time (%/y)",
           "format": "float",
           "example": 2.1
         },
         "EscalationProductionTaxCredit": {
           "type": "number",
+          "description": "Specified index for production tax credit (%/y)",
           "format": "float",
           "example": 2.1
         },
         "EscalationHeatSales": {
           "type": "number",
+          "description": "Escalation rate applied to heat sales (%/y)",
           "format": "float",
           "example": 2.1
         },
         "EscalationCharSales": {
           "type": "number",
+          "description": "Escalation rate applied to sales of char or ash (%/y)",
           "format": "float",
           "example": 2.1
         },
         "EscalationOther": {
           "type": "number",
+          "description": "Rate at which other expenses escalate over time (%/y)",
           "format": "float",
           "example": 2.1
         },
         "DebtRatio": {
           "type": "number",
+          "description": "Fraction of financing covered by debt borrowing (%)",
           "example": 90
         },
         "InterestRateOnDebt": {
           "type": "number",
+          "description": "Interest rate applied to debt portion of investment (%/y)",
           "example": 5
         },
         "EconomicLife": {
           "type": "number",
+          "description": "Life of Loan (y)",
           "example": 20
         },
         "CostOfEquity": {
           "type": "number",
+          "description": "Rate of return on equity portion of investment (%/y)",
           "example": 15
         },
         "TaxCreditFrac": {
           "type": "array",
+          "description": "Tax Credit Schedule -> Fraction is 1 if received in year, 0 if not",
           "items": {
             "type": "number"
           },
