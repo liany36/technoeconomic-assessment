@@ -83,25 +83,6 @@ export interface InputModCHP {
 
 // GasificationPower
 export interface InputModGP {
-    // Fuel Properties
-    GasolineDensity: number;
-    GasolineHigherHeatingMjPerKg: number;
-    GasolineLowerHeatingMjPerKg: number;
-    LightDieselDensity: number;
-    LightDieselHigherHeatingMjPerKg: number;
-    LightDieselLowerHeatingMjPerKg: number;
-    HeavyDieselDensity: number;
-    HeavyDieselHigherHeatingMjPerKg: number;
-    HeavyDieselLowerHeatingMjPerKg: number;
-    NaturalGasDensity: number;
-    NaturalGasHigherHeatingMjPerKg: number;
-    NaturalGasLowerHeatingMjPerKg: number;
-    COHigherHeatingMjPerKg: number;
-    COLowerHeatingMjPerKg: number;
-    H2HigherHeatingMjPerKg: number;
-    H2LowerHeatingMjPerKg: number;
-    CH4HigherHeatingMjPerKg: number;
-    CH4LowerHeatingMjPerKg: number;
     // Capital Cost from Gasification Power Generation
     GasifierSystemCapitalCost: number;
     GasCleaningSystemCapitalCost: number;
@@ -114,13 +95,12 @@ export interface InputModGP {
     HHVEfficiency: number;
     NetHHVEfficiency: number;
     FractionOfInputEnergy: number; // Dual Fuel if ant, default set to heavy disele
-    CleanGasComposition: number;
     CO: number;
     H2: number;
     Hydrocarbons: number;
     CO2: number;
     O2: number;
-    HigherHeating: number;
+    HHV: number; // Higher Heating Value of Biomass Feedstock to Gasifier (kJ/kg)
     MoistureContent: number;
     AshContent: number;
     CarbonConcentration: number;
@@ -167,8 +147,6 @@ export interface InputModGP {
 export interface InputModHydrogen {
     // Hydrogen Generation
     GrossDesignHydrogenCapacity: number;
-    HydrogenHHV: number;
-    HydrogenLHV: number;
     Feedstock: number;
     OverallProductionEfficiency: number;
     CapacityFactor: number;

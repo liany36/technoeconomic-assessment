@@ -4,8 +4,11 @@ import { CashFlowHydrogen, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod
     TotalCashFlowHydrogen } from './output.model';
 
 function Hydrogen(input: InputModHydrogen) {
+    // Constants
+    const HydrogenHHV = 141.93; // Hydrogen Higher Heating Value (MJ/kg)
+    const HydrogenLHV = 119.98; // Hydrogen Lower Heating Value (MJ/kg)
     // Hydrogen Generation
-    const HydrogenEnergy = input.GrossDesignHydrogenCapacity * input.HydrogenHHV;
+    const HydrogenEnergy = input.GrossDesignHydrogenCapacity * HydrogenHHV;
     const DesignHydrogenProductionRateMW = HydrogenEnergy / 24 / 3600;
     const DesignHydrogenProductionRateMg = input.GrossDesignHydrogenCapacity / 24 / 1000;
     const FeedstockInput = DesignHydrogenProductionRateMW / (input.OverallProductionEfficiency / 100);
@@ -15,7 +18,7 @@ function Hydrogen(input: InputModHydrogen) {
     const AnnualFeedstockEnergyInput = AnnualFeedstockSupply * 1000 * input.Feedstock / 1000000000;
     const AnnualHydrogenProductionMg = DesignHydrogenProductionRateMg * AnnualHours;
     const AnnualHydrogenProductionKg = AnnualHydrogenProductionMg * 1000;
-    const AnnualHydrogenEnergy = AnnualHydrogenProductionMg * 1000 * input.HydrogenHHV / 1000;
+    const AnnualHydrogenEnergy = AnnualHydrogenProductionMg * 1000 * HydrogenHHV / 1000;
     // Capital Cost
     const CapitalCostUnitDaily = input.CapitalCost / input.GrossDesignHydrogenCapacity;
     const CapitalCostUnitYear = input.CapitalCost / AnnualHydrogenProductionKg;
