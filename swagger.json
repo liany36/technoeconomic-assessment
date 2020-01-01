@@ -1344,31 +1344,37 @@
         "AnnualHours": {
           "type": "number",
           "format": "float",
+          "example": 7446,
           "description": "Annual Hours"
         },
         "FuelConsumptionRate": {
           "type": "number",
           "format": "float",
+          "example": 24,
           "description": "Fuel consumption rate (dry metric tons/hour)"
         },
         "AnnualGeneration": {
           "type": "number",
           "format": "float",
+          "example": 186150000,
           "description": "Annual Generation (kWh)"
         },
         "CapitalCostNEC": {
           "type": "number",
           "format": "float",
+          "example": 2800,
           "description": "Capital cost per net electrical capacity ($/kWe)"
         },
         "AnnualFuelConsumption": {
           "type": "number",
           "format": "float",
+          "example": 180068,
           "description": "Annual fuel consumption (dry metric tons/year)"
         },
         "AnnualAshDisposal": {
           "type": "number",
           "format": "float",
+          "example": 9003,
           "description": "Annual Ash Disposal (dry metric tons/year)"
         }
       },
@@ -1385,16 +1391,19 @@
         "ParasiticLoad": {
           "type": "number",
           "format": "float",
+          "example": 3000,
           "description": "Electrical power used to operate facility (kWe)"
         },
         "FuelPower": {
           "type": "number",
           "format": "float",
+          "example": 125000,
           "description": "Fuel Power (kW)"
         },
         "GrossStationElectricalEfficiency": {
           "type": "number",
           "format": "float",
+          "example": 22.4,
           "description": "Gross Station Electrical Efficiency (%)"
         }
       },
@@ -1408,111 +1417,133 @@
         "ParasiticLoad": {
           "type": "number",
           "format": "float",
+          "example": 150,
           "description": "Electrical power used to operate system (kWe)"
         },
         "AnnualHours": {
           "type": "number",
           "format": "float",
+          "example": 7446,
           "description": "Annual Hours"
         },
         "AnnualNetElectricityGeneration": {
           "type": "number",
           "format": "float",
+          "example": 3723000,
           "description": "Annual Net Electricity Generation (kWh)"
         },
         "OverallNetSystemEfficiency": {
           "type": "number",
           "format": "float",
+          "example": 15,
           "description": "Overall system efficiency (%) -> biomass into gasifier to electricity"
         },
         "NitrogenGas": {
           "type": "number",
           "format": "float",
+          "example": 51,
           "description": "Nitrogen"
         },
         "CleanGasMolecularMass": {
           "type": "number",
           "format": "float",
+          "example": 26.2,
           "description": "Clean Gas Molecular Mass (kg/kmol)"
         },
         "CleanGasDensity": {
           "type": "number",
           "format": "float",
+          "example": 1.071,
           "description": "Clean Gas Density 298K, 1 atm (kg/m3)"
         },
         "CleanGasHigherHeatingValue": {
           "type": "number",
           "format": "float",
+          "example": 5523,
           "description": "Clean Gas Higher Heating Value (kJ/m3)"
         },
         "CleanGasLowerHeatingValue": {
           "type": "number",
           "format": "float",
+          "example": 5127,
           "description": "Clean Gas Lower Heating Value (MJ/m3)"
         },
         "TotalFuelPowerInput": {
           "type": "number",
           "format": "float",
+          "example": 2174,
           "description": "Total Fuel Power Input (kW)"
         },
         "CleanGasPowerInput": {
           "type": "number",
           "format": "float",
+          "example": 1739,
           "description": "Clean Gas Power Input (kW)"
         },
         "DualFuelPowerInput": {
           "type": "number",
           "format": "float",
+          "example": 435,
           "description": "Dual Fuel Power Input (kW)"
         },
         "CleanGasFlowRateVolume": {
           "type": "number",
           "format": "float",
+          "example": 1134,
           "description": "Clean Gas Flow Rate (m3/h)"
         },
         "CleanGasFlowRateMass": {
           "type": "number",
           "format": "float",
+          "example": 1215,
           "description": "Clean Gas Flow Rate (kg/h)"
         },
         "AnnualCleanGasConsumption": {
           "type": "number",
           "format": "float",
+          "example": 9045,
           "description": "Annual Clean Gas Consumption (dry metric tons/year)"
         },
         "DualFuelFlowRate": {
           "type": "number",
           "format": "float",
+          "example": 40,
           "description": "Dual Fuel Flow Rate (L/h) * Default assumes heavy diesel fuel"
         },
         "AnnualDualFuelConsumption": {
           "type": "number",
           "format": "float",
+          "example": 301347,
           "description": "Annual Dual Fuel Consumption (L/year)"
         },
         "BiomassFeedRate": {
           "type": "number",
           "format": "float",
+          "example": 518,
           "description": "Biomass Feed Rate (kg/h)--dry basis"
         },
         "AnnualBiomassConsumptionDryMass": {
           "type": "number",
           "format": "float",
+          "example": 3854,
           "description": "Annual Biomass Consumption (t/year)--dry basis"
         },
         "AnnualBiomassConsumptionWetMass": {
           "type": "number",
           "format": "float",
+          "example": 4534,
           "description": "Annual Biomass Consumption (t/year)--wet basis"
         },
         "CharProductionRate": {
           "type": "number",
           "format": "float",
+          "example": 37,
           "description": "Char Production Rate (kg/h)--dry"
         },
         "AnnualCharProduction": {
           "type": "number",
           "format": "float",
+          "example": 275,
           "description": "Annual Char Production (t/y)--dry"
         }
       },
@@ -1526,51 +1557,61 @@
         "TotalNonFuelExpenses": {
           "type": "number",
           "format": "float",
+          "example": 5800000,
           "description": "Total Non-Fuel Expenses ($/kWh)"
         },
         "TotalExpensesIncludingFuel": {
           "type": "number",
           "format": "float",
+          "example": 9770493,
           "description": "Total Expenses Including Fuel ($/year)"
         },
         "LaborCostKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0107,
           "description": "Cost of labor to operate facility ($/kWh-net electrical)"
         },
         "MaintenanceCostKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0081,
           "description": "Cost of maintaining the plant ($/kWh-net electrical)"
         },
         "InsurancePropertyTaxKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0075,
           "description": "Cost of insurance for the plant plus any property or other local taxes ($/kWh-net electrical)"
         },
         "UtilitiesKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0011,
           "description": "Purchased utilities including power, gas, water, waste disposal ($/kWh-net electrical)"
         },
         "ManagementKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0011,
           "description": "Cost for administrative personnel and other administration ($/kWh-net electrical)"
         },
         "OtherOperatingExpensesKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0021,
           "description": "All other expenses for operating the plant, for example natural gas not included in utilities, chemicals, or additives ($/kWh-net electrical)"
         },
         "TotalNonFuelExpensesKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0312,
           "description": "Total Non-Fuel Expenses ($/kWh-net electrical)"
         },
         "TotalExpensesIncludingFuelKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0525,
           "description": "Total Expenses Including Fuel ($/kWh-net electrical)"
         }
       },
@@ -1587,11 +1628,13 @@
         "FuelCostKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0213,
           "description": "Cost of fuel ($/kWh-net electrical)"
         },
         "AshDisposalKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0005,
           "description": "Cost of ash disposal from plant ($/kWh-net electrical), use negative value when ash is sold at value"
         }
       },
@@ -1608,16 +1651,19 @@
         "BiomassFuelCostKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0228,
           "description": "Cost of biomass fuel for gasifier ($/kWh-net electrical)"
         },
         "DualFuelCostKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0243,
           "description": "Dual Fuel Cost ($/kWh-net electrical)"
         },
         "WasteTreatmentKwh": {
           "type": "number",
           "format": "float",
+          "example": 0.0005,
           "description": "Waste Treatment/Disposal ($/kWh-net electrical)"
         }
       },
@@ -1631,16 +1677,19 @@
         "AnnualFeedstockCost": {
           "type": "number",
           "format": "float",
+          "example": 24768200,
           "description": "Annual feedstock cost ($)"
         },
         "OperatingExpenses": {
           "type": "number",
           "format": "float",
+          "example": 8260000,
           "description": "Operating expenses ($)"
         },
         "TotalAnnualExpenses": {
           "type": "number",
           "format": "float",
+          "example": 33028200,
           "description": "Total annual expenses including feedstock ($)"
         }
       },
@@ -1654,11 +1703,13 @@
         "AnnualCapacityPayment": {
           "type": "number",
           "format": "float",
+          "example": 4150000,
           "description": "Annual Capacity Payment ($/year)"
         },
         "AnnualDebtReserveInterest": {
           "type": "number",
           "format": "float",
+          "example": 210637,
           "description": "Annual Debt Reserve Interest ($/year)"
         }
       },
@@ -1675,6 +1726,7 @@
         "AnnualIncomeFromChar": {
           "type": "number",
           "format": "float",
+          "example": 0,
           "description": "Annual Income from Char/Ash Sales ($/year)"
         }
       },
@@ -2622,6 +2674,7 @@
         "CombinedTaxRate": {
           "type": "number",
           "format": "float",
+          "example": 40.34,
           "description": "Combined federal and state tax rate to which project is subject (%)"
         },
         "Financing": {
@@ -2644,11 +2697,13 @@
         "LACcurrent": {
           "type": "number",
           "format": "float",
+          "example": 0.0799,
           "description": "Current $ Level Annual Cost of Energy ($/kWh)"
         },
         "LACconstant": {
           "type": "number",
           "format": "float",
+          "example": 0.0696,
           "description": "Constant $ Level Annual Cost of Energy ($/kWh)"
         }
       },
@@ -2662,51 +2717,61 @@
         "EquityRatio": {
           "type": "number",
           "format": "float",
+          "example": 25,
           "description": "Fraction of financing covered by corporate investment (%)"
         },
         "CostOfMoney": {
           "type": "number",
           "format": "float",
+          "example": 7.5,
           "description": "Weighted cost of investment for full investment including both debt and equity (%/year)"
         },
         "TotalCostOfPlant": {
           "type": "number",
           "format": "float",
+          "example": 70000000,
           "description": "Total Cost of Plant ($)"
         },
         "TotalEquityCost": {
           "type": "number",
           "format": "float",
+          "example": 17500000,
           "description": "Total Equity Cost ($)"
         },
         "TotalDebtCost": {
           "type": "number",
           "format": "float",
+          "example": 52500000,
           "description": "Total Debt Cost ($)"
         },
         "CapitalRecoveryFactorEquity": {
           "type": "number",
           "format": "float",
+          "example": 0.1598,
           "description": "Capital Recovery Factor (Equity)"
         },
         "CapitalRecoveryFactorDebt": {
           "type": "number",
           "format": "float",
+          "example": 0.0802,
           "description": "Capital Recovery Factor (Debt)"
         },
         "AnnualEquityRecovery": {
           "type": "number",
           "format": "float",
+          "example": 2795826,
           "description": "Uniform annual revenue required to earn stipulated rate of return on equity ($/year)"
         },
         "AnnualDebtPayment": {
           "type": "number",
           "format": "float",
+          "example": 4212736,
           "description": "Uniform annual payment needed to pay off debt ($/year)"
         },
         "DebtReserve": {
           "type": "number",
           "format": "float",
+          "example": 4212736,
           "description": "Funds placed in reserve account as security deposit ($).  Sometimes required by financing institution to ensure debt repayment if plant operation is stopped for some period, typically up to one year"
         }
       },
@@ -2720,6 +2785,7 @@
         "CostOfMoney": {
           "type": "number",
           "format": "float",
+          "example": 0.15,
           "description": "Cost of Money ($)"
         },
         "PresentWorth": {
@@ -2727,26 +2793,52 @@
           "type": "array",
           "items": {
             "type": "number"
-          }
+          },
+          "example": [
+            16472951,
+            9163094,
+            8126736,
+            7208673,
+            6395288,
+            6217828,
+            5518139,
+            4897875,
+            4347947,
+            3860315,
+            3427865,
+            3044300,
+            2704049,
+            2402180,
+            2134327,
+            1896623,
+            1685647,
+            1498367,
+            1332097,
+            753047
+          ]
         },
         "TotalPresentWorth": {
           "type": "number",
           "format": "float",
+          "example": 93087351,
           "description": "Total Present Worth ($)"
         },
         "CapitalRecoveryFactorCurrent": {
           "type": "number",
           "format": "float",
+          "example": 0.1598,
           "description": "Capital Recovery Factor (current)"
         },
         "CurrentLevelAnnualRevenueRequirements": {
           "type": "number",
           "format": "float",
+          "example": 14871772,
           "description": "Current $ Level Annual Revenue Requirements ($/year)"
         },
         "CurrentLACofEnergy": {
           "type": "number",
           "format": "float",
+          "example": 0.0799,
           "description": "Current $ Level Annual Cost of Energy ($/kWh)"
         }
       },
@@ -2760,23 +2852,25 @@
         "RealCostOfMoney": {
           "type": "number",
           "format": "float",
+          "example": 0.1263,
           "description": "Real Cost of Money (inflation adjusted) ($)"
         },
         "CapitalRecoveryFactorConstant": {
           "description": "Capital Recovery Factor (constant)",
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
+          "type": "number",
+          "format": "float",
+          "example": 0.1392
         },
         "ConstantLevelAnnualRevenueRequirements": {
           "type": "number",
           "format": "float",
+          "example": 12961357,
           "description": "Constant $ Level Annual Revenue Requirements ($/year)"
         },
         "ConstantLACofEnergy": {
           "type": "number",
           "format": "float",
+          "example": 0.0696,
           "description": "Constant $ Level Annual Cost of Energy ($/kWh)"
         }
       },
@@ -2790,36 +2884,43 @@
         "TotalHeatProductionRate": {
           "type": "number",
           "format": "float",
+          "example": 97000,
           "description": "Total heat production rate equal to fuel power less gross electrical power (kWth)"
         },
         "RecoveredHeat": {
           "type": "number",
           "format": "float",
+          "example": 58200,
           "description": "Recovered heat production rate (kWth)"
         },
         "AnnualHeatSales": {
           "type": "number",
           "format": "float",
+          "example": 433357200,
           "description": "Total annual heat energy sales (kWh/year)"
         },
         "TotalIncomeFromHeatSales": {
           "type": "number",
           "format": "float",
+          "example": 4420243,
           "description": "Total income from heat sales ($/year)"
         },
         "HeatIncomePerUnitNEE": {
           "type": "number",
           "format": "float",
+          "example": 0.0237,
           "description": "Heat income per unit net electrical energy ($/kWh-net)"
         },
         "OverallCHPefficiencyGross": {
           "type": "number",
           "format": "float",
+          "example": 69,
           "description": "Overall CHP Efficiency--Gross (%)"
         },
         "OverallCHPefficiencyNet": {
           "type": "number",
           "format": "float",
+          "example": 66.6,
           "description": "Overall CHP Efficiency--Net (%)"
         }
       },
@@ -2833,36 +2934,43 @@
         "TotalFacilityCapitalCost": {
           "type": "number",
           "format": "float",
+          "example": 875000,
           "description": "Total installed cost of plant including electrical plus heat recovery and distribution ($)"
         },
         "GasifierSystemCapitalCostPerKwe": {
           "type": "number",
           "format": "float",
+          "example": 600,
           "description": "Gasifier and Feedstock Handling System Capital Cost ($/kWe-net)"
         },
         "GasCleaningSystemCapitalCostPerKwe": {
           "type": "number",
           "format": "float",
+          "example": 100,
           "description": "Gas Cleaning System Capital Cost ($/kWe-net)"
         },
         "PowerGenerationCapitalCostPerKwe": {
           "type": "number",
           "format": "float",
+          "example": 900,
           "description": "Power Generation/Interconnect System Capital Cost ($/kWe-net)"
         },
         "EmissionControlSystemCapitalCostPerKwe": {
           "type": "number",
           "format": "float",
+          "example": 50,
           "description": "Emission Control System Capital Cost ($/kWe-net)"
         },
         "HeatRecoverySystemCapitalCostPerKwe": {
           "type": "number",
           "format": "float",
+          "example": 100,
           "description": "Heat Recovery System Capital Cost ($/kWe-net)"
         },
         "TotalFacilityCapitalCostPerKwe": {
           "type": "number",
           "format": "float",
+          "example": 1750,
           "description": "Total Facility Capital Cost ($/kWe-net)"
         }
       },
@@ -2876,56 +2984,67 @@
         "HydrogenEnergy": {
           "type": "number",
           "format": "float",
+          "example": 22476960,
           "description": "Hydrogen energy (MJ HHV/day)"
         },
         "DesignHydrogenProductionRateMW": {
           "type": "number",
           "format": "float",
+          "example": 260.15,
           "description": "Design hydrogen production rate (HHV, MWf)"
         },
         "DesignHydrogenProductionRateMg": {
           "type": "number",
           "format": "float",
+          "example": 6.6,
           "description": "Design hydrogen production rate (Mg/hour)"
         },
         "FeedstockInput": {
           "type": "number",
           "format": "float",
+          "example": 430,
           "description": "Feedstock  input (dry, MWth)"
         },
         "FeedstockSupply": {
           "type": "number",
           "format": "float",
+          "example": 80,
           "description": "Feedstock supply (dry, Mg/operating hour)"
         },
         "AnnualHours": {
           "type": "number",
           "format": "float",
+          "example": 8000,
           "description": "Annual Hours"
         },
         "AnnualFeedstockSupply": {
           "type": "number",
           "format": "float",
+          "example": 640005,
           "description": "Annual feedstock supply (dry, Mg/year)"
         },
         "AnnualFeedstockEnergyInput": {
           "type": "number",
           "format": "float",
+          "example": 12.38,
           "description": "Annual feedstock energy input (PJ/year)"
         },
         "AnnualHydrogenProductionMg": {
           "type": "number",
           "format": "float",
+          "example": 52789,
           "description": "Annual hydrogen production (Mg/year)"
         },
         "AnnualHydrogenProductionKg": {
           "type": "number",
           "format": "float",
+          "example": 52788840,
           "description": "Annual hydrogen production (kg/year)"
         },
         "AnnualHydrogenEnergy": {
           "type": "number",
           "format": "float",
+          "example": 7492320,
           "description": "Annual hydrogen energy (GJ/year)"
         }
       },
