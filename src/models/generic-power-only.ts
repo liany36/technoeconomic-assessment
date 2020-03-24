@@ -6,6 +6,7 @@ import { CashFlowGPO, ConstantLevelAnnualCostMod, CurrentLevelAnnualCostMod, Ele
 function GenericPowerOnly(input: InputModGPO) {
     // Electrical and Fuel--base year
     const AnnualHours = input.CapacityFactor / 100 * 8760;
+    input.FuelHeatingValue = input.FuelHeatingValue * (1 - input.MoistureContent / 100);
     const FuelConsumptionRate = input.NetElectricalCapacity / (input.NetStationEfficiency / 100) * 3600
         / input.FuelHeatingValue / 1000;
     const AnnualGeneration = input.NetElectricalCapacity * 8760 * input.CapacityFactor / 100;

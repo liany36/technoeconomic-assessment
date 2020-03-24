@@ -5,6 +5,7 @@ export interface InputModGPO {
     NetElectricalCapacity: number;
     CapacityFactor: number;
     NetStationEfficiency: number;
+    MoistureContent: number;
     FuelHeatingValue: number;
     FuelAshConcentration: number;
     // Expenses--base year
