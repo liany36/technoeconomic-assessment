@@ -7,6 +7,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     // Electrical and Fuel--base year
     const ParasiticLoad = input.GrossElectricalCapacity - input.NetElectricalCapacity;
     const AnnualHours = input.CapacityFactor / 100 * 8760;
+    input.FuelHeatingValue = input.FuelHeatingValue * (1 - input.MoistureContent / 100);
     const FuelConsumptionRate = input.NetElectricalCapacity / (input.NetStationEfficiency / 100) * 3600
         / input.FuelHeatingValue / 1000;
     const FuelPower = FuelConsumptionRate * 1000 * input.FuelHeatingValue / 3600;
