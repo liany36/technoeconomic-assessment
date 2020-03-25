@@ -184,7 +184,7 @@
         "FuelHeatingValue": {
           "type": "number",
           "example": 18608,
-          "description": "Higher heating value (heat of combustion) of fuel expressed on a dry basis input in SI units (kJ/kg)"
+          "description": "Higher heating value (heat of combustion) of fuel expressed on a wet basis input in SI units (kJ/kg)"
         },
         "FuelAshConcentration": {
           "type": "number",
@@ -338,6 +338,7 @@
         "NetPlantCapacity",
         "CapacityFactor",
         "NetStationEfficiency",
+        "MoistureContent",
         "FuelHeatingValue",
         "FuelAshConcentration",
         "FuelCost",
@@ -403,7 +404,7 @@
         "FuelHeatingValue": {
           "type": "number",
           "example": 18608,
-          "description": "Higher heating value (heat of combustion) of fuel expressed on a dry basis input in SI units (kJ/kg)"
+          "description": "Higher heating value (heat of combustion) of fuel expressed on a wet basis input in SI units (kJ/kg)"
         },
         "FuelAshConcentration": {
           "type": "number",
@@ -576,6 +577,7 @@
         "NetElectricalCapacity",
         "CapacityFactor",
         "NetStationEfficiency",
+        "MoistureContent",
         "FuelHeatingValue",
         "FuelAshConcentration",
         "AggregateFractionOfHeatRecovered",
