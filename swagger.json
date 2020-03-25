@@ -176,10 +176,15 @@
           "example": 20,
           "description": "Ratio of net energy output from plant to fuel energy input to plant (%)"
         },
+        "MoistureContent": {
+          "type": "number",
+          "example": 50,
+          "description": "Moisture Content of Biomass Feedstock (% wet basis)"
+        },
         "FuelHeatingValue": {
           "type": "number",
           "example": 18608,
-          "description": "Higher heating value (heat of combustion) of fuel expressed on a dry basis input in SI units (kJ/kg)"
+          "description": "Higher heating value (heat of combustion) of fuel expressed on a wet basis input in SI units (kJ/kg)"
         },
         "FuelAshConcentration": {
           "type": "number",
@@ -333,6 +338,7 @@
         "NetPlantCapacity",
         "CapacityFactor",
         "NetStationEfficiency",
+        "MoistureContent",
         "FuelHeatingValue",
         "FuelAshConcentration",
         "FuelCost",
@@ -390,10 +396,15 @@
           "example": 20,
           "description": "Ratio of net energy output from plant to fuel energy input to plant (%)"
         },
+        "MoistureContent": {
+          "type": "number",
+          "example": 50,
+          "description": "Moisture Content of Biomass Feedstock (% wet basis)"
+        },
         "FuelHeatingValue": {
           "type": "number",
           "example": 18608,
-          "description": "Higher heating value (heat of combustion) of fuel expressed on a dry basis input in SI units (kJ/kg)"
+          "description": "Higher heating value (heat of combustion) of fuel expressed on a wet basis input in SI units (kJ/kg)"
         },
         "FuelAshConcentration": {
           "type": "number",
@@ -435,7 +446,7 @@
         },
         "Utilities": {
           "type": "number",
-          "example": 20000,
+          "example": 200000,
           "description": "Purchased utilities including power, gas, water, waste disposal ($/year)"
         },
         "AshDisposal": {
@@ -566,6 +577,7 @@
         "NetElectricalCapacity",
         "CapacityFactor",
         "NetStationEfficiency",
+        "MoistureContent",
         "FuelHeatingValue",
         "FuelAshConcentration",
         "AggregateFractionOfHeatRecovered",
@@ -688,7 +700,7 @@
         },
         "MoistureContent": {
           "type": "number",
-          "example": 15,
+          "example": 50,
           "description": "Moisture Content of Biomass Feedstock to Gasifier (% wet basis)"
         },
         "AshContent": {
