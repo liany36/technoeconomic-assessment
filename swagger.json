@@ -176,6 +176,11 @@
           "example": 20,
           "description": "Ratio of net energy output from plant to fuel energy input to plant (%)"
         },
+        "MoistureContent": {
+          "type": "number",
+          "example": 50,
+          "description": "Moisture Content of Biomass Feedstock (% wet basis)"
+        },
         "FuelHeatingValue": {
           "type": "number",
           "example": 18608,
@@ -390,6 +395,11 @@
           "example": 20,
           "description": "Ratio of net energy output from plant to fuel energy input to plant (%)"
         },
+        "MoistureContent": {
+          "type": "number",
+          "example": 50,
+          "description": "Moisture Content of Biomass Feedstock (% wet basis)"
+        },
         "FuelHeatingValue": {
           "type": "number",
           "example": 18608,
@@ -435,7 +445,7 @@
         },
         "Utilities": {
           "type": "number",
-          "example": 20000,
+          "example": 200000,
           "description": "Purchased utilities including power, gas, water, waste disposal ($/year)"
         },
         "AshDisposal": {
@@ -688,7 +698,7 @@
         },
         "MoistureContent": {
           "type": "number",
-          "example": 15,
+          "example": 50,
           "description": "Moisture Content of Biomass Feedstock to Gasifier (% wet basis)"
         },
         "AshContent": {
