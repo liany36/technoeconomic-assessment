@@ -104,26 +104,24 @@ function Hydrogen(input: InputModHydrogen) {
   const cashFlow = [];
   for (let i = 0; i < input.EconomicLife; i++) {
     const newCF: CashFlowHydrogen = {
-      Shared: {
-        Year: 0,
-        EquityRecovery: 0,
-        EquityInterest: 0,
-        EquityPrincipalPaid: 0,
-        EquityPrincipalRemaining: 0,
-        DebtRecovery: 0,
-        DebtInterest: 0,
-        DebtPrincipalPaid: 0,
-        DebtPrincipalRemaining: 0,
-        NonFuelExpenses: 0,
-        DebtReserve: 0,
-        Depreciation: 0,
-        IncomeCapacity: 0,
-        InterestOnDebtReserve: 0,
-        TaxesWoCredit: 0,
-        TaxCredit: 0,
-        Taxes: 0,
-        EnergyRevenueRequired: 0
-      },
+      Year: 0,
+      EquityRecovery: 0,
+      EquityInterest: 0,
+      EquityPrincipalPaid: 0,
+      EquityPrincipalRemaining: 0,
+      DebtRecovery: 0,
+      DebtInterest: 0,
+      DebtPrincipalPaid: 0,
+      DebtPrincipalRemaining: 0,
+      NonFuelExpenses: 0,
+      DebtReserve: 0,
+      Depreciation: 0,
+      IncomeCapacity: 0,
+      InterestOnDebtReserve: 0,
+      TaxesWoCredit: 0,
+      TaxCredit: 0,
+      Taxes: 0,
+      EnergyRevenueRequired: 0,
       FuelCost: 0,
       Expenses: 0,
       IncomeElectricalEnergy: 0,
@@ -138,26 +136,24 @@ function Hydrogen(input: InputModHydrogen) {
   }
   function CalcCashFlow(CF: CashFlowHydrogen, Year: number) {
     const newCF: CashFlowHydrogen = {
-      Shared: {
-        Year: 0,
-        EquityRecovery: 0,
-        EquityInterest: 0,
-        EquityPrincipalPaid: 0,
-        EquityPrincipalRemaining: 0,
-        DebtRecovery: 0,
-        DebtInterest: 0,
-        DebtPrincipalPaid: 0,
-        DebtPrincipalRemaining: 0,
-        NonFuelExpenses: 0,
-        DebtReserve: 0,
-        Depreciation: 0,
-        IncomeCapacity: 0,
-        InterestOnDebtReserve: 0,
-        TaxesWoCredit: 0,
-        TaxCredit: 0,
-        Taxes: 0,
-        EnergyRevenueRequired: 0
-      },
+      Year: 0,
+      EquityRecovery: 0,
+      EquityInterest: 0,
+      EquityPrincipalPaid: 0,
+      EquityPrincipalRemaining: 0,
+      DebtRecovery: 0,
+      DebtInterest: 0,
+      DebtPrincipalPaid: 0,
+      DebtPrincipalRemaining: 0,
+      NonFuelExpenses: 0,
+      DebtReserve: 0,
+      Depreciation: 0,
+      IncomeCapacity: 0,
+      InterestOnDebtReserve: 0,
+      TaxesWoCredit: 0,
+      TaxCredit: 0,
+      Taxes: 0,
+      EnergyRevenueRequired: 0,
       FuelCost: 0,
       Expenses: 0,
       IncomeElectricalEnergy: 0,
@@ -165,60 +161,60 @@ function Hydrogen(input: InputModHydrogen) {
       IncomeHeat: 0,
       IncomeResidue: 0
     };
-    newCF.Shared.Year = Year;
-    newCF.Shared.EquityRecovery = AnnualEquityRepayment;
+    newCF.Year = Year;
+    newCF.EquityRecovery = AnnualEquityRepayment;
     if (Year === 1) {
-      newCF.Shared.EquityInterest = (input.MARR / 100) * TotalEquityPrincipal;
+      newCF.EquityInterest = (input.MARR / 100) * TotalEquityPrincipal;
     } else {
-      newCF.Shared.EquityInterest =
-        (input.MARR / 100) * CF.Shared.EquityPrincipalRemaining;
+      newCF.EquityInterest =
+        (input.MARR / 100) * CF.EquityPrincipalRemaining;
     }
-    newCF.Shared.EquityPrincipalPaid =
-      newCF.Shared.EquityRecovery - newCF.Shared.EquityInterest;
+    newCF.EquityPrincipalPaid =
+      newCF.EquityRecovery - newCF.EquityInterest;
     if (Year === 1) {
-      newCF.Shared.EquityPrincipalRemaining =
-        TotalEquityPrincipal - newCF.Shared.EquityPrincipalPaid;
+      newCF.EquityPrincipalRemaining =
+        TotalEquityPrincipal - newCF.EquityPrincipalPaid;
     } else {
-      newCF.Shared.EquityPrincipalRemaining =
-        CF.Shared.EquityPrincipalRemaining - newCF.Shared.EquityPrincipalPaid;
+      newCF.EquityPrincipalRemaining =
+        CF.EquityPrincipalRemaining - newCF.EquityPrincipalPaid;
     }
-    newCF.Shared.DebtRecovery = AnnualDebtRepayment;
+    newCF.DebtRecovery = AnnualDebtRepayment;
     if (Year === 1) {
-      newCF.Shared.DebtInterest =
+      newCF.DebtInterest =
         (input.InterestRateOnDebt / 100) * TotalDebtPrincipal;
     } else {
-      newCF.Shared.DebtInterest =
-        (input.InterestRateOnDebt / 100) * CF.Shared.DebtPrincipalRemaining;
+      newCF.DebtInterest =
+        (input.InterestRateOnDebt / 100) * CF.DebtPrincipalRemaining;
     }
-    newCF.Shared.DebtPrincipalPaid =
-      newCF.Shared.DebtRecovery - newCF.Shared.DebtInterest;
+    newCF.DebtPrincipalPaid =
+      newCF.DebtRecovery - newCF.DebtInterest;
     if (Year === 1) {
-      newCF.Shared.DebtPrincipalRemaining =
-        TotalDebtPrincipal - newCF.Shared.DebtPrincipalPaid;
+      newCF.DebtPrincipalRemaining =
+        TotalDebtPrincipal - newCF.DebtPrincipalPaid;
       newCF.FuelCost = AnnualFeedstockCost;
-      newCF.Shared.NonFuelExpenses = OperatingExpenses;
-      newCF.Shared.DebtReserve = DebtReserve;
+      newCF.NonFuelExpenses = OperatingExpenses;
+      newCF.DebtReserve = DebtReserve;
     } else {
-      newCF.Shared.DebtPrincipalRemaining =
-        CF.Shared.DebtPrincipalRemaining - newCF.Shared.DebtPrincipalPaid;
+      newCF.DebtPrincipalRemaining =
+        CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
       newCF.FuelCost =
         AnnualFeedstockCost *
         Math.pow(1 + input.EscalationFeedstock / 100, Year - 1);
-      newCF.Shared.NonFuelExpenses =
+      newCF.NonFuelExpenses =
         OperatingExpenses * Math.pow(1 + input.EscalationOther / 100, Year - 1);
       if (Year === input.EconomicLife) {
         // last year
-        newCF.Shared.DebtReserve = -DebtReserve;
+        newCF.DebtReserve = -DebtReserve;
       } else {
-        newCF.Shared.DebtReserve = 0;
+        newCF.DebtReserve = 0;
       }
     }
-    newCF.Expenses = newCF.FuelCost + newCF.Shared.NonFuelExpenses;
-    newCF.Shared.Depreciation = AmountOfCapitalFinancing * DepreciationFraction;
+    newCF.Expenses = newCF.FuelCost + newCF.NonFuelExpenses;
+    newCF.Depreciation = AmountOfCapitalFinancing * DepreciationFraction;
     if (Year === 1) {
       newCF.IncomeElectricalEnergy = input.ElectricalEnergy;
       newCF.IncomeIncentivePayments = input.IncentivePayments;
-      newCF.Shared.IncomeCapacity = input.Capacity;
+      newCF.IncomeCapacity = input.Capacity;
       newCF.IncomeHeat = input.Heat;
       newCF.IncomeResidue = input.Residues;
     } else {
@@ -228,7 +224,7 @@ function Hydrogen(input: InputModHydrogen) {
       newCF.IncomeIncentivePayments =
         input.IncentivePayments *
         Math.pow(1 + input.EscalationIncentivePayments / 100, Year - 1);
-      newCF.Shared.IncomeCapacity =
+      newCF.IncomeCapacity =
         input.Capacity *
         Math.pow(1 + input.EscalationCapacityPayment / 100, Year - 1);
       newCF.IncomeHeat =
@@ -237,79 +233,77 @@ function Hydrogen(input: InputModHydrogen) {
         input.Residues *
         Math.pow(1 + input.EscalationResidueSales / 100, Year - 1);
     }
-    newCF.Shared.InterestOnDebtReserve = AnnualDebtReserveInterest;
-    newCF.Shared.TaxesWoCredit =
+    newCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
+    newCF.TaxesWoCredit =
       (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
-      (newCF.Shared.EquityPrincipalPaid +
-        newCF.Shared.DebtPrincipalPaid +
-        newCF.Shared.EquityInterest -
-        newCF.Shared.Depreciation +
-        newCF.Shared.DebtReserve);
+      (newCF.EquityPrincipalPaid +
+        newCF.DebtPrincipalPaid +
+        newCF.EquityInterest -
+        newCF.Depreciation +
+        newCF.DebtReserve);
     if (Year === 1) {
-      newCF.Shared.TaxCredit =
+      newCF.TaxCredit =
         AnnualHydrogenEnergy *
         input.ProductionTaxCredit *
         input.TaxCreditFrac[0];
     } else {
-      newCF.Shared.TaxCredit =
+      newCF.TaxCredit =
         AnnualHydrogenEnergy *
         input.ProductionTaxCredit *
         Math.pow(1 + input.EscalationProductionTaxCredit / 100, Year - 1) *
         input.TaxCreditFrac[Year - 1];
     }
-    newCF.Shared.Taxes =
-      newCF.Shared.TaxesWoCredit - newCF.Shared.TaxCredit < 0
+    newCF.Taxes =
+      newCF.TaxesWoCredit - newCF.TaxCredit < 0
         ? input.OneYearDebtReserveRequired
           ? (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
-            (newCF.Shared.EquityPrincipalPaid +
-              newCF.Shared.DebtPrincipalPaid +
-              newCF.Shared.EquityInterest -
-              newCF.Shared.Depreciation +
-              newCF.Shared.DebtReserve -
-              newCF.Shared.TaxCredit)
+            (newCF.EquityPrincipalPaid +
+              newCF.DebtPrincipalPaid +
+              newCF.EquityInterest -
+              newCF.Depreciation +
+              newCF.DebtReserve -
+              newCF.TaxCredit)
           : 0
         : (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
-          (newCF.Shared.EquityPrincipalPaid +
-            newCF.Shared.DebtPrincipalPaid +
-            newCF.Shared.EquityInterest -
-            newCF.Shared.Depreciation +
-            newCF.Shared.DebtReserve -
-            newCF.Shared.TaxCredit);
-    newCF.Shared.EnergyRevenueRequired =
-      newCF.Shared.EquityRecovery +
-      newCF.Shared.DebtRecovery +
+          (newCF.EquityPrincipalPaid +
+            newCF.DebtPrincipalPaid +
+            newCF.EquityInterest -
+            newCF.Depreciation +
+            newCF.DebtReserve -
+            newCF.TaxCredit);
+    newCF.EnergyRevenueRequired =
+      newCF.EquityRecovery +
+      newCF.DebtRecovery +
       newCF.FuelCost +
-      newCF.Shared.NonFuelExpenses +
-      newCF.Shared.Taxes +
-      newCF.Shared.DebtReserve -
+      newCF.NonFuelExpenses +
+      newCF.Taxes +
+      newCF.DebtReserve -
       newCF.IncomeElectricalEnergy -
       newCF.IncomeIncentivePayments -
-      newCF.Shared.IncomeCapacity -
+      newCF.IncomeCapacity -
       newCF.IncomeHeat -
       newCF.IncomeResidue -
-      newCF.Shared.InterestOnDebtReserve;
+      newCF.InterestOnDebtReserve;
 
     return newCF;
   }
 
   const Total: TotalCashFlowHydrogen = {
-    Shared: {
-      EquityRecovery: 0,
-      EquityInterest: 0,
-      EquityPrincipalPaid: 0,
-      DebtRecovery: 0,
-      DebtInterest: 0,
-      DebtPrincipalPaid: 0,
-      NonFuelExpenses: 0,
-      DebtReserve: 0,
-      Depreciation: 0,
-      IncomeCapacity: 0,
-      InterestOnDebtReserve: 0,
-      TaxesWoCredit: 0,
-      TaxCredit: 0,
-      Taxes: 0,
-      EnergyRevenueRequired: 0
-    },
+    EquityRecovery: 0,
+    EquityInterest: 0,
+    EquityPrincipalPaid: 0,
+    DebtRecovery: 0,
+    DebtInterest: 0,
+    DebtPrincipalPaid: 0,
+    NonFuelExpenses: 0,
+    DebtReserve: 0,
+    Depreciation: 0,
+    IncomeCapacity: 0,
+    InterestOnDebtReserve: 0,
+    TaxesWoCredit: 0,
+    TaxCredit: 0,
+    Taxes: 0,
+    EnergyRevenueRequired: 0,
     FuelCost: 0,
     Expenses: 0,
     IncomeElectricalEnergy: 0,
@@ -318,36 +312,36 @@ function Hydrogen(input: InputModHydrogen) {
     IncomeResidue: 0
   };
   for (let i = 0; i < cashFlow.length; i++) {
-    Total.Shared.EquityRecovery += cashFlow[i].Shared.EquityRecovery;
-    Total.Shared.EquityInterest += cashFlow[i].Shared.EquityInterest;
-    Total.Shared.EquityPrincipalPaid += cashFlow[i].Shared.EquityPrincipalPaid;
-    Total.Shared.DebtRecovery += cashFlow[i].Shared.DebtRecovery;
-    Total.Shared.DebtInterest += cashFlow[i].Shared.DebtInterest;
-    Total.Shared.DebtPrincipalPaid += cashFlow[i].Shared.DebtPrincipalPaid;
+    Total.EquityRecovery += cashFlow[i].EquityRecovery;
+    Total.EquityInterest += cashFlow[i].EquityInterest;
+    Total.EquityPrincipalPaid += cashFlow[i].EquityPrincipalPaid;
+    Total.DebtRecovery += cashFlow[i].DebtRecovery;
+    Total.DebtInterest += cashFlow[i].DebtInterest;
+    Total.DebtPrincipalPaid += cashFlow[i].DebtPrincipalPaid;
     Total.FuelCost += cashFlow[i].FuelCost;
-    Total.Shared.NonFuelExpenses += cashFlow[i].Shared.NonFuelExpenses;
+    Total.NonFuelExpenses += cashFlow[i].NonFuelExpenses;
     Total.Expenses += cashFlow[i].Expenses;
-    Total.Shared.DebtReserve += cashFlow[i].Shared.DebtReserve;
-    Total.Shared.Depreciation += cashFlow[i].Shared.Depreciation;
+    Total.DebtReserve += cashFlow[i].DebtReserve;
+    Total.Depreciation += cashFlow[i].Depreciation;
     Total.IncomeElectricalEnergy += cashFlow[i].IncomeElectricalEnergy;
     Total.IncomeIncentivePayments += cashFlow[i].IncomeIncentivePayments;
-    Total.Shared.IncomeCapacity += cashFlow[i].Shared.IncomeCapacity;
+    Total.IncomeCapacity += cashFlow[i].IncomeCapacity;
     Total.IncomeHeat += cashFlow[i].IncomeHeat;
     Total.IncomeResidue += cashFlow[i].IncomeResidue;
-    Total.Shared.InterestOnDebtReserve +=
-      cashFlow[i].Shared.InterestOnDebtReserve;
-    Total.Shared.TaxesWoCredit += cashFlow[i].Shared.TaxesWoCredit;
-    Total.Shared.TaxCredit += cashFlow[i].Shared.TaxCredit;
-    Total.Shared.Taxes += cashFlow[i].Shared.Taxes;
-    Total.Shared.EnergyRevenueRequired +=
-      cashFlow[i].Shared.EnergyRevenueRequired;
+    Total.InterestOnDebtReserve +=
+      cashFlow[i].InterestOnDebtReserve;
+    Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
+    Total.TaxCredit += cashFlow[i].TaxCredit;
+    Total.Taxes += cashFlow[i].Taxes;
+    Total.EnergyRevenueRequired +=
+      cashFlow[i].EnergyRevenueRequired;
   }
   // Current $ Level Annual Cost (LAC)
   const PresentWorth = [];
   let TotalPresentWorth = 0;
   for (let i = 0; i < cashFlow.length; i++) {
     const newPW = PW(
-      cashFlow[i].Shared.EnergyRevenueRequired,
+      cashFlow[i].EnergyRevenueRequired,
       input.MARR,
       i + 1
     );
@@ -441,13 +435,11 @@ function Hydrogen(input: InputModHydrogen) {
   };
 
   const Output: OutputModHydrogen = {
-    Shared: {
-      SensitivityAnalysis: SensitivityAnalysis,
-      CombinedTaxRate: CombinedTaxRate,
-      Financing: Financing,
-      CurrentLAC: CurrentLevelAnnualCost,
-      ConstantLAC: ConstantLevelAnnualCost
-    },
+    SensitivityAnalysis: SensitivityAnalysis,
+    CombinedTaxRate: CombinedTaxRate,
+    Financing: Financing,
+    CurrentLAC: CurrentLevelAnnualCost,
+    ConstantLAC: ConstantLevelAnnualCost,
     HydrogenGeneration: HydrogenGeneration,
     ExpensesBaseYear: ExpensesBaseYear,
     AnnualCashFlows: cashFlow,
