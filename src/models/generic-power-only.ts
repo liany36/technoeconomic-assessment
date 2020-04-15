@@ -97,26 +97,24 @@ function GenericPowerOnly(input: InputModGPO) {
   const cashFlow = [];
   for (let i = 0; i < input.EconomicLife; i++) {
     const newCF: CashFlowGPO = {
-      Shared: {
-        Year: 0,
-        EquityRecovery: 0,
-        EquityInterest: 0,
-        EquityPrincipalPaid: 0,
-        EquityPrincipalRemaining: 0,
-        DebtRecovery: 0,
-        DebtInterest: 0,
-        DebtPrincipalPaid: 0,
-        DebtPrincipalRemaining: 0,
-        NonFuelExpenses: 0,
-        DebtReserve: 0,
-        Depreciation: 0,
-        IncomeCapacity: 0,
-        InterestOnDebtReserve: 0,
-        TaxesWoCredit: 0,
-        TaxCredit: 0,
-        Taxes: 0,
-        EnergyRevenueRequired: 0
-      },
+      Year: 0,
+      EquityRecovery: 0,
+      EquityInterest: 0,
+      EquityPrincipalPaid: 0,
+      EquityPrincipalRemaining: 0,
+      DebtRecovery: 0,
+      DebtInterest: 0,
+      DebtPrincipalPaid: 0,
+      DebtPrincipalRemaining: 0,
+      NonFuelExpenses: 0,
+      DebtReserve: 0,
+      Depreciation: 0,
+      IncomeCapacity: 0,
+      InterestOnDebtReserve: 0,
+      TaxesWoCredit: 0,
+      TaxCredit: 0,
+      Taxes: 0,
+      EnergyRevenueRequired: 0,
       FuelCost: 0
     };
     cashFlow.push(newCF);
@@ -126,121 +124,15 @@ function GenericPowerOnly(input: InputModGPO) {
   }
   function CalcCashFlow(CF: CashFlowGPO, Year: number) {
     const newCF: CashFlowGPO = {
-      Shared: {
-        Year: 0,
-        EquityRecovery: 0,
-        EquityInterest: 0,
-        EquityPrincipalPaid: 0,
-        EquityPrincipalRemaining: 0,
-        DebtRecovery: 0,
-        DebtInterest: 0,
-        DebtPrincipalPaid: 0,
-        DebtPrincipalRemaining: 0,
-        NonFuelExpenses: 0,
-        DebtReserve: 0,
-        Depreciation: 0,
-        IncomeCapacity: 0,
-        InterestOnDebtReserve: 0,
-        TaxesWoCredit: 0,
-        TaxCredit: 0,
-        Taxes: 0,
-        EnergyRevenueRequired: 0
-      },
-      FuelCost: 0
-    };
-    newCF.Shared.Year = Year;
-    newCF.Shared.EquityRecovery = AnnualEquityRecovery;
-    if (Year === 1) {
-      newCF.Shared.EquityInterest =
-        (input.CostOfEquity / 100) * TotalEquityCost;
-    } else {
-      newCF.Shared.EquityInterest =
-        (input.CostOfEquity / 100) * CF.Shared.EquityPrincipalRemaining;
-    }
-    newCF.Shared.EquityPrincipalPaid =
-      newCF.Shared.EquityRecovery - newCF.Shared.EquityInterest;
-    if (Year === 1) {
-      newCF.Shared.EquityPrincipalRemaining =
-        TotalEquityCost - newCF.Shared.EquityPrincipalPaid;
-    } else {
-      newCF.Shared.EquityPrincipalRemaining =
-        CF.Shared.EquityPrincipalRemaining - newCF.Shared.EquityPrincipalPaid;
-    }
-    newCF.Shared.DebtRecovery = AnnualDebtPayment;
-    if (Year === 1) {
-      newCF.Shared.DebtInterest =
-        (input.InterestRateOnDebt / 100) * TotalDebtCost;
-    } else {
-      newCF.Shared.DebtInterest =
-        (input.InterestRateOnDebt / 100) * CF.Shared.DebtPrincipalRemaining;
-    }
-    newCF.Shared.DebtPrincipalPaid =
-      newCF.Shared.DebtRecovery - newCF.Shared.DebtInterest;
-    if (Year === 1) {
-      newCF.Shared.DebtPrincipalRemaining =
-        TotalDebtCost - newCF.Shared.DebtPrincipalPaid;
-    } else {
-      newCF.Shared.DebtPrincipalRemaining =
-        CF.Shared.DebtPrincipalRemaining - newCF.Shared.DebtPrincipalPaid;
-    }
-    newCF.FuelCost =
-      AnnualFuelConsumption *
-      input.FuelCost *
-      Math.pow(1 + input.EscalationFuel / 100, Year - 1);
-    newCF.Shared.NonFuelExpenses =
-      TotalNonFuelExpenses *
-      Math.pow(1 + input.EscalationOther / 100, Year - 1);
-    if (Year === 1) {
-      newCF.Shared.DebtReserve = DebtReserve;
-    } else if (Year < input.EconomicLife) {
-      newCF.Shared.DebtReserve = 0;
-    } else {
-      newCF.Shared.DebtReserve = -DebtReserve;
-    }
-    newCF.Shared.Depreciation = TotalCostOfPlant * DepreciationFraction;
-    newCF.Shared.IncomeCapacity = AnnualCapacityPayment;
-    newCF.Shared.InterestOnDebtReserve = AnnualDebtReserveInterest;
-    newCF.Shared.TaxesWoCredit =
-      (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
-      (newCF.Shared.EquityPrincipalPaid +
-        newCF.Shared.DebtPrincipalPaid +
-        newCF.Shared.EquityInterest -
-        newCF.Shared.Depreciation +
-        newCF.Shared.DebtReserve);
-    newCF.Shared.TaxCredit =
-      AnnualGeneration *
-      input.ProductionTaxCredit *
-      Math.pow(1 + input.EscalationProductionTaxCredit / 100, Year - 1) *
-      input.TaxCreditFrac[Year - 1];
-    newCF.Shared.Taxes =
-      (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
-      (newCF.Shared.EquityPrincipalPaid +
-        newCF.Shared.DebtPrincipalPaid +
-        newCF.Shared.EquityInterest -
-        newCF.Shared.Depreciation +
-        newCF.Shared.DebtReserve -
-        newCF.Shared.TaxCredit);
-    newCF.Shared.EnergyRevenueRequired =
-      newCF.Shared.EquityRecovery +
-      newCF.Shared.DebtRecovery +
-      newCF.FuelCost +
-      newCF.Shared.NonFuelExpenses +
-      newCF.Shared.Taxes +
-      newCF.Shared.DebtReserve -
-      newCF.Shared.IncomeCapacity -
-      newCF.Shared.InterestOnDebtReserve;
-
-    return newCF;
-  }
-
-  const Total: TotalCashFlowGPO = {
-    Shared: {
+      Year: 0,
       EquityRecovery: 0,
       EquityInterest: 0,
       EquityPrincipalPaid: 0,
+      EquityPrincipalRemaining: 0,
       DebtRecovery: 0,
       DebtInterest: 0,
       DebtPrincipalPaid: 0,
+      DebtPrincipalRemaining: 0,
       NonFuelExpenses: 0,
       DebtReserve: 0,
       Depreciation: 0,
@@ -249,36 +141,138 @@ function GenericPowerOnly(input: InputModGPO) {
       TaxesWoCredit: 0,
       TaxCredit: 0,
       Taxes: 0,
-      EnergyRevenueRequired: 0
-    },
+      EnergyRevenueRequired: 0,
+      FuelCost: 0
+    };
+    newCF.Year = Year;
+    newCF.EquityRecovery = AnnualEquityRecovery;
+    if (Year === 1) {
+      newCF.EquityInterest =
+        (input.CostOfEquity / 100) * TotalEquityCost;
+    } else {
+      newCF.EquityInterest =
+        (input.CostOfEquity / 100) * CF.EquityPrincipalRemaining;
+    }
+    newCF.EquityPrincipalPaid =
+      newCF.EquityRecovery - newCF.EquityInterest;
+    if (Year === 1) {
+      newCF.EquityPrincipalRemaining =
+        TotalEquityCost - newCF.EquityPrincipalPaid;
+    } else {
+      newCF.EquityPrincipalRemaining =
+        CF.EquityPrincipalRemaining - newCF.EquityPrincipalPaid;
+    }
+    newCF.DebtRecovery = AnnualDebtPayment;
+    if (Year === 1) {
+      newCF.DebtInterest =
+        (input.InterestRateOnDebt / 100) * TotalDebtCost;
+    } else {
+      newCF.DebtInterest =
+        (input.InterestRateOnDebt / 100) * CF.DebtPrincipalRemaining;
+    }
+    newCF.DebtPrincipalPaid =
+      newCF.DebtRecovery - newCF.DebtInterest;
+    if (Year === 1) {
+      newCF.DebtPrincipalRemaining =
+        TotalDebtCost - newCF.DebtPrincipalPaid;
+    } else {
+      newCF.DebtPrincipalRemaining =
+        CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
+    }
+    newCF.FuelCost =
+      AnnualFuelConsumption *
+      input.FuelCost *
+      Math.pow(1 + input.EscalationFuel / 100, Year - 1);
+    newCF.NonFuelExpenses =
+      TotalNonFuelExpenses *
+      Math.pow(1 + input.EscalationOther / 100, Year - 1);
+    if (Year === 1) {
+      newCF.DebtReserve = DebtReserve;
+    } else if (Year < input.EconomicLife) {
+      newCF.DebtReserve = 0;
+    } else {
+      newCF.DebtReserve = -DebtReserve;
+    }
+    newCF.Depreciation = TotalCostOfPlant * DepreciationFraction;
+    newCF.IncomeCapacity = AnnualCapacityPayment;
+    newCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
+    newCF.TaxesWoCredit =
+      (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
+      (newCF.EquityPrincipalPaid +
+        newCF.DebtPrincipalPaid +
+        newCF.EquityInterest -
+        newCF.Depreciation +
+        newCF.DebtReserve);
+    newCF.TaxCredit =
+      AnnualGeneration *
+      input.ProductionTaxCredit *
+      Math.pow(1 + input.EscalationProductionTaxCredit / 100, Year - 1) *
+      input.TaxCreditFrac[Year - 1];
+    newCF.Taxes =
+      (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
+      (newCF.EquityPrincipalPaid +
+        newCF.DebtPrincipalPaid +
+        newCF.EquityInterest -
+        newCF.Depreciation +
+        newCF.DebtReserve -
+        newCF.TaxCredit);
+    newCF.EnergyRevenueRequired =
+      newCF.EquityRecovery +
+      newCF.DebtRecovery +
+      newCF.FuelCost +
+      newCF.NonFuelExpenses +
+      newCF.Taxes +
+      newCF.DebtReserve -
+      newCF.IncomeCapacity -
+      newCF.InterestOnDebtReserve;
+
+    return newCF;
+  }
+
+  const Total: TotalCashFlowGPO = {
+    EquityRecovery: 0,
+    EquityInterest: 0,
+    EquityPrincipalPaid: 0,
+    DebtRecovery: 0,
+    DebtInterest: 0,
+    DebtPrincipalPaid: 0,
+    NonFuelExpenses: 0,
+    DebtReserve: 0,
+    Depreciation: 0,
+    IncomeCapacity: 0,
+    InterestOnDebtReserve: 0,
+    TaxesWoCredit: 0,
+    TaxCredit: 0,
+    Taxes: 0,
+    EnergyRevenueRequired: 0,
     FuelCost: 0
   };
   for (let i = 0; i < cashFlow.length; i++) {
-    Total.Shared.EquityRecovery += cashFlow[i].Shared.EquityRecovery;
-    Total.Shared.EquityInterest += cashFlow[i].Shared.EquityInterest;
-    Total.Shared.EquityPrincipalPaid += cashFlow[i].Shared.EquityPrincipalPaid;
-    Total.Shared.DebtRecovery += cashFlow[i].Shared.DebtRecovery;
-    Total.Shared.DebtInterest += cashFlow[i].Shared.DebtInterest;
-    Total.Shared.DebtPrincipalPaid += cashFlow[i].Shared.DebtPrincipalPaid;
+    Total.EquityRecovery += cashFlow[i].EquityRecovery;
+    Total.EquityInterest += cashFlow[i].EquityInterest;
+    Total.EquityPrincipalPaid += cashFlow[i].EquityPrincipalPaid;
+    Total.DebtRecovery += cashFlow[i].DebtRecovery;
+    Total.DebtInterest += cashFlow[i].DebtInterest;
+    Total.DebtPrincipalPaid += cashFlow[i].DebtPrincipalPaid;
     Total.FuelCost += cashFlow[i].FuelCost;
-    Total.Shared.NonFuelExpenses += cashFlow[i].Shared.NonFuelExpenses;
-    Total.Shared.DebtReserve += cashFlow[i].Shared.DebtReserve;
-    Total.Shared.Depreciation += cashFlow[i].Shared.Depreciation;
-    Total.Shared.IncomeCapacity += cashFlow[i].Shared.IncomeCapacity;
-    Total.Shared.InterestOnDebtReserve +=
-      cashFlow[i].Shared.InterestOnDebtReserve;
-    Total.Shared.TaxesWoCredit += cashFlow[i].Shared.TaxesWoCredit;
-    Total.Shared.TaxCredit += cashFlow[i].Shared.TaxCredit;
-    Total.Shared.Taxes += cashFlow[i].Shared.Taxes;
-    Total.Shared.EnergyRevenueRequired +=
-      cashFlow[i].Shared.EnergyRevenueRequired;
+    Total.NonFuelExpenses += cashFlow[i].NonFuelExpenses;
+    Total.DebtReserve += cashFlow[i].DebtReserve;
+    Total.Depreciation += cashFlow[i].Depreciation;
+    Total.IncomeCapacity += cashFlow[i].IncomeCapacity;
+    Total.InterestOnDebtReserve +=
+      cashFlow[i].InterestOnDebtReserve;
+    Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
+    Total.TaxCredit += cashFlow[i].TaxCredit;
+    Total.Taxes += cashFlow[i].Taxes;
+    Total.EnergyRevenueRequired +=
+      cashFlow[i].EnergyRevenueRequired;
   }
   // Current $ Level Annual Cost (LAC)
   const PresentWorth = [];
   let TotalPresentWorth = 0;
   for (let i = 0; i < cashFlow.length; i++) {
     const newPW = PW(
-      cashFlow[i].Shared.EnergyRevenueRequired,
+      cashFlow[i].EnergyRevenueRequired,
       input.CostOfEquity,
       i + 1
     );
@@ -323,33 +317,31 @@ function GenericPowerOnly(input: InputModGPO) {
   ElectricalFuelBaseYear.AnnualFuelConsumption = AnnualFuelConsumption;
   ElectricalFuelBaseYear.AnnualAshDisposal = AnnualAshDisposal;
   const ExpensesBaseYear: ExpensesBaseYearModGPO = {
-    Shared: {
-      TotalNonFuelExpenses: 0,
-      TotalExpensesIncludingFuel: 0,
-      LaborCostKwh: 0,
-      MaintenanceCostKwh: 0,
-      InsurancePropertyTaxKwh: 0,
-      UtilitiesKwh: 0,
-      ManagementKwh: 0,
-      OtherOperatingExpensesKwh: 0,
-      TotalNonFuelExpensesKwh: 0,
-      TotalExpensesIncludingFuelKwh: 0
-    },
+    TotalNonFuelExpenses: 0,
+    TotalExpensesIncludingFuel: 0,
+    LaborCostKwh: 0,
+    MaintenanceCostKwh: 0,
+    InsurancePropertyTaxKwh: 0,
+    UtilitiesKwh: 0,
+    ManagementKwh: 0,
+    OtherOperatingExpensesKwh: 0,
+    TotalNonFuelExpensesKwh: 0,
+    TotalExpensesIncludingFuelKwh: 0,
     FuelCostKwh: 0,
     AshDisposalKwh: 0
   };
-  ExpensesBaseYear.Shared.TotalNonFuelExpenses = TotalNonFuelExpenses;
-  ExpensesBaseYear.Shared.TotalExpensesIncludingFuel = TotalExpensesIncludingFuel;
+  ExpensesBaseYear.TotalNonFuelExpenses = TotalNonFuelExpenses;
+  ExpensesBaseYear.TotalExpensesIncludingFuel = TotalExpensesIncludingFuel;
   ExpensesBaseYear.FuelCostKwh = FuelCostKwh;
-  ExpensesBaseYear.Shared.LaborCostKwh = LaborCostKwh;
-  ExpensesBaseYear.Shared.MaintenanceCostKwh = MaintenanceCostKwh;
-  ExpensesBaseYear.Shared.InsurancePropertyTaxKwh = InsurancePropertyTaxKwh;
-  ExpensesBaseYear.Shared.UtilitiesKwh = UtilitiesKwh;
+  ExpensesBaseYear.LaborCostKwh = LaborCostKwh;
+  ExpensesBaseYear.MaintenanceCostKwh = MaintenanceCostKwh;
+  ExpensesBaseYear.InsurancePropertyTaxKwh = InsurancePropertyTaxKwh;
+  ExpensesBaseYear.UtilitiesKwh = UtilitiesKwh;
   ExpensesBaseYear.AshDisposalKwh = AshDisposalKwh;
-  ExpensesBaseYear.Shared.ManagementKwh = ManagementKwh;
-  ExpensesBaseYear.Shared.OtherOperatingExpensesKwh = OtherOperatingExpensesKwh;
-  ExpensesBaseYear.Shared.TotalNonFuelExpensesKwh = TotalNonFuelExpensesKwh;
-  ExpensesBaseYear.Shared.TotalExpensesIncludingFuelKwh = TotalExpensesIncludingFuelKwh;
+  ExpensesBaseYear.ManagementKwh = ManagementKwh;
+  ExpensesBaseYear.OtherOperatingExpensesKwh = OtherOperatingExpensesKwh;
+  ExpensesBaseYear.TotalNonFuelExpensesKwh = TotalNonFuelExpensesKwh;
+  ExpensesBaseYear.TotalExpensesIncludingFuelKwh = TotalExpensesIncludingFuelKwh;
   const IncomeOtherThanEnergy: IncomeOtherThanEnergyMod = {
     AnnualCapacityPayment: 0,
     AnnualDebtReserveInterest: 0
@@ -408,13 +400,11 @@ function GenericPowerOnly(input: InputModGPO) {
   };
 
   const Output: OutputModGPO = {
-    Shared: {
-      SensitivityAnalysis: SensitivityAnalysis,
-      CombinedTaxRate: CombinedTaxRate,
-      Financing: Financing,
-      CurrentLAC: CurrentLevelAnnualCost,
-      ConstantLAC: ConstantLevelAnnualCost
-    },
+    SensitivityAnalysis: SensitivityAnalysis,
+    CombinedTaxRate: CombinedTaxRate,
+    Financing: Financing,
+    CurrentLAC: CurrentLevelAnnualCost,
+    ConstantLAC: ConstantLevelAnnualCost,
     ElectricalAndFuelBaseYear: ElectricalFuelBaseYear,
     ExpensesBaseYear: ExpensesBaseYear,
     IncomeOtherThanEnergy: IncomeOtherThanEnergy,

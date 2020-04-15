@@ -8,9 +8,8 @@ export interface ElectricalFuelBaseYearMod {
   AnnualAshDisposal: number;
 }
 
-export interface ElectricalFuelBaseYearModCHP {
+export interface ElectricalFuelBaseYearModCHP extends ElectricalFuelBaseYearMod {
   // combined-heat-power
-  Shared: ElectricalFuelBaseYearMod;
   ParasiticLoad: number;
   FuelPower: number;
   GrossStationElectricalEfficiency: number;
@@ -66,16 +65,14 @@ export interface ExpensesBaseYearMod {
   TotalExpensesIncludingFuelKwh: number;
 }
 
-export interface ExpensesBaseYearModGPO {
+export interface ExpensesBaseYearModGPO extends ExpensesBaseYearMod {
   // generic-power-only & combined-heat-power
-  Shared: ExpensesBaseYearMod;
   FuelCostKwh: number;
   AshDisposalKwh: number;
 }
 
-export interface ExpensesBaseYearModGP {
+export interface ExpensesBaseYearModGP extends ExpensesBaseYearMod {
   // gasification-power
-  Shared: ExpensesBaseYearMod;
   BiomassFuelCostKwh: number;
   DualFuelCostKwh: number;
   WasteTreatmentKwh: number;
@@ -94,9 +91,8 @@ export interface IncomeOtherThanEnergyMod {
   AnnualDebtReserveInterest: number;
 }
 
-export interface IncomeOtherThanEnergyModGP {
+export interface IncomeOtherThanEnergyModGP extends IncomeOtherThanEnergyMod {
   // gasification-power
-  Shared: IncomeOtherThanEnergyMod;
   AnnualIncomeFromChar: number;
 }
 
@@ -161,31 +157,27 @@ export interface CashFlow {
   EnergyRevenueRequired: number;
 }
 
-export interface CashFlowGPO {
+export interface CashFlowGPO extends CashFlow {
   // generic-power-only
-  Shared: CashFlow;
   FuelCost: number;
 }
 
-export interface CashFlowCHP {
+export interface CashFlowCHP extends CashFlow {
   // combined-heat-power
-  Shared: CashFlow;
   FuelCost: number;
   IncomeHeat: number;
 }
 
-export interface CashFlowGP {
+export interface CashFlowGP extends CashFlow {
   // gasification-power
-  Shared: CashFlow;
   BiomassFuelCost: number;
   DualFuelCost: number;
   IncomeHeat: number;
   IncomeChar: number;
 }
 
-export interface CashFlowHydrogen {
+export interface CashFlowHydrogen extends CashFlow {
   // hydrogen
-  Shared: CashFlow;
   FuelCost: number;
   Expenses: number;
   IncomeElectricalEnergy: number;
@@ -214,31 +206,27 @@ export interface TotalCashFlow {
   EnergyRevenueRequired: number;
 }
 
-export interface TotalCashFlowGPO {
+export interface TotalCashFlowGPO extends TotalCashFlow {
   // generic-power-only
-  Shared: TotalCashFlow;
   FuelCost: number;
 }
 
-export interface TotalCashFlowCHP {
+export interface TotalCashFlowCHP extends TotalCashFlow {
   // combined-heat-power
-  Shared: TotalCashFlow;
   FuelCost: number;
   IncomeHeat: number;
 }
 
-export interface TotalCashFlowGP {
+export interface TotalCashFlowGP extends TotalCashFlow {
   // gasification-power
-  Shared: TotalCashFlow;
   BiomassFuelCost: number;
   DualFuelCost: number;
   IncomeHeat: number;
   IncomeChar: number;
 }
 
-export interface TotalCashFlowHydrogen {
+export interface TotalCashFlowHydrogen extends TotalCashFlow {
   // hydrogen
-  Shared: TotalCashFlow;
   FuelCost: number;
   Expenses: number;
   IncomeElectricalEnergy: number;
@@ -284,16 +272,14 @@ export interface OutputMod {
   CurrentLAC: CurrentLevelAnnualCostMod;
   ConstantLAC: ConstantLevelAnnualCostMod;
 }
-export interface OutputModGPO {
-  Shared: OutputMod;
+export interface OutputModGPO extends OutputMod {
   ElectricalAndFuelBaseYear: ElectricalFuelBaseYearMod;
   ExpensesBaseYear: ExpensesBaseYearModGPO;
   IncomeOtherThanEnergy: IncomeOtherThanEnergyMod;
   AnnualCashFlows: CashFlowGPO[];
   TotalCashFlow: TotalCashFlowGPO;
 }
-export interface OutputModCHP {
-  Shared: OutputMod;
+export interface OutputModCHP extends OutputMod {
   ElectricalAndFuelBaseYear: ElectricalFuelBaseYearModCHP;
   HeatBaseYear: HeatBaseYearMod;
   ExpensesBaseYear: ExpensesBaseYearModGPO;
@@ -301,8 +287,7 @@ export interface OutputModCHP {
   AnnualCashFlows: CashFlowCHP[];
   TotalCashFlow: TotalCashFlowCHP;
 }
-export interface OutputModGP {
-  Shared: OutputMod;
+export interface OutputModGP extends OutputMod {
   CapitalCost: CapitalCostMod;
   ElectricalAndFuelBaseYear: ElectricalFuelBaseYearModGP;
   HeatBaseYear: HeatBaseYearMod;
@@ -311,8 +296,7 @@ export interface OutputModGP {
   AnnualCashFlows: CashFlowGP[];
   TotalCashFlow: TotalCashFlowGP;
 }
-export interface OutputModHydrogen {
-  Shared: OutputMod;
+export interface OutputModHydrogen extends OutputMod {
   HydrogenGeneration: HydrogenGenerationMod;
   ExpensesBaseYear: ExpensesBaseYearModHydrogen;
   AnnualCashFlows: CashFlowHydrogen[];

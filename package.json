@@ -1,9 +1,9 @@
 {
   "name": "@ucdavis/tea",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "./out/index.js",
   "types": "./out/index.d.ts",
-  "author": "Yi Lian",
+  "author": "Kaiyan Li",
   "license": "MIT",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json",
