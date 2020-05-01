@@ -1,20 +1,11 @@
-export interface IncomeOtherThanEnergyInputMod {
-  CapacityPayment: number;
-  InterestRateOnDebtReserve: number;
-}
-
-export interface IncomeOtherThanEnergyInputModGP
-  extends IncomeOtherThanEnergyInputMod {
-  SalesPriceForChar: number;
-}
-
 // GenericPowerOnly
 export interface InputModGPO
   extends ElectricalFuelBaseYearInputModGPO,
     ExpensesBaseYearInputModGPO,
     TaxesInputMod,
     FinancingInputMod,
-    IncomeOtherThanEnergyInputMod {
+    IncomeOtherThanEnergyInputMod,
+    EscalationInflationInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Expenses--base year
@@ -22,10 +13,6 @@ export interface InputModGPO
   // Financing
   // Income other than energy
   // Escalation/Inflation
-  GeneralInflation: number;
-  EscalationFuel: number;
-  EscalationProductionTaxCredit: number;
-  EscalationOther: number;
   // Tax Credit Schedule
   TaxCreditFrac: number[];
 }
@@ -37,7 +24,8 @@ export interface InputModCHP
     HeatBaseYearInputMod,
     TaxesInputMod,
     FinancingInputMod,
-    IncomeOtherThanEnergyInputMod {
+    IncomeOtherThanEnergyInputMod,
+    EscalationInflationInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Heat-base year
@@ -46,11 +34,6 @@ export interface InputModCHP
   // Financing
   // Income other than energy
   // Escalation/Inflation
-  GeneralInflation: number;
-  EscalationFuel: number;
-  EscalationProductionTaxCredit: number;
-  EscalationHeatSales: number;
-  EscalationOther: number;
   // Tax Credit Schedule
   TaxCreditFrac: number[];
 }
@@ -60,8 +43,10 @@ export interface InputModGP
   extends ElectricalFuelBaseYearInputModGP,
     ExpensesBaseYearInputModGP,
     HeatBaseYearInputMod,
+    FinancingInputMod,
     TaxesInputMod,
-    IncomeOtherThanEnergyInputModGP {
+    IncomeOtherThanEnergyInputModGP,
+    EscalationInflationInputModGP {
   // Capital Cost from Gasification Power Generation
   GasifierSystemCapitalCost: number;
   GasCleaningSystemCapitalCost: number;
@@ -74,18 +59,7 @@ export interface InputModGP
   // Taxes
   // Income Other Than Energy
   // Escalation/Inflation
-  GeneralInflation: number;
-  EscalationBiomassFuel: number;
-  EscalationDualFuel: number;
-  EscalationProductionTaxCredit: number;
-  EscalationHeatSales: number;
-  EscalationCharSales: number;
-  EscalationOther: number;
   // Financing
-  DebtRatio: number;
-  InterestRateOnDebt: number;
-  EconomicLife: number;
-  CostOfEquity: number;
   // Tax Rate Schedule
   TaxCreditFrac: number[];
 }
@@ -139,19 +113,16 @@ export interface ElectricalFuelBaseYearInputMod {
   CapacityFactor: number;
   MoistureContent: number;
 }
-
 export interface ElectricalFuelBaseYearInputModGPO
   extends ElectricalFuelBaseYearInputMod {
   NetStationEfficiency: number;
   FuelHeatingValue: number;
   FuelAshConcentration: number;
 }
-
 export interface ElectricalFuelBaseYearInputModCHP
   extends ElectricalFuelBaseYearInputModGPO {
   GrossElectricalCapacity: number;
 }
-
 export interface ElectricalFuelBaseYearInputModGP
   extends ElectricalFuelBaseYearInputMod {
   GrossElectricalCapacity: number;
@@ -177,11 +148,9 @@ export interface ExpensesBaseYearInputMod {
   Management: number;
   OtherOperatingExpenses: number;
 }
-
 export interface ExpensesBaseYearInputModGPO extends ExpensesBaseYearInputMod {
   AshDisposal: number;
 }
-
 export interface ExpensesBaseYearInputModGP extends ExpensesBaseYearInputMod {
   DualFuelCost: number;
   WasteTreatment: number;
@@ -203,4 +172,26 @@ export interface FinancingInputMod {
   InterestRateOnDebt: number;
   EconomicLife: number;
   CostOfEquity: number;
+}
+
+export interface IncomeOtherThanEnergyInputMod {
+  CapacityPayment: number;
+  InterestRateOnDebtReserve: number;
+}
+export interface IncomeOtherThanEnergyInputModGP
+  extends IncomeOtherThanEnergyInputMod {
+  SalesPriceForChar: number;
+}
+
+export interface EscalationInflationInputMod {
+  GeneralInflation: number;
+  EscalationBiomassFuel: number;
+  EscalationProductionTaxCredit: number;
+  EscalationHeatSales: number;
+  EscalationOther: number;
+}
+export interface EscalationInflationInputModGP
+  extends EscalationInflationInputMod {
+  EscalationDualFuel: number;
+  EscalationCharSales: number;
 }

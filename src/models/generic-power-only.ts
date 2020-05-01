@@ -147,14 +147,12 @@ function GenericPowerOnly(input: InputModGPO) {
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRecovery;
     if (Year === 1) {
-      newCF.EquityInterest =
-        (input.CostOfEquity / 100) * TotalEquityCost;
+      newCF.EquityInterest = (input.CostOfEquity / 100) * TotalEquityCost;
     } else {
       newCF.EquityInterest =
         (input.CostOfEquity / 100) * CF.EquityPrincipalRemaining;
     }
-    newCF.EquityPrincipalPaid =
-      newCF.EquityRecovery - newCF.EquityInterest;
+    newCF.EquityPrincipalPaid = newCF.EquityRecovery - newCF.EquityInterest;
     if (Year === 1) {
       newCF.EquityPrincipalRemaining =
         TotalEquityCost - newCF.EquityPrincipalPaid;
@@ -164,17 +162,14 @@ function GenericPowerOnly(input: InputModGPO) {
     }
     newCF.DebtRecovery = AnnualDebtPayment;
     if (Year === 1) {
-      newCF.DebtInterest =
-        (input.InterestRateOnDebt / 100) * TotalDebtCost;
+      newCF.DebtInterest = (input.InterestRateOnDebt / 100) * TotalDebtCost;
     } else {
       newCF.DebtInterest =
         (input.InterestRateOnDebt / 100) * CF.DebtPrincipalRemaining;
     }
-    newCF.DebtPrincipalPaid =
-      newCF.DebtRecovery - newCF.DebtInterest;
+    newCF.DebtPrincipalPaid = newCF.DebtRecovery - newCF.DebtInterest;
     if (Year === 1) {
-      newCF.DebtPrincipalRemaining =
-        TotalDebtCost - newCF.DebtPrincipalPaid;
+      newCF.DebtPrincipalRemaining = TotalDebtCost - newCF.DebtPrincipalPaid;
     } else {
       newCF.DebtPrincipalRemaining =
         CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
@@ -182,7 +177,7 @@ function GenericPowerOnly(input: InputModGPO) {
     newCF.FuelCost =
       AnnualFuelConsumption *
       input.BiomassFuelCost *
-      Math.pow(1 + input.EscalationFuel / 100, Year - 1);
+      Math.pow(1 + input.EscalationBiomassFuel / 100, Year - 1);
     newCF.NonFuelExpenses =
       TotalNonFuelExpenses *
       Math.pow(1 + input.EscalationOther / 100, Year - 1);
@@ -259,13 +254,11 @@ function GenericPowerOnly(input: InputModGPO) {
     Total.DebtReserve += cashFlow[i].DebtReserve;
     Total.Depreciation += cashFlow[i].Depreciation;
     Total.IncomeCapacity += cashFlow[i].IncomeCapacity;
-    Total.InterestOnDebtReserve +=
-      cashFlow[i].InterestOnDebtReserve;
+    Total.InterestOnDebtReserve += cashFlow[i].InterestOnDebtReserve;
     Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
     Total.TaxCredit += cashFlow[i].TaxCredit;
     Total.Taxes += cashFlow[i].Taxes;
-    Total.EnergyRevenueRequired +=
-      cashFlow[i].EnergyRevenueRequired;
+    Total.EnergyRevenueRequired += cashFlow[i].EnergyRevenueRequired;
   }
   // Current $ Level Annual Cost (LAC)
   const PresentWorth = [];
