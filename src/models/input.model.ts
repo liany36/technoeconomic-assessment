@@ -1,5 +1,12 @@
+export interface HeatBaseYearInputMod {
+  AggregateFractionOfHeatRecovered: number;
+  AggregateSalesPriceForHeat: number;
+}
+
 // GenericPowerOnly
-export interface InputModGPO extends ElectricalFuelBaseYearInputModGPO, ExpensesBaseYearInputModGPO {
+export interface InputModGPO
+  extends ElectricalFuelBaseYearInputModGPO,
+    ExpensesBaseYearInputModGPO {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Expenses--base year
@@ -25,12 +32,13 @@ export interface InputModGPO extends ElectricalFuelBaseYearInputModGPO, Expenses
 }
 
 // GenericCombinedHeatPower
-export interface InputModCHP extends ElectricalFuelBaseYearInputModCHP, ExpensesBaseYearInputModGPO {
+export interface InputModCHP
+  extends ElectricalFuelBaseYearInputModCHP,
+    ExpensesBaseYearInputModGPO,
+    HeatBaseYearInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Heat-base year
-  AggregateFractionOfHeatRecovered: number;
-  AggregateSalesPriceForHeat: number;
   // Expenses--base year
   // Taxes
   FederalTaxRate: number;
@@ -55,7 +63,10 @@ export interface InputModCHP extends ElectricalFuelBaseYearInputModCHP, Expenses
 }
 
 // GasificationPower
-export interface InputModGP extends ElectricalFuelBaseYearInputModGP, ExpensesBaseYearInputModGP {
+export interface InputModGP
+  extends ElectricalFuelBaseYearInputModGP,
+    ExpensesBaseYearInputModGP,
+    HeatBaseYearInputMod {
   // Capital Cost from Gasification Power Generation
   GasifierSystemCapitalCost: number;
   GasCleaningSystemCapitalCost: number;
@@ -64,8 +75,6 @@ export interface InputModGP extends ElectricalFuelBaseYearInputModGP, ExpensesBa
   HeatRecoverySystemCapitalCost: number;
   // Electrical and Fuel -- base year from Gasification Power Generation
   // Heat--Base Year
-  AggregateFractionOfHeatRecovered: number;
-  AggregateSalesPriceForHeat: number;
   // Expenses--Base Year
   // Taxes
   FederalTaxRate: number;
@@ -142,17 +151,20 @@ export interface ElectricalFuelBaseYearInputMod {
   MoistureContent: number;
 }
 
-export interface ElectricalFuelBaseYearInputModGPO extends ElectricalFuelBaseYearInputMod {
+export interface ElectricalFuelBaseYearInputModGPO
+  extends ElectricalFuelBaseYearInputMod {
   NetStationEfficiency: number;
   FuelHeatingValue: number;
   FuelAshConcentration: number;
 }
 
-export interface ElectricalFuelBaseYearInputModCHP extends ElectricalFuelBaseYearInputModGPO {
+export interface ElectricalFuelBaseYearInputModCHP
+  extends ElectricalFuelBaseYearInputModGPO {
   GrossElectricalCapacity: number;
 }
 
-export interface ElectricalFuelBaseYearInputModGP extends ElectricalFuelBaseYearInputMod {
+export interface ElectricalFuelBaseYearInputModGP
+  extends ElectricalFuelBaseYearInputMod {
   GrossElectricalCapacity: number;
   HHVEfficiency: number;
   NetHHVEfficiency: number;
