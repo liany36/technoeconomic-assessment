@@ -185,7 +185,7 @@ export interface IncomeOtherThanEnergyInputModGP
 
 export interface EscalationInflationInputMod {
   GeneralInflation: number;
-  EscalationBiomassFuel: number;
+  EscalationBiomassFuel: number; // for GPO and CHP this is just EscalationFuel on the spreadsheet
   EscalationProductionTaxCredit: number;
   EscalationHeatSales: number;
   EscalationOther: number;
