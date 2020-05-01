@@ -1,19 +1,12 @@
-export interface HeatBaseYearInputMod {
-  AggregateFractionOfHeatRecovered: number;
-  AggregateSalesPriceForHeat: number;
-}
-
 // GenericPowerOnly
 export interface InputModGPO
   extends ElectricalFuelBaseYearInputModGPO,
-    ExpensesBaseYearInputModGPO {
+    ExpensesBaseYearInputModGPO,
+    TaxesInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Expenses--base year
   // Taxes
-  FederalTaxRate: number;
-  StateTaxRate: number;
-  ProductionTaxCredit: number;
   // Financing
   DebtRatio: number;
   InterestRateOnDebt: number;
@@ -35,15 +28,13 @@ export interface InputModGPO
 export interface InputModCHP
   extends ElectricalFuelBaseYearInputModCHP,
     ExpensesBaseYearInputModGPO,
-    HeatBaseYearInputMod {
+    HeatBaseYearInputMod,
+    TaxesInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Heat-base year
   // Expenses--base year
   // Taxes
-  FederalTaxRate: number;
-  StateTaxRate: number;
-  ProductionTaxCredit: number;
   // Financing
   DebtRatio: number;
   InterestRateOnDebt: number;
@@ -66,7 +57,8 @@ export interface InputModCHP
 export interface InputModGP
   extends ElectricalFuelBaseYearInputModGP,
     ExpensesBaseYearInputModGP,
-    HeatBaseYearInputMod {
+    HeatBaseYearInputMod,
+    TaxesInputMod {
   // Capital Cost from Gasification Power Generation
   GasifierSystemCapitalCost: number;
   GasCleaningSystemCapitalCost: number;
@@ -77,9 +69,6 @@ export interface InputModGP
   // Heat--Base Year
   // Expenses--Base Year
   // Taxes
-  FederalTaxRate: number;
-  StateTaxRate: number;
-  ProductionTaxCredit: number;
   // Income Other Than Energy
   CapacityPayment: number;
   InterestRateOnDebtReserve: number;
@@ -196,4 +185,15 @@ export interface ExpensesBaseYearInputModGPO extends ExpensesBaseYearInputMod {
 export interface ExpensesBaseYearInputModGP extends ExpensesBaseYearInputMod {
   DualFuelCost: number;
   WasteTreatment: number;
+}
+
+export interface HeatBaseYearInputMod {
+  AggregateFractionOfHeatRecovered: number;
+  AggregateSalesPriceForHeat: number;
+}
+
+export interface TaxesInputMod {
+  FederalTaxRate: number;
+  StateTaxRate: number;
+  ProductionTaxCredit: number;
 }
