@@ -1,13 +1,7 @@
 // GenericPowerOnly
-export interface InputModGPO {
+export interface InputModGPO extends ElectricalFuelBaseYearInputModGPO {
   CapitalCost: number;
   // Electrical and Fuel--base year
-  NetElectricalCapacity: number;
-  CapacityFactor: number;
-  NetStationEfficiency: number;
-  MoistureContent: number;
-  FuelHeatingValue: number;
-  FuelAshConcentration: number;
   // Expenses--base year
   FuelCost: number;
   LaborCost: number;
@@ -39,21 +33,14 @@ export interface InputModGPO {
 }
 
 // GenericCombinedHeatPower
-export interface InputModCHP {
+export interface InputModCHP extends ElectricalFuelBaseYearInputModCHP {
   CapitalCost: number;
   // Electrical and Fuel--base year
-  GrossElectricalCapacity: number;
-  NetElectricalCapacity: number;
-  CapacityFactor: number;
-  NetStationEfficiency: number;
-  MoistureContent: number;
-  FuelHeatingValue: number;
-  FuelAshConcentration: number;
   // Heat-base year
   AggregateFractionOfHeatRecovered: number;
   AggregateSalesPriceForHeat: number;
   // Expenses--base year
-  FuelCost: number;
+  BiomassFuelCost: number;
   LaborCost: number;
   MaintenanceCost: number;
   InsurancePropertyTax: number;
@@ -84,7 +71,7 @@ export interface InputModCHP {
 }
 
 // GasificationPower
-export interface InputModGP {
+export interface InputModGP extends ElectricalFuelBaseYearInputModGP {
   // Capital Cost from Gasification Power Generation
   GasifierSystemCapitalCost: number;
   GasCleaningSystemCapitalCost: number;
@@ -92,21 +79,7 @@ export interface InputModGP {
   EmissionControlSystemCapitalCost: number;
   HeatRecoverySystemCapitalCost: number;
   // Electrical and Fuel -- base year from Gasification Power Generation
-  GrossElectricalCapacity: number;
-  NetElectricalCapacity: number;
-  HHVEfficiency: number;
-  NetHHVEfficiency: number;
-  FractionOfInputEnergy: number; // Dual Fuel if ant, default set to heavy disele
-  CO: number;
-  H2: number;
-  Hydrocarbons: number;
-  CO2: number;
-  O2: number;
-  HHV: number; // Higher Heating Value of Biomass Feedstock to Gasifier (kJ/kg)
-  MoistureContent: number;
-  AshContent: number;
-  CarbonConcentration: number;
-  CapacityFactor: number;
+
   // Heat--Base Year
   AggregateFractionOfHeatRecovered: number;
   AggregateSalesPriceForHeat: number;
@@ -187,4 +160,35 @@ export interface InputModHydrogen {
   InterestRateOnDebtReserve: number;
   // Tax Credit Schedule
   TaxCreditFrac: number[];
+}
+
+export interface ElectricalFuelBaseYearInputMod {
+  NetElectricalCapacity: number;
+  CapacityFactor: number;
+  MoistureContent: number;
+}
+
+export interface ElectricalFuelBaseYearInputModGPO extends ElectricalFuelBaseYearInputMod {
+  NetStationEfficiency: number;
+  FuelHeatingValue: number;
+  FuelAshConcentration: number;
+}
+
+export interface ElectricalFuelBaseYearInputModCHP extends ElectricalFuelBaseYearInputModGPO {
+  GrossElectricalCapacity: number;
+}
+
+export interface ElectricalFuelBaseYearInputModGP extends ElectricalFuelBaseYearInputMod {
+  GrossElectricalCapacity: number;
+  HHVEfficiency: number;
+  NetHHVEfficiency: number;
+  FractionOfInputEnergy: number; // Dual Fuel if ant, default set to heavy disele
+  CO: number;
+  H2: number;
+  Hydrocarbons: number;
+  CO2: number;
+  O2: number;
+  HHV: number; // Higher Heating Value of Biomass Feedstock to Gasifier (kJ/kg)
+  AshContent: number;
+  CarbonConcentration: number;
 }
