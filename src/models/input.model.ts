@@ -2,16 +2,13 @@
 export interface InputModGPO
   extends ElectricalFuelBaseYearInputModGPO,
     ExpensesBaseYearInputModGPO,
-    TaxesInputMod {
+    TaxesInputMod,
+    FinancingInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Expenses--base year
   // Taxes
   // Financing
-  DebtRatio: number;
-  InterestRateOnDebt: number;
-  EconomicLife: number;
-  CostOfEquity: number;
   // Income other than energy
   CapacityPayment: number;
   InterestRateOnDebtReserve: number;
@@ -29,17 +26,14 @@ export interface InputModCHP
   extends ElectricalFuelBaseYearInputModCHP,
     ExpensesBaseYearInputModGPO,
     HeatBaseYearInputMod,
-    TaxesInputMod {
+    TaxesInputMod,
+    FinancingInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Heat-base year
   // Expenses--base year
   // Taxes
   // Financing
-  DebtRatio: number;
-  InterestRateOnDebt: number;
-  EconomicLife: number;
-  CostOfEquity: number;
   // Income other than energy
   CapacityPayment: number;
   InterestRateOnDebtReserve: number;
@@ -196,4 +190,11 @@ export interface TaxesInputMod {
   FederalTaxRate: number;
   StateTaxRate: number;
   ProductionTaxCredit: number;
+}
+
+export interface FinancingInputMod {
+  DebtRatio: number;
+  InterestRateOnDebt: number;
+  EconomicLife: number;
+  CostOfEquity: number;
 }
