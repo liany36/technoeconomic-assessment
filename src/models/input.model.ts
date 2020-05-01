@@ -1,17 +1,26 @@
+export interface IncomeOtherThanEnergyInputMod {
+  CapacityPayment: number;
+  InterestRateOnDebtReserve: number;
+}
+
+export interface IncomeOtherThanEnergyInputModGP
+  extends IncomeOtherThanEnergyInputMod {
+  SalesPriceForChar: number;
+}
+
 // GenericPowerOnly
 export interface InputModGPO
   extends ElectricalFuelBaseYearInputModGPO,
     ExpensesBaseYearInputModGPO,
     TaxesInputMod,
-    FinancingInputMod {
+    FinancingInputMod,
+    IncomeOtherThanEnergyInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Expenses--base year
   // Taxes
   // Financing
   // Income other than energy
-  CapacityPayment: number;
-  InterestRateOnDebtReserve: number;
   // Escalation/Inflation
   GeneralInflation: number;
   EscalationFuel: number;
@@ -27,7 +36,8 @@ export interface InputModCHP
     ExpensesBaseYearInputModGPO,
     HeatBaseYearInputMod,
     TaxesInputMod,
-    FinancingInputMod {
+    FinancingInputMod,
+    IncomeOtherThanEnergyInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Heat-base year
@@ -35,8 +45,6 @@ export interface InputModCHP
   // Taxes
   // Financing
   // Income other than energy
-  CapacityPayment: number;
-  InterestRateOnDebtReserve: number;
   // Escalation/Inflation
   GeneralInflation: number;
   EscalationFuel: number;
@@ -52,7 +60,8 @@ export interface InputModGP
   extends ElectricalFuelBaseYearInputModGP,
     ExpensesBaseYearInputModGP,
     HeatBaseYearInputMod,
-    TaxesInputMod {
+    TaxesInputMod,
+    IncomeOtherThanEnergyInputModGP {
   // Capital Cost from Gasification Power Generation
   GasifierSystemCapitalCost: number;
   GasCleaningSystemCapitalCost: number;
@@ -64,9 +73,6 @@ export interface InputModGP
   // Expenses--Base Year
   // Taxes
   // Income Other Than Energy
-  CapacityPayment: number;
-  InterestRateOnDebtReserve: number;
-  SalesPriceForChar: number;
   // Escalation/Inflation
   GeneralInflation: number;
   EscalationBiomassFuel: number;
