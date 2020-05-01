@@ -59,8 +59,8 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     input.Management +
     input.OtherOperatingExpenses;
   const TotalExpensesIncludingFuel =
-    input.FuelCost * AnnualFuelConsumption + TotalNonFuelExpenses;
-  const FuelCostKwh = CalcKwh(AnnualFuelConsumption * input.FuelCost);
+    input.BiomassFuelCost * AnnualFuelConsumption + TotalNonFuelExpenses;
+  const FuelCostKwh = CalcKwh(AnnualFuelConsumption * input.BiomassFuelCost);
   const LaborCostKwh = CalcKwh(input.LaborCost);
   const MaintenanceCostKwh = CalcKwh(input.MaintenanceCost);
   const InsurancePropertyTaxKwh = CalcKwh(input.InsurancePropertyTax);
@@ -204,7 +204,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     }
     newCF.FuelCost =
       AnnualFuelConsumption *
-      input.FuelCost *
+      input.BiomassFuelCost *
       Math.pow(1 + input.EscalationFuel / 100, Year - 1);
     newCF.NonFuelExpenses =
       TotalNonFuelExpenses *

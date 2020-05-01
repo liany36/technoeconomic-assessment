@@ -1,16 +1,8 @@
 // GenericPowerOnly
-export interface InputModGPO extends ElectricalFuelBaseYearInputModGPO {
+export interface InputModGPO extends ElectricalFuelBaseYearInputModGPO, ExpensesBaseYearInputModGPO {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Expenses--base year
-  FuelCost: number;
-  LaborCost: number;
-  MaintenanceCost: number;
-  InsurancePropertyTax: number;
-  Utilities: number;
-  AshDisposal: number;
-  Management: number;
-  OtherOperatingExpenses: number;
   // Taxes
   FederalTaxRate: number;
   StateTaxRate: number;
@@ -33,21 +25,13 @@ export interface InputModGPO extends ElectricalFuelBaseYearInputModGPO {
 }
 
 // GenericCombinedHeatPower
-export interface InputModCHP extends ElectricalFuelBaseYearInputModCHP {
+export interface InputModCHP extends ElectricalFuelBaseYearInputModCHP, ExpensesBaseYearInputModGPO {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Heat-base year
   AggregateFractionOfHeatRecovered: number;
   AggregateSalesPriceForHeat: number;
   // Expenses--base year
-  BiomassFuelCost: number;
-  LaborCost: number;
-  MaintenanceCost: number;
-  InsurancePropertyTax: number;
-  Utilities: number;
-  AshDisposal: number;
-  Management: number;
-  OtherOperatingExpenses: number;
   // Taxes
   FederalTaxRate: number;
   StateTaxRate: number;
@@ -71,7 +55,7 @@ export interface InputModCHP extends ElectricalFuelBaseYearInputModCHP {
 }
 
 // GasificationPower
-export interface InputModGP extends ElectricalFuelBaseYearInputModGP {
+export interface InputModGP extends ElectricalFuelBaseYearInputModGP, ExpensesBaseYearInputModGP {
   // Capital Cost from Gasification Power Generation
   GasifierSystemCapitalCost: number;
   GasCleaningSystemCapitalCost: number;
@@ -79,20 +63,10 @@ export interface InputModGP extends ElectricalFuelBaseYearInputModGP {
   EmissionControlSystemCapitalCost: number;
   HeatRecoverySystemCapitalCost: number;
   // Electrical and Fuel -- base year from Gasification Power Generation
-
   // Heat--Base Year
   AggregateFractionOfHeatRecovered: number;
   AggregateSalesPriceForHeat: number;
   // Expenses--Base Year
-  BiomassFuelCost: number;
-  DualFuelCost: number;
-  LaborCost: number;
-  MaintenanceCost: number;
-  WasteTreatment: number;
-  InsurancePropertyTax: number;
-  Utilities: number;
-  Management: number;
-  OtherOperatingExpenses: number;
   // Taxes
   FederalTaxRate: number;
   StateTaxRate: number;
@@ -191,4 +165,23 @@ export interface ElectricalFuelBaseYearInputModGP extends ElectricalFuelBaseYear
   HHV: number; // Higher Heating Value of Biomass Feedstock to Gasifier (kJ/kg)
   AshContent: number;
   CarbonConcentration: number;
+}
+
+export interface ExpensesBaseYearInputMod {
+  BiomassFuelCost: number; // FuelCost for GPO and CHP on spreadsheet
+  LaborCost: number;
+  MaintenanceCost: number;
+  InsurancePropertyTax: number;
+  Utilities: number;
+  Management: number;
+  OtherOperatingExpenses: number;
+}
+
+export interface ExpensesBaseYearInputModGPO extends ExpensesBaseYearInputMod {
+  AshDisposal: number;
+}
+
+export interface ExpensesBaseYearInputModGP extends ExpensesBaseYearInputMod {
+  DualFuelCost: number;
+  WasteTreatment: number;
 }
