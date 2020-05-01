@@ -274,7 +274,7 @@
           "example": 166,
           "description": "Payment made from power purchaser if plant can guarantee capacity (depends on contract) ($/kW-year)"
         },
-        "InterestRateonDebtReserve": {
+        "InterestRateOnDebtReserve": {
           "type": "number",
           "example": 5,
           "description": "Interest income earned on reserve account if financing institution requires security deposit (%/year)"
@@ -357,7 +357,7 @@
         "EconomicLife",
         "CostOfEquity",
         "CapacityPayment",
-        "InterestRateonDebtReserve",
+        "InterestRateOnDebtReserve",
         "GeneralInflation",
         "EscalationFuel",
         "EscalationForProductionTaxCredit",
@@ -506,7 +506,7 @@
           "example": 166,
           "description": "Payment made from power purchaser if plant can guarantee capacity (depends on contract) ($/kW-year)"
         },
-        "InterestRateonDebtReserve": {
+        "InterestRateOnDebtReserve": {
           "type": "number",
           "example": 5,
           "description": "Interest income earned on reserve account if financing institution requires security deposit (%/year)"
@@ -598,7 +598,7 @@
         "EconomicLife",
         "CostOfEquity",
         "CapacityPayment",
-        "InterestRateonDebtReserve",
+        "InterestRateOnDebtReserve",
         "GeneralInflation",
         "EscalationFuel",
         "EscalationForProductionTaxCredit",

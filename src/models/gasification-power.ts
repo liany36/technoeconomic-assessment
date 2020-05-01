@@ -144,7 +144,7 @@ function GasificationPower(input: InputModGP) {
   const WasteTreatmentKwh =
     input.WasteTreatment / AnnualNetElectricityGeneration;
   const InsurancePropertyTaxKwh =
-    input.Insurance / AnnualNetElectricityGeneration;
+    input.InsurancePropertyTax / AnnualNetElectricityGeneration;
   const UtilitiesKwh = input.Utilities / AnnualNetElectricityGeneration;
   const ManagementKwh = input.Management / AnnualNetElectricityGeneration;
   const OtherOperatingExpensesKwh =
@@ -153,7 +153,7 @@ function GasificationPower(input: InputModGP) {
     input.LaborCost +
     input.MaintenanceCost +
     input.WasteTreatment +
-    input.Insurance +
+    input.InsurancePropertyTax +
     input.Utilities +
     input.Management +
     input.OtherOperatingExpenses;
@@ -195,7 +195,7 @@ function GasificationPower(input: InputModGP) {
   const DebtReserve = AnnualDebtPayment;
   // Income other than energy
   const AnnualCapacityPayment =
-    input.ElectricityCapacityPayment * input.NetElectricalCapacity;
+    input.CapacityPayment * input.NetElectricalCapacity;
   const AnnualDebtReserveInterest =
     (DebtReserve * input.InterestRateOnDebtReserve) / 100;
   const AnnualIncomeFromChar = input.SalesPriceForChar * AnnualCharProduction;

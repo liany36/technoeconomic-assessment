@@ -90,7 +90,7 @@ function GenericPowerOnly(input: InputModGPO) {
   const AnnualCapacityPayment =
     input.CapacityPayment * input.NetElectricalCapacity;
   const AnnualDebtReserveInterest =
-    (DebtReserve * input.InterestRateonDebtReserve) / 100;
+    (DebtReserve * input.InterestRateOnDebtReserve) / 100;
   // Depreciation Schedule
   const DepreciationFraction = 1 / input.EconomicLife;
   // Annual Cash Flows

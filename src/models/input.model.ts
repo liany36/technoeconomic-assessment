@@ -28,7 +28,7 @@ export interface InputModGPO {
   CostOfEquity: number;
   // Income other than energy
   CapacityPayment: number;
-  InterestRateonDebtReserve: number;
+  InterestRateOnDebtReserve: number;
   // Escalation/Inflation
   GeneralInflation: number;
   EscalationFuel: number;
@@ -72,7 +72,7 @@ export interface InputModCHP {
   CostOfEquity: number;
   // Income other than energy
   CapacityPayment: number;
-  InterestRateonDebtReserve: number;
+  InterestRateOnDebtReserve: number;
   // Escalation/Inflation
   GeneralInflation: number;
   EscalationFuel: number;
@@ -116,7 +116,7 @@ export interface InputModGP {
   LaborCost: number;
   MaintenanceCost: number;
   WasteTreatment: number;
-  Insurance: number;
+  InsurancePropertyTax: number;
   Utilities: number;
   Management: number;
   OtherOperatingExpenses: number;
@@ -125,7 +125,7 @@ export interface InputModGP {
   StateTaxRate: number;
   ProductionTaxCredit: number;
   // Income Other Than Energy
-  ElectricityCapacityPayment: number;
+  CapacityPayment: number;
   InterestRateOnDebtReserve: number;
   SalesPriceForChar: number;
   // Escalation/Inflation
