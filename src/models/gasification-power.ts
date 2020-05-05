@@ -46,18 +46,20 @@ function GasificationPower(input: InputModGP) {
     TotalFacilityCapitalCostPerKwe: 0
   };
   CapitalCost.GasifierSystemCapitalCostPerKwe =
-    input.CapitalCost.GasifierSystemCapitalCost / input.NetElectricalCapacity;
+    input.CapitalCost.GasifierSystemCapitalCost /
+    input.ElectricalFuelBaseYear.NetElectricalCapacity;
   CapitalCost.GasCleaningSystemCapitalCostPerKwe =
     input.CapitalCost.GasCleaningSystemCapitalCost /
-    input.NetElectricalCapacity;
+    input.ElectricalFuelBaseYear.NetElectricalCapacity;
   CapitalCost.PowerGenerationCapitalCostPerKwe =
-    input.CapitalCost.PowerGenerationCapitalCost / input.NetElectricalCapacity;
+    input.CapitalCost.PowerGenerationCapitalCost /
+    input.ElectricalFuelBaseYear.NetElectricalCapacity;
   CapitalCost.EmissionControlSystemCapitalCostPerKwe =
     input.CapitalCost.EmissionControlSystemCapitalCost /
-    input.NetElectricalCapacity;
+    input.ElectricalFuelBaseYear.NetElectricalCapacity;
   CapitalCost.HeatRecoverySystemCapitalCostPerKwe =
     input.CapitalCost.HeatRecoverySystemCapitalCost /
-    input.NetElectricalCapacity;
+    input.ElectricalFuelBaseYear.NetElectricalCapacity;
   CapitalCost.TotalFacilityCapitalCost =
     input.CapitalCost.GasifierSystemCapitalCost +
     input.CapitalCost.GasCleaningSystemCapitalCost +
@@ -65,60 +67,79 @@ function GasificationPower(input: InputModGP) {
     input.CapitalCost.EmissionControlSystemCapitalCost +
     input.CapitalCost.HeatRecoverySystemCapitalCost;
   CapitalCost.TotalFacilityCapitalCostPerKwe =
-    CapitalCost.TotalFacilityCapitalCost / input.NetElectricalCapacity;
+    CapitalCost.TotalFacilityCapitalCost /
+    input.ElectricalFuelBaseYear.NetElectricalCapacity;
   // Electrical and Fuel--base year
   const ParasiticLoad =
-    input.GrossElectricalCapacity - input.NetElectricalCapacity;
-  const AnnualHours = (input.CapacityFactor / 100) * 8760;
+    input.ElectricalFuelBaseYear.GrossElectricalCapacity -
+    input.ElectricalFuelBaseYear.NetElectricalCapacity;
+  const AnnualHours =
+    (input.ElectricalFuelBaseYear.CapacityFactor / 100) * 8760;
   const AnnualNetElectricityGeneration =
-    input.NetElectricalCapacity * AnnualHours;
+    input.ElectricalFuelBaseYear.NetElectricalCapacity * AnnualHours;
   const OverallNetSystemEfficiency =
-    (input.HHVEfficiency * input.NetHHVEfficiency) / 100;
+    (input.ElectricalFuelBaseYear.HHVEfficiency *
+      input.ElectricalFuelBaseYear.NetHHVEfficiency) /
+    100;
   const N2 =
-    100 - (input.CO + input.H2 + input.Hydrocarbons + input.CO2 + input.O2);
+    100 -
+    (input.ElectricalFuelBaseYear.CO +
+      input.ElectricalFuelBaseYear.H2 +
+      input.ElectricalFuelBaseYear.Hydrocarbons +
+      input.ElectricalFuelBaseYear.CO2 +
+      input.ElectricalFuelBaseYear.O2);
   const CleanGasMolecularMass =
-    (input.CO * 28 +
-      input.H2 * 2 +
-      input.Hydrocarbons * 16 +
-      input.CO2 * 44 +
-      input.O2 * 32 +
+    (input.ElectricalFuelBaseYear.CO * 28 +
+      input.ElectricalFuelBaseYear.H2 * 2 +
+      input.ElectricalFuelBaseYear.Hydrocarbons * 16 +
+      input.ElectricalFuelBaseYear.CO2 * 44 +
+      input.ElectricalFuelBaseYear.O2 * 32 +
       N2 * 28) /
     100;
   const CleanGasDensity = (101325 * CleanGasMolecularMass) / 8314 / 298;
   const CleanGasHHeating =
-    (input.CO * CO_HHV_KJL +
-      input.H2 * H2_HHV_KJL +
-      input.Hydrocarbons * CH4_HHV_KJL) /
+    (input.ElectricalFuelBaseYear.CO * CO_HHV_KJL +
+      input.ElectricalFuelBaseYear.H2 * H2_HHV_KJL +
+      input.ElectricalFuelBaseYear.Hydrocarbons * CH4_HHV_KJL) /
     100;
   const CleanGasLHeating =
-    (input.CO * CO_LHV_KJL +
-      input.H2 * H2_LHV_KJL +
-      input.Hydrocarbons * CH4_LHV_KJL) /
+    (input.ElectricalFuelBaseYear.CO * CO_LHV_KJL +
+      input.ElectricalFuelBaseYear.H2 * H2_LHV_KJL +
+      input.ElectricalFuelBaseYear.Hydrocarbons * CH4_LHV_KJL) /
     100;
   const TotalFuelPowerInput =
-    input.NetElectricalCapacity / (input.NetHHVEfficiency / 100);
+    input.ElectricalFuelBaseYear.NetElectricalCapacity /
+    (input.ElectricalFuelBaseYear.NetHHVEfficiency / 100);
   const CleanGasPowerInput =
-    TotalFuelPowerInput * (1 - input.FractionOfInputEnergy / 100);
+    TotalFuelPowerInput *
+    (1 - input.ElectricalFuelBaseYear.FractionOfInputEnergy / 100);
   const DualFuelPowerInput =
-    (TotalFuelPowerInput * input.FractionOfInputEnergy) / 100;
+    (TotalFuelPowerInput * input.ElectricalFuelBaseYear.FractionOfInputEnergy) /
+    100;
   const CleanGasFlowRateVolume = (CleanGasPowerInput / CleanGasHHeating) * 3600;
   const CleanGasFlowRateMass = CleanGasFlowRateVolume * CleanGasDensity;
   const AnnualCleanGasConsumption = (CleanGasFlowRateMass * AnnualHours) / 1000;
   const DualFuelFlowRate = (DualFuelPowerInput / HeavyDieselHHVkJL) * 3600;
   const AnnualDualFuelConsumption = DualFuelFlowRate * AnnualHours;
-  input.HHV = input.HHV * (1 - input.MoistureContent / 100);
+  input.ElectricalFuelBaseYear.HHV =
+    input.ElectricalFuelBaseYear.HHV *
+    (1 - input.ElectricalFuelBaseYear.MoistureContent / 100);
   const BiomassFeedRate =
-    (CleanGasPowerInput / (input.HHVEfficiency / 100) / input.HHV) * 3600;
+    (CleanGasPowerInput /
+      (input.ElectricalFuelBaseYear.HHVEfficiency / 100) /
+      input.ElectricalFuelBaseYear.HHV) *
+    3600;
   const AnnualBiomassConsumptionDry = (BiomassFeedRate * AnnualHours) / 1000;
   const AnnualBiomassConsumptionWet =
-    AnnualBiomassConsumptionDry / (1 - input.MoistureContent / 100);
+    AnnualBiomassConsumptionDry /
+    (1 - input.ElectricalFuelBaseYear.MoistureContent / 100);
   const CharProductionRate =
-    ((input.AshContent / 100) * BiomassFeedRate) /
-    (1 - input.CarbonConcentration / 100);
+    ((input.ElectricalFuelBaseYear.AshContent / 100) * BiomassFeedRate) /
+    (1 - input.ElectricalFuelBaseYear.CarbonConcentration / 100);
   const AnnualCharProduction = (CharProductionRate * AnnualHours) / 1000;
   // Heat--base year
   const TotalHeatProductionRate =
-    TotalFuelPowerInput - input.GrossElectricalCapacity;
+    TotalFuelPowerInput - input.ElectricalFuelBaseYear.GrossElectricalCapacity;
   const RecoveredHeat =
     (TotalHeatProductionRate * input.AggregateFractionOfHeatRecovered) / 100;
   const AnnualHeatSales = RecoveredHeat * AnnualHours;
@@ -127,7 +148,8 @@ function GasificationPower(input: InputModGP) {
   const HeatIncomePerUnitNEE =
     TotalIncomeFromHeatSales / AnnualNetElectricityGeneration;
   const OverallCHPefficiencyGross =
-    ((input.GrossElectricalCapacity * AnnualHours + AnnualHeatSales) /
+    ((input.ElectricalFuelBaseYear.GrossElectricalCapacity * AnnualHours +
+      AnnualHeatSales) /
       (TotalFuelPowerInput * AnnualHours)) *
     100;
   const OverallCHPefficiencyNet =
@@ -198,7 +220,7 @@ function GasificationPower(input: InputModGP) {
   const DebtReserve = AnnualDebtPayment;
   // Income other than energy
   const AnnualCapacityPayment =
-    input.CapacityPayment * input.NetElectricalCapacity;
+    input.CapacityPayment * input.ElectricalFuelBaseYear.NetElectricalCapacity;
   const AnnualDebtReserveInterest =
     (DebtReserve * input.InterestRateOnDebtReserve) / 100;
   const AnnualIncomeFromChar = input.SalesPriceForChar * AnnualCharProduction;

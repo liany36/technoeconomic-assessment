@@ -16,27 +16,41 @@ import {
 function GenericCombinedHeatPower(input: InputModCHP) {
   // Electrical and Fuel--base year
   const ParasiticLoad =
-    input.GrossElectricalCapacity - input.NetElectricalCapacity;
-  const AnnualHours = (input.CapacityFactor / 100) * 8760;
-  input.FuelHeatingValue =
-    input.FuelHeatingValue * (1 - input.MoistureContent / 100);
+    input.ElectricalFuelBaseYear.GrossElectricalCapacity -
+    input.ElectricalFuelBaseYear.NetElectricalCapacity;
+  const AnnualHours =
+    (input.ElectricalFuelBaseYear.CapacityFactor / 100) * 8760;
+  input.ElectricalFuelBaseYear.FuelHeatingValue =
+    input.ElectricalFuelBaseYear.FuelHeatingValue *
+    (1 - input.ElectricalFuelBaseYear.MoistureContent / 100);
   const FuelConsumptionRate =
-    ((input.NetElectricalCapacity / (input.NetStationEfficiency / 100)) *
+    ((input.ElectricalFuelBaseYear.NetElectricalCapacity /
+      (input.ElectricalFuelBaseYear.NetStationEfficiency / 100)) *
       3600) /
-    input.FuelHeatingValue /
+    input.ElectricalFuelBaseYear.FuelHeatingValue /
     1000;
   const FuelPower =
-    (FuelConsumptionRate * 1000 * input.FuelHeatingValue) / 3600;
+    (FuelConsumptionRate *
+      1000 *
+      input.ElectricalFuelBaseYear.FuelHeatingValue) /
+    3600;
   const GrossStationElectricalEfficiency =
-    (input.GrossElectricalCapacity / FuelPower) * 100;
+    (input.ElectricalFuelBaseYear.GrossElectricalCapacity / FuelPower) * 100;
   const AnnualNetGeneration =
-    (input.NetElectricalCapacity * 8760 * input.CapacityFactor) / 100;
+    (input.ElectricalFuelBaseYear.NetElectricalCapacity *
+      8760 *
+      input.ElectricalFuelBaseYear.CapacityFactor) /
+    100;
   const AnnualFuelConsumption = FuelConsumptionRate * AnnualHours;
-  const CapitalCostNEC = input.CapitalCost / input.NetElectricalCapacity;
+  const CapitalCostNEC =
+    input.CapitalCost / input.ElectricalFuelBaseYear.NetElectricalCapacity;
   const AnnualAshDisposal =
-    (AnnualFuelConsumption * input.FuelAshConcentration) / 100;
+    (AnnualFuelConsumption *
+      input.ElectricalFuelBaseYear.FuelAshConcentration) /
+    100;
   // Heat-base year
-  const TotalHeatProductionRate = FuelPower - input.GrossElectricalCapacity;
+  const TotalHeatProductionRate =
+    FuelPower - input.ElectricalFuelBaseYear.GrossElectricalCapacity;
   const RecoveredHeat =
     (TotalHeatProductionRate * input.AggregateFractionOfHeatRecovered) / 100;
   const AnnualHeatSales = RecoveredHeat * AnnualHours;
@@ -44,7 +58,8 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     AnnualHeatSales * input.AggregateSalesPriceForHeat;
   const HeatIncomePerUnitNEE = TotalIncomeFromHeatSales / AnnualNetGeneration;
   const OverallCHPefficiencyGross =
-    ((input.GrossElectricalCapacity * AnnualHours + AnnualHeatSales) /
+    ((input.ElectricalFuelBaseYear.GrossElectricalCapacity * AnnualHours +
+      AnnualHeatSales) /
       (FuelPower * AnnualHours)) *
     100;
   const OverallCHPefficiencyNet =
@@ -109,7 +124,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
   }
   // Income other than energy
   const AnnualCapacityPayment =
-    input.CapacityPayment * input.NetElectricalCapacity;
+    input.CapacityPayment * input.ElectricalFuelBaseYear.NetElectricalCapacity;
   const AnnualDebtReserveInterest =
     (DebtReserve * input.InterestRateOnDebtReserve) / 100;
   // Depreciation Schedule

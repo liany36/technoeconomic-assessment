@@ -14,20 +14,29 @@ import {
 
 function GenericPowerOnly(input: InputModGPO) {
   // Electrical and Fuel--base year
-  const AnnualHours = (input.CapacityFactor / 100) * 8760;
-  input.FuelHeatingValue =
-    input.FuelHeatingValue * (1 - input.MoistureContent / 100);
+  const AnnualHours =
+    (input.ElectricalFuelBaseYear.CapacityFactor / 100) * 8760;
+  input.ElectricalFuelBaseYear.FuelHeatingValue =
+    input.ElectricalFuelBaseYear.FuelHeatingValue *
+    (1 - input.ElectricalFuelBaseYear.MoistureContent / 100);
   const FuelConsumptionRate =
-    ((input.NetElectricalCapacity / (input.NetStationEfficiency / 100)) *
+    ((input.ElectricalFuelBaseYear.NetElectricalCapacity /
+      (input.ElectricalFuelBaseYear.NetStationEfficiency / 100)) *
       3600) /
-    input.FuelHeatingValue /
+    input.ElectricalFuelBaseYear.FuelHeatingValue /
     1000;
   const AnnualGeneration =
-    (input.NetElectricalCapacity * 8760 * input.CapacityFactor) / 100;
-  const CapitalCostNEC = input.CapitalCost / input.NetElectricalCapacity;
+    (input.ElectricalFuelBaseYear.NetElectricalCapacity *
+      8760 *
+      input.ElectricalFuelBaseYear.CapacityFactor) /
+    100;
+  const CapitalCostNEC =
+    input.CapitalCost / input.ElectricalFuelBaseYear.NetElectricalCapacity;
   const AnnualFuelConsumption = FuelConsumptionRate * AnnualHours;
   const AnnualAshDisposal =
-    (AnnualFuelConsumption * input.FuelAshConcentration) / 100;
+    (AnnualFuelConsumption *
+      input.ElectricalFuelBaseYear.FuelAshConcentration) /
+    100;
   // Expenses--base year
   const TotalNonFuelExpenses =
     input.LaborCost +
@@ -88,7 +97,7 @@ function GenericPowerOnly(input: InputModGPO) {
   }
   // Income other than energy
   const AnnualCapacityPayment =
-    input.CapacityPayment * input.NetElectricalCapacity;
+    input.CapacityPayment * input.ElectricalFuelBaseYear.NetElectricalCapacity;
   const AnnualDebtReserveInterest =
     (DebtReserve * input.InterestRateOnDebtReserve) / 100;
   // Depreciation Schedule
