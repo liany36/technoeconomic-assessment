@@ -208,35 +208,42 @@ function GasificationPower(input: InputModGP) {
     input.Taxes.StateTaxRate +
     input.Taxes.FederalTaxRate * (1 - input.Taxes.StateTaxRate / 100);
   // Financing
-  const EquityRatio = 100 - input.DebtRatio;
+  const EquityRatio = 100 - input.Financing.DebtRatio;
   const CostOfMoney =
-    (input.DebtRatio / 100) * input.InterestRateOnDebt +
-    (EquityRatio / 100) * input.CostOfEquity;
+    (input.Financing.DebtRatio / 100) * input.Financing.InterestRateOnDebt +
+    (EquityRatio / 100) * input.Financing.CostOfEquity;
   const TotalCostOfPlant = CapitalCost.TotalFacilityCapitalCost;
   const TotalEquityCost = (TotalCostOfPlant * EquityRatio) / 100;
-  const TotalDebtCost = (TotalCostOfPlant * input.DebtRatio) / 100;
+  const TotalDebtCost = (TotalCostOfPlant * input.Financing.DebtRatio) / 100;
   const CapitalRecoveryFactorEquity =
-    ((input.CostOfEquity / 100) *
-      (1 + input.CostOfEquity / 100) ** input.EconomicLife) /
-    ((1 + input.CostOfEquity / 100) ** input.EconomicLife - 1);
+    ((input.Financing.CostOfEquity / 100) *
+      (1 + input.Financing.CostOfEquity / 100) **
+        input.Financing.EconomicLife) /
+    ((1 + input.Financing.CostOfEquity / 100) ** input.Financing.EconomicLife -
+      1);
   const CapitalRecoveryFactorDebt =
-    ((input.InterestRateOnDebt / 100) *
-      (1 + input.InterestRateOnDebt / 100) ** input.EconomicLife) /
-    ((1 + input.InterestRateOnDebt / 100) ** input.EconomicLife - 1);
+    ((input.Financing.InterestRateOnDebt / 100) *
+      (1 + input.Financing.InterestRateOnDebt / 100) **
+        input.Financing.EconomicLife) /
+    ((1 + input.Financing.InterestRateOnDebt / 100) **
+      input.Financing.EconomicLife -
+      1);
   const AnnualEquityRecovery = CapitalRecoveryFactorEquity * TotalEquityCost;
   const AnnualDebtPayment = TotalDebtCost * CapitalRecoveryFactorDebt;
   const DebtReserve = AnnualDebtPayment;
   // Income other than energy
   const AnnualCapacityPayment =
-    input.CapacityPayment * input.ElectricalFuelBaseYear.NetElectricalCapacity;
+    input.IncomeOtherThanEnergy.CapacityPayment *
+    input.ElectricalFuelBaseYear.NetElectricalCapacity;
   const AnnualDebtReserveInterest =
-    (DebtReserve * input.InterestRateOnDebtReserve) / 100;
-  const AnnualIncomeFromChar = input.SalesPriceForChar * AnnualCharProduction;
+    (DebtReserve * input.IncomeOtherThanEnergy.InterestRateOnDebtReserve) / 100;
+  const AnnualIncomeFromChar =
+    input.IncomeOtherThanEnergy.SalesPriceForChar * AnnualCharProduction;
   // Depreciation Schedule
-  const DepreciationFraction = 1 / input.EconomicLife;
+  const DepreciationFraction = 1 / input.Financing.EconomicLife;
   // Annual Cash Flows
   const cashFlow = [];
-  for (let i = 0; i < input.EconomicLife; i++) {
+  for (let i = 0; i < input.Financing.EconomicLife; i++) {
     const newCF: CashFlowGP = {
       Year: 0,
       EquityRecovery: 0,
@@ -263,7 +270,7 @@ function GasificationPower(input: InputModGP) {
     };
     cashFlow.push(newCF);
   }
-  for (let i = 0; i < input.EconomicLife; i++) {
+  for (let i = 0; i < input.Financing.EconomicLife; i++) {
     cashFlow[i] = CalcCashFlow(cashFlow[i - 1], i + 1);
   }
   function CalcCashFlow(CF: CashFlowGP, Year: number) {
@@ -294,10 +301,11 @@ function GasificationPower(input: InputModGP) {
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRecovery;
     if (Year === 1) {
-      newCF.EquityInterest = (input.CostOfEquity / 100) * TotalEquityCost;
+      newCF.EquityInterest =
+        (input.Financing.CostOfEquity / 100) * TotalEquityCost;
     } else {
       newCF.EquityInterest =
-        (input.CostOfEquity / 100) * CF.EquityPrincipalRemaining;
+        (input.Financing.CostOfEquity / 100) * CF.EquityPrincipalRemaining;
     }
     newCF.EquityPrincipalPaid = newCF.EquityRecovery - newCF.EquityInterest;
     if (Year === 1) {
@@ -309,10 +317,11 @@ function GasificationPower(input: InputModGP) {
     }
     newCF.DebtRecovery = AnnualDebtPayment;
     if (Year === 1) {
-      newCF.DebtInterest = (input.InterestRateOnDebt / 100) * TotalDebtCost;
+      newCF.DebtInterest =
+        (input.Financing.InterestRateOnDebt / 100) * TotalDebtCost;
     } else {
       newCF.DebtInterest =
-        (input.InterestRateOnDebt / 100) * CF.DebtPrincipalRemaining;
+        (input.Financing.InterestRateOnDebt / 100) * CF.DebtPrincipalRemaining;
     }
     newCF.DebtPrincipalPaid = newCF.DebtRecovery - newCF.DebtInterest;
     if (Year === 1) {
@@ -334,7 +343,7 @@ function GasificationPower(input: InputModGP) {
       Math.pow(1 + input.EscalationOther / 100, Year - 1);
     if (Year === 1) {
       newCF.DebtReserve = DebtReserve;
-    } else if (Year < input.EconomicLife) {
+    } else if (Year < input.Financing.EconomicLife) {
       newCF.DebtReserve = 0;
     } else {
       newCF.DebtReserve = -DebtReserve;
@@ -436,9 +445,9 @@ function GasificationPower(input: InputModGP) {
     CurrentLevelAnnualRevenueRequirements: 0,
     CurrentLACofEnergy: 0
   };
-  CurrentLevelAnnualCost.CostOfMoney = input.CostOfEquity / 100;
+  CurrentLevelAnnualCost.CostOfMoney = input.Financing.CostOfEquity / 100;
   let TempPresentWorth: number;
-  for (let i = 0; i < input.EconomicLife; i++) {
+  for (let i = 0; i < input.Financing.EconomicLife; i++) {
     TempPresentWorth =
       cashFlow[i].EnergyRevenueRequired *
       (1 + CurrentLevelAnnualCost.CostOfMoney) ** -cashFlow[i].Year;
@@ -447,8 +456,10 @@ function GasificationPower(input: InputModGP) {
   }
   CurrentLevelAnnualCost.CapitalRecoveryFactorCurrent =
     (CurrentLevelAnnualCost.CostOfMoney *
-      (1 + CurrentLevelAnnualCost.CostOfMoney) ** input.EconomicLife) /
-    ((1 + CurrentLevelAnnualCost.CostOfMoney) ** input.EconomicLife - 1);
+      (1 + CurrentLevelAnnualCost.CostOfMoney) **
+        input.Financing.EconomicLife) /
+    ((1 + CurrentLevelAnnualCost.CostOfMoney) ** input.Financing.EconomicLife -
+      1);
   CurrentLevelAnnualCost.CurrentLevelAnnualRevenueRequirements =
     CurrentLevelAnnualCost.TotalPresentWorth *
     CurrentLevelAnnualCost.CapitalRecoveryFactorCurrent;
@@ -468,8 +479,11 @@ function GasificationPower(input: InputModGP) {
     1;
   ConstantLevelAnnualCost.CapitalRecoveryFactorConstant =
     (ConstantLevelAnnualCost.RealCostOfMoney *
-      (1 + ConstantLevelAnnualCost.RealCostOfMoney) ** input.EconomicLife) /
-    ((1 + ConstantLevelAnnualCost.RealCostOfMoney) ** input.EconomicLife - 1);
+      (1 + ConstantLevelAnnualCost.RealCostOfMoney) **
+        input.Financing.EconomicLife) /
+    ((1 + ConstantLevelAnnualCost.RealCostOfMoney) **
+      input.Financing.EconomicLife -
+      1);
   ConstantLevelAnnualCost.ConstantLevelAnnualRevenueRequirements =
     CurrentLevelAnnualCost.TotalPresentWorth *
     ConstantLevelAnnualCost.CapitalRecoveryFactorConstant;
