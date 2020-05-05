@@ -46,21 +46,24 @@ function GasificationPower(input: InputModGP) {
     TotalFacilityCapitalCostPerKwe: 0
   };
   CapitalCost.GasifierSystemCapitalCostPerKwe =
-    input.GasifierSystemCapitalCost / input.NetElectricalCapacity;
+    input.CapitalCost.GasifierSystemCapitalCost / input.NetElectricalCapacity;
   CapitalCost.GasCleaningSystemCapitalCostPerKwe =
-    input.GasCleaningSystemCapitalCost / input.NetElectricalCapacity;
+    input.CapitalCost.GasCleaningSystemCapitalCost /
+    input.NetElectricalCapacity;
   CapitalCost.PowerGenerationCapitalCostPerKwe =
-    input.PowerGenerationCapitalCost / input.NetElectricalCapacity;
+    input.CapitalCost.PowerGenerationCapitalCost / input.NetElectricalCapacity;
   CapitalCost.EmissionControlSystemCapitalCostPerKwe =
-    input.EmissionControlSystemCapitalCost / input.NetElectricalCapacity;
+    input.CapitalCost.EmissionControlSystemCapitalCost /
+    input.NetElectricalCapacity;
   CapitalCost.HeatRecoverySystemCapitalCostPerKwe =
-    input.HeatRecoverySystemCapitalCost / input.NetElectricalCapacity;
+    input.CapitalCost.HeatRecoverySystemCapitalCost /
+    input.NetElectricalCapacity;
   CapitalCost.TotalFacilityCapitalCost =
-    input.GasifierSystemCapitalCost +
-    input.GasCleaningSystemCapitalCost +
-    input.PowerGenerationCapitalCost +
-    input.EmissionControlSystemCapitalCost +
-    input.HeatRecoverySystemCapitalCost;
+    input.CapitalCost.GasifierSystemCapitalCost +
+    input.CapitalCost.GasCleaningSystemCapitalCost +
+    input.CapitalCost.PowerGenerationCapitalCost +
+    input.CapitalCost.EmissionControlSystemCapitalCost +
+    input.CapitalCost.HeatRecoverySystemCapitalCost;
   CapitalCost.TotalFacilityCapitalCostPerKwe =
     CapitalCost.TotalFacilityCapitalCost / input.NetElectricalCapacity;
   // Electrical and Fuel--base year
@@ -261,14 +264,12 @@ function GasificationPower(input: InputModGP) {
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRecovery;
     if (Year === 1) {
-      newCF.EquityInterest =
-        (input.CostOfEquity / 100) * TotalEquityCost;
+      newCF.EquityInterest = (input.CostOfEquity / 100) * TotalEquityCost;
     } else {
       newCF.EquityInterest =
         (input.CostOfEquity / 100) * CF.EquityPrincipalRemaining;
     }
-    newCF.EquityPrincipalPaid =
-      newCF.EquityRecovery - newCF.EquityInterest;
+    newCF.EquityPrincipalPaid = newCF.EquityRecovery - newCF.EquityInterest;
     if (Year === 1) {
       newCF.EquityPrincipalRemaining =
         TotalEquityCost - newCF.EquityPrincipalPaid;
@@ -278,17 +279,14 @@ function GasificationPower(input: InputModGP) {
     }
     newCF.DebtRecovery = AnnualDebtPayment;
     if (Year === 1) {
-      newCF.DebtInterest =
-        (input.InterestRateOnDebt / 100) * TotalDebtCost;
+      newCF.DebtInterest = (input.InterestRateOnDebt / 100) * TotalDebtCost;
     } else {
       newCF.DebtInterest =
         (input.InterestRateOnDebt / 100) * CF.DebtPrincipalRemaining;
     }
-    newCF.DebtPrincipalPaid =
-      newCF.DebtRecovery - newCF.DebtInterest;
+    newCF.DebtPrincipalPaid = newCF.DebtRecovery - newCF.DebtInterest;
     if (Year === 1) {
-      newCF.DebtPrincipalRemaining =
-        TotalDebtCost - newCF.DebtPrincipalPaid;
+      newCF.DebtPrincipalRemaining = TotalDebtCost - newCF.DebtPrincipalPaid;
       newCF.BiomassFuelCost =
         AnnualBiomassConsumptionDry * input.BiomassFuelCost;
       newCF.DualFuelCost = AnnualDualFuelConsumption * input.DualFuelCost;
@@ -392,13 +390,11 @@ function GasificationPower(input: InputModGP) {
     Total.IncomeCapacity += cashFlow[i].IncomeCapacity;
     Total.IncomeHeat += cashFlow[i].IncomeHeat;
     Total.IncomeChar += cashFlow[i].IncomeChar;
-    Total.InterestOnDebtReserve +=
-      cashFlow[i].InterestOnDebtReserve;
+    Total.InterestOnDebtReserve += cashFlow[i].InterestOnDebtReserve;
     Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
     Total.TaxCredit += cashFlow[i].TaxCredit;
     Total.Taxes += cashFlow[i].Taxes;
-    Total.EnergyRevenueRequired +=
-      cashFlow[i].EnergyRevenueRequired;
+    Total.EnergyRevenueRequired += cashFlow[i].EnergyRevenueRequired;
   }
   // Current $ Level Annual Cost (LAC)
   const CurrentLevelAnnualCost: CurrentLevelAnnualCostMod = {
