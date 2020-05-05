@@ -170,14 +170,12 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRecovery;
     if (Year === 1) {
-      newCF.EquityInterest =
-        (input.CostOfEquity / 100) * TotalEquityCost;
+      newCF.EquityInterest = (input.CostOfEquity / 100) * TotalEquityCost;
     } else {
       newCF.EquityInterest =
         (input.CostOfEquity / 100) * CF.EquityPrincipalRemaining;
     }
-    newCF.EquityPrincipalPaid =
-      newCF.EquityRecovery - newCF.EquityInterest;
+    newCF.EquityPrincipalPaid = newCF.EquityRecovery - newCF.EquityInterest;
     if (Year === 1) {
       newCF.EquityPrincipalRemaining =
         TotalEquityCost - newCF.EquityPrincipalPaid;
@@ -187,17 +185,14 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     }
     newCF.DebtRecovery = AnnualDebtPayment;
     if (Year === 1) {
-      newCF.DebtInterest =
-        (input.InterestRateOnDebt / 100) * TotalDebtCost;
+      newCF.DebtInterest = (input.InterestRateOnDebt / 100) * TotalDebtCost;
     } else {
       newCF.DebtInterest =
         (input.InterestRateOnDebt / 100) * CF.DebtPrincipalRemaining;
     }
-    newCF.DebtPrincipalPaid =
-      newCF.DebtRecovery - newCF.DebtInterest;
+    newCF.DebtPrincipalPaid = newCF.DebtRecovery - newCF.DebtInterest;
     if (Year === 1) {
-      newCF.DebtPrincipalRemaining =
-        TotalDebtCost - newCF.DebtPrincipalPaid;
+      newCF.DebtPrincipalRemaining = TotalDebtCost - newCF.DebtPrincipalPaid;
     } else {
       newCF.DebtPrincipalRemaining =
         CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
@@ -205,10 +200,13 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     newCF.FuelCost =
       AnnualFuelConsumption *
       input.BiomassFuelCost *
-      Math.pow(1 + input.EscalationFuel / 100, Year - 1);
+      Math.pow(
+        1 + input.EscalationInflation.EscalationBiomassFuel / 100,
+        Year - 1
+      );
     newCF.NonFuelExpenses =
       TotalNonFuelExpenses *
-      Math.pow(1 + input.EscalationOther / 100, Year - 1);
+      Math.pow(1 + input.EscalationInflation.EscalationOther / 100, Year - 1);
     if (Year === 1) {
       newCF.DebtReserve = DebtReserve;
     } else if (Year < input.EconomicLife) {
@@ -223,7 +221,10 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     } else {
       newCF.IncomeHeat =
         TotalIncomeFromHeatSales *
-        Math.pow(1 + input.EscalationHeatSales / 100, Year - 1);
+        Math.pow(
+          1 + input.EscalationInflation.EscalationHeatSales / 100,
+          Year - 1
+        );
     }
     newCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
     newCF.TaxesWoCredit =
@@ -236,7 +237,10 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     newCF.TaxCredit =
       AnnualNetGeneration *
       input.ProductionTaxCredit *
-      Math.pow(1 + input.EscalationProductionTaxCredit / 100, Year - 1) *
+      Math.pow(
+        1 + input.EscalationInflation.EscalationProductionTaxCredit / 100,
+        Year - 1
+      ) *
       input.TaxCreditFrac[Year - 1];
     newCF.Taxes =
       (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
@@ -292,13 +296,11 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     Total.Depreciation += cashFlow[i].Depreciation;
     Total.IncomeCapacity += cashFlow[i].IncomeCapacity;
     Total.IncomeHeat += cashFlow[i].IncomeHeat;
-    Total.InterestOnDebtReserve +=
-      cashFlow[i].InterestOnDebtReserve;
+    Total.InterestOnDebtReserve += cashFlow[i].InterestOnDebtReserve;
     Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
     Total.TaxCredit += cashFlow[i].TaxCredit;
     Total.Taxes += cashFlow[i].Taxes;
-    Total.EnergyRevenueRequired +=
-      cashFlow[i].EnergyRevenueRequired;
+    Total.EnergyRevenueRequired += cashFlow[i].EnergyRevenueRequired;
   }
   // Current $ Level Annual Cost (LAC)
   const PresentWorth = [];
@@ -325,7 +327,9 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     return EnergyRevenueRequired * Math.pow(1 + CostOfEquity / 100, -Year);
   }
   const RealCostOfMoney =
-    (1 + input.CostOfEquity / 100) / (1 + input.GeneralInflation / 100) - 1;
+    (1 + input.CostOfEquity / 100) /
+      (1 + input.EscalationInflation.GeneralInflation / 100) -
+    1;
   const CapitalRecoveryFactorConstant = CapitalRecoveryFactor(
     RealCostOfMoney * 100,
     input.EconomicLife

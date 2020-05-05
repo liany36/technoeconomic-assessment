@@ -177,10 +177,13 @@ function GenericPowerOnly(input: InputModGPO) {
     newCF.FuelCost =
       AnnualFuelConsumption *
       input.BiomassFuelCost *
-      Math.pow(1 + input.EscalationBiomassFuel / 100, Year - 1);
+      Math.pow(
+        1 + input.EscalationInflation.EscalationBiomassFuel / 100,
+        Year - 1
+      );
     newCF.NonFuelExpenses =
       TotalNonFuelExpenses *
-      Math.pow(1 + input.EscalationOther / 100, Year - 1);
+      Math.pow(1 + input.EscalationInflation.EscalationOther / 100, Year - 1);
     if (Year === 1) {
       newCF.DebtReserve = DebtReserve;
     } else if (Year < input.EconomicLife) {
@@ -201,7 +204,10 @@ function GenericPowerOnly(input: InputModGPO) {
     newCF.TaxCredit =
       AnnualGeneration *
       input.ProductionTaxCredit *
-      Math.pow(1 + input.EscalationProductionTaxCredit / 100, Year - 1) *
+      Math.pow(
+        1 + input.EscalationInflation.EscalationProductionTaxCredit / 100,
+        Year - 1
+      ) *
       input.TaxCreditFrac[Year - 1];
     newCF.Taxes =
       (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
@@ -285,7 +291,9 @@ function GenericPowerOnly(input: InputModGPO) {
     return EnergyRevenueRequired * Math.pow(1 + CostOfEquity / 100, -Year);
   }
   const RealCostOfMoney =
-    (1 + input.CostOfEquity / 100) / (1 + input.GeneralInflation / 100) - 1;
+    (1 + input.CostOfEquity / 100) /
+      (1 + input.EscalationInflation.GeneralInflation / 100) -
+    1;
   const CapitalRecoveryFactorConstant = CapitalRecoveryFactor(
     RealCostOfMoney * 100,
     input.EconomicLife

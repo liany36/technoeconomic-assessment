@@ -4,8 +4,7 @@ export interface InputModGPO
     ExpensesBaseYearInputModGPO,
     TaxesInputMod,
     FinancingInputMod,
-    IncomeOtherThanEnergyInputMod,
-    EscalationInflationInputMod {
+    IncomeOtherThanEnergyInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Expenses--base year
@@ -13,6 +12,7 @@ export interface InputModGPO
   // Financing
   // Income other than energy
   // Escalation/Inflation
+  EscalationInflation: EscalationInflationInputMod;
   // Tax Credit Schedule
   TaxCreditFrac: number[];
 }
@@ -24,8 +24,7 @@ export interface InputModCHP
     HeatBaseYearInputMod,
     TaxesInputMod,
     FinancingInputMod,
-    IncomeOtherThanEnergyInputMod,
-    EscalationInflationInputMod {
+    IncomeOtherThanEnergyInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   // Heat-base year
@@ -34,6 +33,7 @@ export interface InputModCHP
   // Financing
   // Income other than energy
   // Escalation/Inflation
+  EscalationInflation: EscalationInflationInputMod;
   // Tax Credit Schedule
   TaxCreditFrac: number[];
 }
