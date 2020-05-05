@@ -106,7 +106,8 @@ function GenericCombinedHeatPower(input: InputModCHP) {
   }
   // Taxes
   const CombinedTaxRate =
-    input.StateTaxRate + input.FederalTaxRate * (1 - input.StateTaxRate / 100);
+    input.Taxes.StateTaxRate +
+    input.Taxes.FederalTaxRate * (1 - input.Taxes.StateTaxRate / 100);
   // Financing
   const EquityRatio = 100 - input.DebtRatio;
   const CostOfMoney =
@@ -260,7 +261,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
         newCF.DebtReserve);
     newCF.TaxCredit =
       AnnualNetGeneration *
-      input.ProductionTaxCredit *
+      input.Taxes.ProductionTaxCredit *
       Math.pow(
         1 + input.EscalationInflation.EscalationProductionTaxCredit / 100,
         Year - 1

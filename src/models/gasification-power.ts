@@ -205,7 +205,8 @@ function GasificationPower(input: InputModGP) {
     BiomassFuelCostPerKwh + DualFuelPerKwh + TotalNonFuelExpensesKwh;
   // Taxes
   const CombinedTaxRate =
-    input.StateTaxRate + input.FederalTaxRate * (1 - input.StateTaxRate / 100);
+    input.Taxes.StateTaxRate +
+    input.Taxes.FederalTaxRate * (1 - input.Taxes.StateTaxRate / 100);
   // Financing
   const EquityRatio = 100 - input.DebtRatio;
   const CostOfMoney =
@@ -359,7 +360,7 @@ function GasificationPower(input: InputModGP) {
         newCF.DebtReserve);
     newCF.TaxCredit =
       AnnualNetElectricityGeneration *
-      input.ProductionTaxCredit *
+      input.Taxes.ProductionTaxCredit *
       Math.pow(1 + input.EscalationProductionTaxCredit / 100, Year - 1) *
       input.TaxCreditFrac[Year - 1];
     newCF.Taxes =

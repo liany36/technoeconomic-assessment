@@ -77,7 +77,8 @@ function GenericPowerOnly(input: InputModGPO) {
   }
   // Taxes
   const CombinedTaxRate =
-    input.StateTaxRate + input.FederalTaxRate * (1 - input.StateTaxRate / 100);
+    input.Taxes.StateTaxRate +
+    input.Taxes.FederalTaxRate * (1 - input.Taxes.StateTaxRate / 100);
   // Financing
   const EquityRatio = 100 - input.DebtRatio;
   const CostOfMoney =
@@ -219,7 +220,7 @@ function GenericPowerOnly(input: InputModGPO) {
         newCF.DebtReserve);
     newCF.TaxCredit =
       AnnualGeneration *
-      input.ProductionTaxCredit *
+      input.Taxes.ProductionTaxCredit *
       Math.pow(
         1 + input.EscalationInflation.EscalationProductionTaxCredit / 100,
         Year - 1
