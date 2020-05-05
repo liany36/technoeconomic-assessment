@@ -5,8 +5,8 @@ export interface InputModGPO
     TaxesInputMod,
     FinancingInputMod,
     IncomeOtherThanEnergyInputMod,
-    EscalationInflationInputMod {
-  CapitalCost: number;
+    EscalationInflationInputMod,
+    CapitalCostInputMod {
   // Electrical and Fuel--base year
   // Expenses--base year
   // Taxes
@@ -25,8 +25,8 @@ export interface InputModCHP
     TaxesInputMod,
     FinancingInputMod,
     IncomeOtherThanEnergyInputMod,
-    EscalationInflationInputMod {
-  CapitalCost: number;
+    EscalationInflationInputMod,
+    CapitalCostInputMod {
   // Electrical and Fuel--base year
   // Heat-base year
   // Expenses--base year
@@ -46,13 +46,10 @@ export interface InputModGP
     FinancingInputMod,
     TaxesInputMod,
     IncomeOtherThanEnergyInputModGP,
-    EscalationInflationInputModGP {
+    EscalationInflationInputModGP,
+    CapitalCostInputModGP {
   // Capital Cost from Gasification Power Generation
-  GasifierSystemCapitalCost: number;
-  GasCleaningSystemCapitalCost: number;
-  PowerGenerationCapitalCost: number;
-  EmissionControlSystemCapitalCost: number;
-  HeatRecoverySystemCapitalCost: number;
+
   // Electrical and Fuel -- base year from Gasification Power Generation
   // Heat--Base Year
   // Expenses--Base Year
@@ -194,4 +191,15 @@ export interface EscalationInflationInputModGP
   extends EscalationInflationInputMod {
   EscalationDualFuel: number;
   EscalationCharSales: number;
+}
+
+export interface CapitalCostInputMod {
+  CapitalCost: number;
+}
+export interface CapitalCostInputModGP {
+  GasifierSystemCapitalCost: number;
+  GasCleaningSystemCapitalCost: number;
+  PowerGenerationCapitalCost: number;
+  EmissionControlSystemCapitalCost: number;
+  HeatRecoverySystemCapitalCost: number;
 }
