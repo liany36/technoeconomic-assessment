@@ -158,30 +158,35 @@ function GasificationPower(input: InputModGP) {
     100;
   // Expenses--base year
   const BiomassFuelCostPerKwh =
-    (AnnualBiomassConsumptionDry * input.BiomassFuelCost) /
+    (AnnualBiomassConsumptionDry * input.ExpensesBaseYear.BiomassFuelCost) /
     AnnualNetElectricityGeneration;
   const DualFuelPerKwh =
-    (input.DualFuelCost * AnnualDualFuelConsumption) /
+    (input.ExpensesBaseYear.DualFuelCost * AnnualDualFuelConsumption) /
     AnnualNetElectricityGeneration;
-  const LaborCostKwh = input.LaborCost / AnnualNetElectricityGeneration;
+  const LaborCostKwh =
+    input.ExpensesBaseYear.LaborCost / AnnualNetElectricityGeneration;
   const MaintenanceCostKwh =
-    input.MaintenanceCost / AnnualNetElectricityGeneration;
+    input.ExpensesBaseYear.MaintenanceCost / AnnualNetElectricityGeneration;
   const WasteTreatmentKwh =
-    input.WasteTreatment / AnnualNetElectricityGeneration;
+    input.ExpensesBaseYear.WasteTreatment / AnnualNetElectricityGeneration;
   const InsurancePropertyTaxKwh =
-    input.InsurancePropertyTax / AnnualNetElectricityGeneration;
-  const UtilitiesKwh = input.Utilities / AnnualNetElectricityGeneration;
-  const ManagementKwh = input.Management / AnnualNetElectricityGeneration;
+    input.ExpensesBaseYear.InsurancePropertyTax /
+    AnnualNetElectricityGeneration;
+  const UtilitiesKwh =
+    input.ExpensesBaseYear.Utilities / AnnualNetElectricityGeneration;
+  const ManagementKwh =
+    input.ExpensesBaseYear.Management / AnnualNetElectricityGeneration;
   const OtherOperatingExpensesKwh =
-    input.OtherOperatingExpenses / AnnualNetElectricityGeneration;
+    input.ExpensesBaseYear.OtherOperatingExpenses /
+    AnnualNetElectricityGeneration;
   const TotalNonFuelExpenses =
-    input.LaborCost +
-    input.MaintenanceCost +
-    input.WasteTreatment +
-    input.InsurancePropertyTax +
-    input.Utilities +
-    input.Management +
-    input.OtherOperatingExpenses;
+    input.ExpensesBaseYear.LaborCost +
+    input.ExpensesBaseYear.MaintenanceCost +
+    input.ExpensesBaseYear.WasteTreatment +
+    input.ExpensesBaseYear.InsurancePropertyTax +
+    input.ExpensesBaseYear.Utilities +
+    input.ExpensesBaseYear.Management +
+    input.ExpensesBaseYear.OtherOperatingExpenses;
   const TotalNonFuelExpensesKwh =
     LaborCostKwh +
     MaintenanceCostKwh +
@@ -191,8 +196,8 @@ function GasificationPower(input: InputModGP) {
     ManagementKwh +
     OtherOperatingExpensesKwh;
   const TotalExpensesIncludingFuel =
-    input.BiomassFuelCost * AnnualBiomassConsumptionDry +
-    input.DualFuelCost * AnnualDualFuelConsumption +
+    input.ExpensesBaseYear.BiomassFuelCost * AnnualBiomassConsumptionDry +
+    input.ExpensesBaseYear.DualFuelCost * AnnualDualFuelConsumption +
     TotalNonFuelExpenses;
   const TotalExpensesIncludingFuelKwh =
     BiomassFuelCostPerKwh + DualFuelPerKwh + TotalNonFuelExpensesKwh;
@@ -310,8 +315,9 @@ function GasificationPower(input: InputModGP) {
     if (Year === 1) {
       newCF.DebtPrincipalRemaining = TotalDebtCost - newCF.DebtPrincipalPaid;
       newCF.BiomassFuelCost =
-        AnnualBiomassConsumptionDry * input.BiomassFuelCost;
-      newCF.DualFuelCost = AnnualDualFuelConsumption * input.DualFuelCost;
+        AnnualBiomassConsumptionDry * input.ExpensesBaseYear.BiomassFuelCost;
+      newCF.DualFuelCost =
+        AnnualDualFuelConsumption * input.ExpensesBaseYear.DualFuelCost;
     } else {
       newCF.DebtPrincipalRemaining =
         CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;

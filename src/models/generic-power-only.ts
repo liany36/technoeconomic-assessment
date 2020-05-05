@@ -39,23 +39,30 @@ function GenericPowerOnly(input: InputModGPO) {
     100;
   // Expenses--base year
   const TotalNonFuelExpenses =
-    input.LaborCost +
-    input.MaintenanceCost +
-    input.InsurancePropertyTax +
-    input.Utilities +
-    input.AshDisposal +
-    input.Management +
-    input.OtherOperatingExpenses;
+    input.ExpensesBaseYear.LaborCost +
+    input.ExpensesBaseYear.MaintenanceCost +
+    input.ExpensesBaseYear.InsurancePropertyTax +
+    input.ExpensesBaseYear.Utilities +
+    input.ExpensesBaseYear.AshDisposal +
+    input.ExpensesBaseYear.Management +
+    input.ExpensesBaseYear.OtherOperatingExpenses;
   const TotalExpensesIncludingFuel =
-    input.BiomassFuelCost * AnnualFuelConsumption + TotalNonFuelExpenses;
-  const FuelCostKwh = CalcKwh(AnnualFuelConsumption * input.BiomassFuelCost);
-  const LaborCostKwh = CalcKwh(input.LaborCost);
-  const MaintenanceCostKwh = CalcKwh(input.MaintenanceCost);
-  const InsurancePropertyTaxKwh = CalcKwh(input.InsurancePropertyTax);
-  const UtilitiesKwh = CalcKwh(input.Utilities);
-  const AshDisposalKwh = CalcKwh(input.AshDisposal);
-  const ManagementKwh = CalcKwh(input.Management);
-  const OtherOperatingExpensesKwh = CalcKwh(input.OtherOperatingExpenses);
+    input.ExpensesBaseYear.BiomassFuelCost * AnnualFuelConsumption +
+    TotalNonFuelExpenses;
+  const FuelCostKwh = CalcKwh(
+    AnnualFuelConsumption * input.ExpensesBaseYear.BiomassFuelCost
+  );
+  const LaborCostKwh = CalcKwh(input.ExpensesBaseYear.LaborCost);
+  const MaintenanceCostKwh = CalcKwh(input.ExpensesBaseYear.MaintenanceCost);
+  const InsurancePropertyTaxKwh = CalcKwh(
+    input.ExpensesBaseYear.InsurancePropertyTax
+  );
+  const UtilitiesKwh = CalcKwh(input.ExpensesBaseYear.Utilities);
+  const AshDisposalKwh = CalcKwh(input.ExpensesBaseYear.AshDisposal);
+  const ManagementKwh = CalcKwh(input.ExpensesBaseYear.Management);
+  const OtherOperatingExpensesKwh = CalcKwh(
+    input.ExpensesBaseYear.OtherOperatingExpenses
+  );
   const TotalNonFuelExpensesKwh =
     LaborCostKwh +
     MaintenanceCostKwh +
@@ -185,7 +192,7 @@ function GenericPowerOnly(input: InputModGPO) {
     }
     newCF.FuelCost =
       AnnualFuelConsumption *
-      input.BiomassFuelCost *
+      input.ExpensesBaseYear.BiomassFuelCost *
       Math.pow(
         1 + input.EscalationInflation.EscalationBiomassFuel / 100,
         Year - 1
