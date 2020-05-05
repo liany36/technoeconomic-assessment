@@ -52,10 +52,12 @@ function GenericCombinedHeatPower(input: InputModCHP) {
   const TotalHeatProductionRate =
     FuelPower - input.ElectricalFuelBaseYear.GrossElectricalCapacity;
   const RecoveredHeat =
-    (TotalHeatProductionRate * input.AggregateFractionOfHeatRecovered) / 100;
+    (TotalHeatProductionRate *
+      input.HeatBaseYear.AggregateFractionOfHeatRecovered) /
+    100;
   const AnnualHeatSales = RecoveredHeat * AnnualHours;
   const TotalIncomeFromHeatSales =
-    AnnualHeatSales * input.AggregateSalesPriceForHeat;
+    AnnualHeatSales * input.HeatBaseYear.AggregateSalesPriceForHeat;
   const HeatIncomePerUnitNEE = TotalIncomeFromHeatSales / AnnualNetGeneration;
   const OverallCHPefficiencyGross =
     ((input.ElectricalFuelBaseYear.GrossElectricalCapacity * AnnualHours +

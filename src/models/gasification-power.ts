@@ -141,10 +141,12 @@ function GasificationPower(input: InputModGP) {
   const TotalHeatProductionRate =
     TotalFuelPowerInput - input.ElectricalFuelBaseYear.GrossElectricalCapacity;
   const RecoveredHeat =
-    (TotalHeatProductionRate * input.AggregateFractionOfHeatRecovered) / 100;
+    (TotalHeatProductionRate *
+      input.HeatBaseYear.AggregateFractionOfHeatRecovered) /
+    100;
   const AnnualHeatSales = RecoveredHeat * AnnualHours;
   const TotalIncomeFromHeatSales =
-    AnnualHeatSales * input.AggregateSalesPriceForHeat;
+    AnnualHeatSales * input.HeatBaseYear.AggregateSalesPriceForHeat;
   const HeatIncomePerUnitNEE =
     TotalIncomeFromHeatSales / AnnualNetElectricityGeneration;
   const OverallCHPefficiencyGross =

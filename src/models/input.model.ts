@@ -19,14 +19,14 @@ export interface InputModGPO
 
 // GenericCombinedHeatPower
 export interface InputModCHP
-  extends HeatBaseYearInputMod,
-    TaxesInputMod,
+  extends TaxesInputMod,
     FinancingInputMod,
     IncomeOtherThanEnergyInputMod {
   CapitalCost: number;
   // Electrical and Fuel--base year
   ElectricalFuelBaseYear: ElectricalFuelBaseYearInputModCHP;
   // Heat-base year
+  HeatBaseYear: HeatBaseYearInputMod;
   // Expenses--base year
   ExpensesBaseYear: ExpensesBaseYearInputModGPO;
   // Taxes
@@ -40,8 +40,7 @@ export interface InputModCHP
 
 // GasificationPower
 export interface InputModGP
-  extends HeatBaseYearInputMod,
-    FinancingInputMod,
+  extends FinancingInputMod,
     TaxesInputMod,
     IncomeOtherThanEnergyInputModGP,
     EscalationInflationInputModGP {
@@ -50,6 +49,7 @@ export interface InputModGP
   // Electrical and Fuel -- base year from Gasification Power Generation
   ElectricalFuelBaseYear: ElectricalFuelBaseYearInputModGP;
   // Heat--Base Year
+  HeatBaseYear: HeatBaseYearInputMod;
   // Expenses--Base Year
   ExpensesBaseYear: ExpensesBaseYearInputModGP;
   // Taxes
