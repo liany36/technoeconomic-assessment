@@ -207,7 +207,7 @@
           "description": "Total installed cost of plant ($)"
         },
         "ElectricalFuelBaseYear": {
-          "$ref": "#/definitions/ElectricalFuelBaseYearInputModGPO"
+          "$ref": "#/definitions/ElectricalFuelBaseYearInputModCHP"
         },
         "HeatBaseYear": {
           "$ref": "#/definitions/HeatBaseYearInputMod"
@@ -811,6 +811,12 @@
           "example": 2.1,
           "description": "Specified index for production tax credit (%)"
         },
+        "EscalationHeatSales": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Escalation rate applied to heat sales (%/year)"
+        },
         "EscalationOther": {
           "type": "number",
           "format": "float",
@@ -820,8 +826,8 @@
       },
       "required": [
         "GeneralInflation",
-        "EscalationFuel",
-        "EscalationForProductionTaxCredit",
+        "EscalationBiomassFuel",
+        "EscalationProductionTaxCredit",
         "EscalationOther"
       ],
       "xml": {

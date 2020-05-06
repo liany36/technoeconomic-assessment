@@ -50,12 +50,12 @@ export interface InputModGP {
   ExpensesBaseYear: ExpensesBaseYearInputModGP;
   // Taxes
   Taxes: TaxesInputMod;
+  // Financing
+  Financing: FinancingInputMod;
   // Income Other Than Energy
   IncomeOtherThanEnergy: IncomeOtherThanEnergyInputModGP;
   // Escalation/Inflation
   EscalationInflation: EscalationInflationInputModGP;
-  // Financing
-  Financing: FinancingInputMod;
   // Tax Rate Schedule
   TaxCreditFrac: number[];
 }
