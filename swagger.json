@@ -159,6 +159,9 @@
         },
         "IncomeOtherThanEnergy": {
           "$ref": "#/definitions/IncomeOtherThanEnergyInputMod"
+        },
+        "EscalationInflation": {
+          "$ref": "#/definitions/EscalationInflationInputMod"
         }
       },
       "required": ["CapitalCost"],
@@ -191,6 +194,9 @@
         },
         "IncomeOtherThanEnergy": {
           "$ref": "#/definitions/IncomeOtherThanEnergyInputMod"
+        },
+        "EscalationInflation": {
+          "$ref": "#/definitions/EscalationInflationInputMod"
         }
       },
       "required": ["CapitalCost"],
@@ -221,6 +227,9 @@
         },
         "IncomeOtherThanEnergy": {
           "$ref": "#/definitions/IncomeOtherThanEnergyInputModGP"
+        },
+        "EscalationInflation": {
+          "$ref": "#/definitions/EscalationInflationInputModGP"
         }
       },
       "xml": {
@@ -689,6 +698,77 @@
         {
           "xml": {
             "name": "IncomeOtherThanEnergyInputModGP"
+          }
+        }
+      ]
+    },
+    "EscalationInflationInputMod": {
+      "type": "object",
+      "properties": {
+        "GeneralInflation": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Overall inflation rate used to adjust current dollar result to constant dollars (%)"
+        },
+        "EscalationBiomassFuel": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Rate at which fuel cost escalates over time (%)"
+        },
+        "EscalationProductionTaxCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Specified index for production tax credit (%)"
+        },
+        "EscalationOther": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Rate at which other expenses escalate over time (%)"
+        }
+      },
+      "required": [
+        "GeneralInflation",
+        "EscalationFuel",
+        "EscalationForProductionTaxCredit",
+        "EscalationOther"
+      ],
+      "xml": {
+        "name": "EscalationInflationInputMod"
+      }
+    },
+
+    "EscalationInflationInputModGP": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/EscalationInflationInputMod"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "properties": {
+            "EscalationDualFuel": {
+              "type": "number",
+              "format": "float",
+              "example": 2.1,
+              "description": "Rate at which dual fuel cost escalates over time (%/year)"
+            },
+            "EscalationCharSales": {
+              "type": "number",
+              "format": "float",
+              "example": 2.1,
+              "description": "Escalation rate applied to sales of char or ash (%/year)"
+            }
+          },
+          "required": ["EscalationCharSales", "EscalationDualFuel"]
+        },
+        {
+          "xml": {
+            "name": "EscalationInflationInputModGP"
           }
         }
       ]
