@@ -168,6 +168,9 @@
         "ElectricalFuelBaseYear": {
           "$ref": "#/definitions/ElectricalFuelBaseYearInputModGPO"
         },
+        "HeatBaseYear": {
+          "$ref": "#/definitions/HeatBaseYearInputMod"
+        },
         "ExpensesBaseYear": {
           "$ref": "#/definitions/ExpensesBaseYearInputModGPO"
         }
@@ -185,6 +188,9 @@
         },
         "ElectricalFuelBaseYear": {
           "$ref": "#/definitions/ElectricalFuelBaseYearInputModGP"
+        },
+        "HeatBaseYear": {
+          "$ref": "#/definitions/HeatBaseYearInputMod"
         },
         "ExpensesBaseYear": {
           "$ref": "#/definitions/ExpensesBaseYearInputModGP"
@@ -422,6 +428,30 @@
           }
         }
       ]
+    },
+    "HeatBaseYearInputMod": {
+      "type": "object",
+      "properties": {
+        "AggregateFractionOfHeatRecovered": {
+          "type": "number",
+          "format": "float",
+          "example": 60,
+          "description": "Fraction of total heat production available for sale (%)"
+        },
+        "AggregateSalesPriceForHeat": {
+          "type": "number",
+          "format": "float",
+          "example": 0.0102,
+          "description": "Aggregate sales price for heat ($/kWh)"
+        }
+      },
+      "required": [
+        "AggregateFractionOfHeatRecovered",
+        "AggregateSalesPriceForHeat"
+      ],
+      "xml": {
+        "name": "HeatBaseYearInputMod"
+      }
     },
     "ExpensesBaseYearInputMod": {
       "type": "object",
