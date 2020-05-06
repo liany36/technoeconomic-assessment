@@ -162,9 +162,38 @@
         },
         "EscalationInflation": {
           "$ref": "#/definitions/EscalationInflationInputMod"
+        },
+        "TaxCreditFrac": {
+          "description": "Tax Credit Schedule -> Fraction is 1 if received in year, 0 if not",
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "example": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       },
-      "required": ["CapitalCost"],
+      "required": ["CapitalCost, TaxCreditFrac"],
       "xml": {
         "name": "InputModGPO"
       }
@@ -197,9 +226,38 @@
         },
         "EscalationInflation": {
           "$ref": "#/definitions/EscalationInflationInputMod"
+        },
+        "TaxCreditFrac": {
+          "description": "Tax Credit Schedule -> Fraction is 1 if received in year, 0 if not",
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "example": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       },
-      "required": ["CapitalCost"],
+      "required": ["CapitalCost, TaxCreditFrac"],
       "xml": {
         "name": "InputModCHP"
       }
@@ -230,8 +288,38 @@
         },
         "EscalationInflation": {
           "$ref": "#/definitions/EscalationInflationInputModGP"
+        },
+        "TaxCreditFrac": {
+          "description": "Tax Credit Schedule -> Fraction is 1 if received in year, 0 if not",
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "example": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       },
+      "required": ["TaxCreditFrac"],
       "xml": {
         "name": "InputModGP"
       }
