@@ -153,6 +153,9 @@
         },
         "Taxes": {
           "$ref": "#/definitions/TaxesInputMod"
+        },
+        "Financing": {
+          "$ref": "#/definitions/FinancingInputMod"
         }
       },
       "required": ["CapitalCost"],
@@ -179,6 +182,9 @@
         },
         "Taxes": {
           "$ref": "#/definitions/TaxesInputMod"
+        },
+        "Financing": {
+          "$ref": "#/definitions/FinancingInputMod"
         }
       },
       "required": ["CapitalCost"],
@@ -203,6 +209,9 @@
         },
         "Taxes": {
           "$ref": "#/definitions/TaxesInputMod"
+        },
+        "Financing": {
+          "$ref": "#/definitions/FinancingInputMod"
         }
       },
       "required": [],
@@ -594,6 +603,40 @@
       "required": ["FederalTaxRate", "StateTaxRate", "ProductionTaxCredit"],
       "xml": {
         "name": "TaxesInputMod"
+      }
+    },
+    "FinancingInputMod": {
+      "type": "object",
+      "properties": {
+        "DebtRatio": {
+          "type": "number",
+          "example": 75,
+          "description": "Fraction of financing covered by debt borrowing (%)"
+        },
+        "InterestRateOnDebt": {
+          "type": "number",
+          "example": 5,
+          "description": "Interest rate applied to debt portion of investment (%/year).  Value must be non-zero"
+        },
+        "EconomicLife": {
+          "type": "number",
+          "example": 20,
+          "description": "Life of Loan (years)"
+        },
+        "CostOfEquity": {
+          "type": "number",
+          "example": 15,
+          "description": "Rate of return on equity portion of investment (%/year)"
+        }
+      },
+      "required": [
+        "DebtRatio",
+        "InterestRateOnDebt",
+        "EconomicLife",
+        "CostOfEquity"
+      ],
+      "xml": {
+        "name": "FinancingInputMod"
       }
     },
     "OutputModGPO": {
