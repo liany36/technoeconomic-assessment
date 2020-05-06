@@ -156,6 +156,9 @@
         },
         "Financing": {
           "$ref": "#/definitions/FinancingInputMod"
+        },
+        "IncomeOtherThanEnergy": {
+          "$ref": "#/definitions/IncomeOtherThanEnergyInputMod"
         }
       },
       "required": ["CapitalCost"],
@@ -185,6 +188,9 @@
         },
         "Financing": {
           "$ref": "#/definitions/FinancingInputMod"
+        },
+        "IncomeOtherThanEnergy": {
+          "$ref": "#/definitions/IncomeOtherThanEnergyInputMod"
         }
       },
       "required": ["CapitalCost"],
@@ -212,9 +218,11 @@
         },
         "Financing": {
           "$ref": "#/definitions/FinancingInputMod"
+        },
+        "IncomeOtherThanEnergy": {
+          "$ref": "#/definitions/IncomeOtherThanEnergyInputModGP"
         }
       },
-      "required": [],
       "xml": {
         "name": "InputModGP"
       }
@@ -638,6 +646,52 @@
       "xml": {
         "name": "FinancingInputMod"
       }
+    },
+    "IncomeOtherThanEnergyInputMod": {
+      "type": "object",
+      "properties": {
+        "CapacityPayment": {
+          "type": "number",
+          "example": 166,
+          "description": "Payment made from power purchaser if plant can guarantee capacity (depends on contract) ($/kW-year)"
+        },
+        "InterestRateOnDebtReserve": {
+          "type": "number",
+          "example": 5,
+          "description": "Interest income earned on reserve account if financing institution requires security deposit (%/year)"
+        }
+      },
+      "required": ["CapacityPayment", "InterestRateOnDebtReserve"],
+      "xml": {
+        "name": "IncomeOtherThanEnergyInputMod"
+      }
+    },
+
+    "IncomeOtherThanEnergyInputModGP": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/IncomeOtherThanEnergyInputMod"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "properties": {
+            "SalesPriceForChar": {
+              "type": "number",
+              "format": "float",
+              "example": 0,
+              "description": "Sales Price for Char/Ash ($/t)--for disposal"
+            }
+          },
+          "required": ["SalesPriceForChar"]
+        },
+        {
+          "xml": {
+            "name": "IncomeOtherThanEnergyInputModGP"
+          }
+        }
+      ]
     },
     "OutputModGPO": {
       "allOf": [
