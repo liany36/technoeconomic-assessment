@@ -147,6 +147,9 @@
         },
         "ElectricalFuelBaseYear": {
           "$ref": "#/definitions/ElectricalFuelBaseYearInputModGPO"
+        },
+        "ExpensesBaseYear": {
+          "$ref": "#/definitions/ExpensesBaseYearInputModGPO"
         }
       },
       "required": ["CapitalCost"],
@@ -164,6 +167,9 @@
         },
         "ElectricalFuelBaseYear": {
           "$ref": "#/definitions/ElectricalFuelBaseYearInputModGPO"
+        },
+        "ExpensesBaseYear": {
+          "$ref": "#/definitions/ExpensesBaseYearInputModGPO"
         }
       },
       "required": ["CapitalCost"],
@@ -179,6 +185,9 @@
         },
         "ElectricalFuelBaseYear": {
           "$ref": "#/definitions/ElectricalFuelBaseYearInputModGP"
+        },
+        "ExpensesBaseYear": {
+          "$ref": "#/definitions/ExpensesBaseYearInputModGP"
         }
       },
       "required": [],
@@ -410,6 +419,114 @@
         {
           "xml": {
             "name": "ElectricalFuelBaseYearInputModGP"
+          }
+        }
+      ]
+    },
+    "ExpensesBaseYearInputMod": {
+      "type": "object",
+      "properties": {
+        "BiomassFuelCost": {
+          "type": "number",
+          "format": "float",
+          "example": 22.05,
+          "description": "Cost of fuel ($/dry metric ton)"
+        },
+        "LaborCost": {
+          "type": "number",
+          "example": 2000000,
+          "description": "Cost of labor to operate facility ($/year)"
+        },
+        "MaintenanceCost": {
+          "type": "number",
+          "example": 1500000,
+          "description": "Cost of maintaining the plant ($/year)"
+        },
+        "InsurancePropertyTax": {
+          "type": "number",
+          "example": 1400000,
+          "description": "Cost of insurance for the plant plus any property or other local taxes ($/year)"
+        },
+        "Utilities": {
+          "type": "number",
+          "example": 200000,
+          "description": "Purchased utilities including power, gas, water, waste disposal ($/year)"
+        },
+        "Management": {
+          "type": "number",
+          "example": 200000,
+          "description": "Cost for administrative personnel and other administration ($/year)"
+        },
+        "OtherOperatingExpenses": {
+          "type": "number",
+          "example": 400000,
+          "description": "All other expenses for operating the plant, for example natural gas not included in utilities, chemicals, or additives ($/year)"
+        }
+      },
+      "required": [
+        "BiomassFuelCost",
+        "LaborCost",
+        "MaintenanceCost",
+        "InsurancePropertyTax",
+        "Utilities",
+        "Management",
+        "OtherOperatingExpenses"
+      ],
+      "xml": {
+        "name": "ExpensesBaseYearInputMod"
+      }
+    },
+    "ExpensesBaseYearInputModGPO": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ExpensesBaseYearInputMod"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "properties": {
+            "AshDisposal": {
+              "type": "number",
+              "example": 100000,
+              "description": "Cost of ash disposal from plant ($/year), use negative value when ash is sold at value"
+            }
+          },
+          "required": ["AshDisposal"]
+        },
+        {
+          "xml": {
+            "name": "ExpensesBaseYearInputModGPO"
+          }
+        }
+      ]
+    },
+    "ExpensesBaseYearInputModGP": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ExpensesBaseYearInputMod"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "properties": {
+            "DualFuelCost": {
+              "type": "number",
+              "example": 0.3,
+              "description": "Dual Fuel Cost ($/L) * Default assumes heavy diesel fuel"
+            },
+            "WasteTreatment": {
+              "type": "number",
+              "example": 2000,
+              "description": "Waste Treatment/Disposal ($/year)"
+            }
+          },
+          "required": ["DualFuelCost", "WasteTreatment"]
+        },
+        {
+          "xml": {
+            "name": "ExpensesBaseYearInputModGP"
           }
         }
       ]
