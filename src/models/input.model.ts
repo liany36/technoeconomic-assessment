@@ -39,7 +39,7 @@ export interface InputModCHP {
 }
 
 // GasificationPower
-export interface InputModGP extends EscalationInflationInputModGP {
+export interface InputModGP {
   // Capital Cost from Gasification Power Generation
   CapitalCost: CapitalCostInputModGP;
   // Electrical and Fuel -- base year from Gasification Power Generation
@@ -53,6 +53,7 @@ export interface InputModGP extends EscalationInflationInputModGP {
   // Income Other Than Energy
   IncomeOtherThanEnergy: IncomeOtherThanEnergyInputModGP;
   // Escalation/Inflation
+  EscalationInflation: EscalationInflationInputModGP;
   // Financing
   Financing: FinancingInputMod;
   // Tax Rate Schedule

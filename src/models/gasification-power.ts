@@ -334,13 +334,15 @@ function GasificationPower(input: InputModGP) {
       newCF.DebtPrincipalRemaining =
         CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
       newCF.BiomassFuelCost =
-        CF.BiomassFuelCost * (1 + input.EscalationBiomassFuel / 100);
+        CF.BiomassFuelCost *
+        (1 + input.EscalationInflation.EscalationBiomassFuel / 100);
       newCF.DualFuelCost =
-        CF.DualFuelCost * (1 + input.EscalationDualFuel / 100);
+        CF.DualFuelCost *
+        (1 + input.EscalationInflation.EscalationDualFuel / 100);
     }
     newCF.NonFuelExpenses =
       TotalNonFuelExpenses *
-      Math.pow(1 + input.EscalationOther / 100, Year - 1);
+      Math.pow(1 + input.EscalationInflation.EscalationOther / 100, Year - 1);
     if (Year === 1) {
       newCF.DebtReserve = DebtReserve;
     } else if (Year < input.Financing.EconomicLife) {
@@ -356,8 +358,13 @@ function GasificationPower(input: InputModGP) {
     } else {
       newCF.IncomeHeat =
         TotalIncomeFromHeatSales *
-        Math.pow(1 + input.EscalationHeatSales / 100, Year - 1);
-      newCF.IncomeChar = CF.IncomeChar * (1 + input.EscalationCharSales / 100);
+        Math.pow(
+          1 + input.EscalationInflation.EscalationHeatSales / 100,
+          Year - 1
+        );
+      newCF.IncomeChar =
+        CF.IncomeChar *
+        (1 + input.EscalationInflation.EscalationCharSales / 100);
     }
     newCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
     newCF.TaxesWoCredit =
@@ -370,7 +377,10 @@ function GasificationPower(input: InputModGP) {
     newCF.TaxCredit =
       AnnualNetElectricityGeneration *
       input.Taxes.ProductionTaxCredit *
-      Math.pow(1 + input.EscalationProductionTaxCredit / 100, Year - 1) *
+      Math.pow(
+        1 + input.EscalationInflation.EscalationProductionTaxCredit / 100,
+        Year - 1
+      ) *
       input.TaxCreditFrac[Year - 1];
     newCF.Taxes =
       (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
@@ -475,7 +485,7 @@ function GasificationPower(input: InputModGP) {
   };
   ConstantLevelAnnualCost.RealCostOfMoney =
     (1 + CurrentLevelAnnualCost.CostOfMoney) /
-      (1 + input.GeneralInflation / 100) -
+      (1 + input.EscalationInflation.GeneralInflation / 100) -
     1;
   ConstantLevelAnnualCost.CapitalRecoveryFactorConstant =
     (ConstantLevelAnnualCost.RealCostOfMoney *
