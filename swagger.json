@@ -150,6 +150,9 @@
         },
         "ExpensesBaseYear": {
           "$ref": "#/definitions/ExpensesBaseYearInputModGPO"
+        },
+        "Taxes": {
+          "$ref": "#/definitions/TaxesInputMod"
         }
       },
       "required": ["CapitalCost"],
@@ -173,6 +176,9 @@
         },
         "ExpensesBaseYear": {
           "$ref": "#/definitions/ExpensesBaseYearInputModGPO"
+        },
+        "Taxes": {
+          "$ref": "#/definitions/TaxesInputMod"
         }
       },
       "required": ["CapitalCost"],
@@ -194,6 +200,9 @@
         },
         "ExpensesBaseYear": {
           "$ref": "#/definitions/ExpensesBaseYearInputModGP"
+        },
+        "Taxes": {
+          "$ref": "#/definitions/TaxesInputMod"
         }
       },
       "required": [],
@@ -560,6 +569,32 @@
           }
         }
       ]
+    },
+    "TaxesInputMod": {
+      "type": "object",
+      "properties": {
+        "FederalTaxRate": {
+          "type": "number",
+          "example": 34,
+          "description": "Federal Tax Rate (%)"
+        },
+        "StateTaxRate": {
+          "type": "number",
+          "format": "float",
+          "example": 9.6,
+          "description": "State Tax Rate (%)"
+        },
+        "ProductionTaxCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 0.009,
+          "description": "Production Tax Credit on electrical energy (%)"
+        }
+      },
+      "required": ["FederalTaxRate", "StateTaxRate", "ProductionTaxCredit"],
+      "xml": {
+        "name": "TaxesInputMod"
+      }
     },
     "OutputModGPO": {
       "allOf": [
