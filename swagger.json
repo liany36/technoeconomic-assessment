@@ -149,8 +149,38 @@
           "$ref": "#/definitions/ElectricalFuelBaseYearInputModGPO"
         }
       },
+      "required": ["CapitalCost"],
       "xml": {
         "name": "InputModGPO"
+      }
+    },
+    "InputModCHP": {
+      "type": "object",
+      "properties": {
+        "CapitalCost": {
+          "type": "number",
+          "example": 70000000,
+          "description": "Total installed cost of plant ($)"
+        },
+        "ElectricalFuelBaseYear": {
+          "$ref": "#/definitions/ElectricalFuelBaseYearInputModGPO"
+        }
+      },
+      "required": ["CapitalCost"],
+      "xml": {
+        "name": "InputModCHP"
+      }
+    },
+    "InputModGP": {
+      "type": "object",
+      "properties": {
+        "ElectricalFuelBaseYear": {
+          "$ref": "#/definitions/ElectricalFuelBaseYearInputModGP"
+        }
+      },
+      "required": [],
+      "xml": {
+        "name": "InputModGP"
       }
     },
     "ElectricalFuelBaseYearInputMod": {
@@ -172,6 +202,11 @@
           "description": "Moisture Content of Biomass Feedstock (% wet basis)"
         }
       },
+      "required": [
+        "NetElectricalCapacity",
+        "CapacityFactor",
+        "MoistureContent"
+      ],
       "xml": {
         "name": "ElectricalFuelBaseYearInputMod"
       }
@@ -201,7 +236,12 @@
               "example": 5,
               "description": "Fraction of ash in fuel, percent dry basis (%)"
             }
-          }
+          },
+          "required": [
+            "NetStationEfficiency",
+            "FuelHeatingValue",
+            "FuelAshConcentration"
+          ]
         },
         {
           "xml": {
@@ -225,48 +265,12 @@
               "example": 28000,
               "description": "Total gross generating capacity (kWe)"
             }
-          }
+          },
+          "required": ["GrossElectricalCapacity"]
         },
         {
           "xml": {
             "name": "ElectricalFuelBaseYearInputModGPO"
-          }
-        }
-      ]
-    },
-    "OutputModGPO": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/OutputMod"
-        },
-        {
-          "type": "object"
-        },
-        {
-          "properties": {
-            "ElectricalAndFuelBaseYear": {
-              "$ref": "#/definitions/ElectricalFuelBaseYearMod"
-            },
-            "ExpensesBaseYear": {
-              "$ref": "#/definitions/ExpensesBaseYearModGPO"
-            },
-            "IncomeOtherThanEnergy": {
-              "$ref": "#/definitions/IncomeOtherThanEnergyMod"
-            },
-            "AnnualCashFlows": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CashFlowGPO"
-              }
-            },
-            "TotalCashFlow": {
-              "$ref": "#/definitions/TotalCashFlowGPO"
-            }
-          }
-        },
-        {
-          "xml": {
-            "name": "OutputModGPO"
           }
         }
       ]
@@ -341,11 +345,65 @@
               "example": 30,
               "description": "Carbon Concentration of Char (% dry basis)"
             }
-          }
+          },
+          "required": [
+            "GrossElectricalCapacity",
+            "HHVEfficiency",
+            "NetHHVEfficiency",
+            "FractionOfInputEnergy",
+            "CleanGasComposition",
+            "CO",
+            "H2",
+            "Hydrocarbons",
+            "CO2",
+            "O2",
+            "HHV",
+            "AshContent",
+            "CarbonConcentration",
+            "AggregateFractionOfHeatRecovered",
+            "AggregateSalesPriceForHeat"
+          ]
         },
         {
           "xml": {
             "name": "ElectricalFuelBaseYearInputModGP"
+          }
+        }
+      ]
+    },
+    "OutputModGPO": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OutputMod"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "properties": {
+            "ElectricalAndFuelBaseYear": {
+              "$ref": "#/definitions/ElectricalFuelBaseYearMod"
+            },
+            "ExpensesBaseYear": {
+              "$ref": "#/definitions/ExpensesBaseYearModGPO"
+            },
+            "IncomeOtherThanEnergy": {
+              "$ref": "#/definitions/IncomeOtherThanEnergyMod"
+            },
+            "AnnualCashFlows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CashFlowGPO"
+              }
+            },
+            "TotalCashFlow": {
+              "$ref": "#/definitions/TotalCashFlowGPO"
+            }
+          }
+        },
+        {
+          "xml": {
+            "name": "OutputModGPO"
           }
         }
       ]
