@@ -878,7 +878,7 @@
         {
           "properties": {
             "ElectricalAndFuelBaseYear": {
-              "$ref": "#/definitions/ElectricalFuelBaseYearMod"
+              "$ref": "#/definitions/ElectricalFuelBaseYearModGPO"
             },
             "ExpensesBaseYear": {
               "$ref": "#/definitions/ExpensesBaseYearModGPO"
@@ -1030,45 +1030,70 @@
           "example": 7446,
           "description": "Annual Hours"
         },
-        "FuelConsumptionRate": {
-          "type": "number",
-          "format": "float",
-          "example": 24,
-          "description": "Fuel consumption rate (dry metric tons/hour)"
-        },
-        "AnnualGeneration": {
-          "type": "number",
-          "format": "float",
-          "example": 186150000,
-          "description": "Annual Generation (kWh)"
-        },
-        "CapitalCostNEC": {
-          "type": "number",
-          "format": "float",
-          "example": 2800,
-          "description": "Capital cost per net electrical capacity ($/kWe)"
-        },
-        "AnnualFuelConsumption": {
+        "Biomass Target": {
           "type": "number",
           "format": "float",
           "example": 180068,
-          "description": "Annual fuel consumption (dry metric tons/year)"
-        },
-        "AnnualAshDisposal": {
-          "type": "number",
-          "format": "float",
-          "example": 9003,
-          "description": "Annual Ash Disposal (dry metric tons/year)"
+          "description": "This is the same as AnnualFuelConsumption for GPO and CHP, and AnnualBiomassConsumptionDryMass for GP"
         }
       },
       "xml": {
         "name": "ElectricalFuelBaseYearMod"
       }
     },
-    "ElectricalFuelBaseYearModCHP": {
+    "ElectricalFuelBaseYearModGPO": {
       "allOf": [
         {
           "$ref": "#/definitions/ElectricalFuelBaseYearMod"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "properties": {
+            "FuelConsumptionRate": {
+              "type": "number",
+              "format": "float",
+              "example": 24,
+              "description": "Fuel consumption rate (dry metric tons/hour)"
+            },
+            "AnnualGeneration": {
+              "type": "number",
+              "format": "float",
+              "example": 186150000,
+              "description": "Annual Generation (kWh)"
+            },
+            "CapitalCostNEC": {
+              "type": "number",
+              "format": "float",
+              "example": 2800,
+              "description": "Capital cost per net electrical capacity ($/kWe)"
+            },
+            "AnnualFuelConsumption": {
+              "type": "number",
+              "format": "float",
+              "example": 180068,
+              "description": "Annual fuel consumption (dry metric tons/year)"
+            },
+            "AnnualAshDisposal": {
+              "type": "number",
+              "format": "float",
+              "example": 9003,
+              "description": "Annual Ash Disposal (dry metric tons/year)"
+            }
+          }
+        },
+        {
+          "xml": {
+            "name": "ElectricalFuelBaseYearModGPO"
+          }
+        }
+      ]
+    },
+    "ElectricalFuelBaseYearModCHP": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ElectricalFuelBaseYearModGPO"
         },
         {
           "type": "object"
@@ -1103,144 +1128,155 @@
       ]
     },
     "ElectricalFuelBaseYearModGP": {
-      "type": "object",
-      "properties": {
-        "ParasiticLoad": {
-          "type": "number",
-          "format": "float",
-          "example": 150,
-          "description": "Electrical power used to operate system (kWe)"
+      "allOf": [
+        {
+          "$ref": "#/definitions/ElectricalFuelBaseYearMod"
         },
-        "AnnualHours": {
-          "type": "number",
-          "format": "float",
-          "example": 7446,
-          "description": "Annual Hours"
+        {
+          "type": "object"
         },
-        "AnnualNetElectricityGeneration": {
-          "type": "number",
-          "format": "float",
-          "example": 3723000,
-          "description": "Annual Net Electricity Generation (kWh)"
+        {
+          "properties": {
+              "ParasiticLoad": {
+                "type": "number",
+                "format": "float",
+                "example": 150,
+                "description": "Electrical power used to operate system (kWe)"
+              },
+              "AnnualHours": {
+                "type": "number",
+                "format": "float",
+                "example": 7446,
+                "description": "Annual Hours"
+              },
+              "AnnualNetElectricityGeneration": {
+                "type": "number",
+                "format": "float",
+                "example": 3723000,
+                "description": "Annual Net Electricity Generation (kWh)"
+              },
+              "OverallNetSystemEfficiency": {
+                "type": "number",
+                "format": "float",
+                "example": 15,
+                "description": "Overall system efficiency (%) -> biomass into gasifier to electricity"
+              },
+              "NitrogenGas": {
+                "type": "number",
+                "format": "float",
+                "example": 51,
+                "description": "Nitrogen"
+              },
+              "CleanGasMolecularMass": {
+                "type": "number",
+                "format": "float",
+                "example": 26.2,
+                "description": "Clean Gas Molecular Mass (kg/kmol)"
+              },
+              "CleanGasDensity": {
+                "type": "number",
+                "format": "float",
+                "example": 1.071,
+                "description": "Clean Gas Density 298K, 1 atm (kg/m3)"
+              },
+              "CleanGasHigherHeatingValue": {
+                "type": "number",
+                "format": "float",
+                "example": 5523,
+                "description": "Clean Gas Higher Heating Value (kJ/m3)"
+              },
+              "CleanGasLowerHeatingValue": {
+                "type": "number",
+                "format": "float",
+                "example": 5127,
+                "description": "Clean Gas Lower Heating Value (MJ/m3)"
+              },
+              "TotalFuelPowerInput": {
+                "type": "number",
+                "format": "float",
+                "example": 2174,
+                "description": "Total Fuel Power Input (kW)"
+              },
+              "CleanGasPowerInput": {
+                "type": "number",
+                "format": "float",
+                "example": 1739,
+                "description": "Clean Gas Power Input (kW)"
+              },
+              "DualFuelPowerInput": {
+                "type": "number",
+                "format": "float",
+                "example": 435,
+                "description": "Dual Fuel Power Input (kW)"
+              },
+              "CleanGasFlowRateVolume": {
+                "type": "number",
+                "format": "float",
+                "example": 1134,
+                "description": "Clean Gas Flow Rate (m3/h)"
+              },
+              "CleanGasFlowRateMass": {
+                "type": "number",
+                "format": "float",
+                "example": 1215,
+                "description": "Clean Gas Flow Rate (kg/h)"
+              },
+              "AnnualCleanGasConsumption": {
+                "type": "number",
+                "format": "float",
+                "example": 9045,
+                "description": "Annual Clean Gas Consumption (dry metric tons/year)"
+              },
+              "DualFuelFlowRate": {
+                "type": "number",
+                "format": "float",
+                "example": 40,
+                "description": "Dual Fuel Flow Rate (L/h) * Default assumes heavy diesel fuel"
+              },
+              "AnnualDualFuelConsumption": {
+                "type": "number",
+                "format": "float",
+                "example": 301347,
+                "description": "Annual Dual Fuel Consumption (L/year)"
+              },
+              "BiomassFeedRate": {
+                "type": "number",
+                "format": "float",
+                "example": 518,
+                "description": "Biomass Feed Rate (kg/h)--dry basis"
+              },
+              "AnnualBiomassConsumptionDryMass": {
+                "type": "number",
+                "format": "float",
+                "example": 3854,
+                "description": "Annual Biomass Consumption (t/year)--dry basis"
+              },
+              "AnnualBiomassConsumptionWetMass": {
+                "type": "number",
+                "format": "float",
+                "example": 4534,
+                "description": "Annual Biomass Consumption (t/year)--wet basis"
+              },
+              "CharProductionRate": {
+                "type": "number",
+                "format": "float",
+                "example": 37,
+                "description": "Char Production Rate (kg/h)--dry"
+              },
+              "AnnualCharProduction": {
+                "type": "number",
+                "format": "float",
+                "example": 275,
+                "description": "Annual Char Production (t/y)--dry"
+              }
+          }
         },
-        "OverallNetSystemEfficiency": {
-          "type": "number",
-          "format": "float",
-          "example": 15,
-          "description": "Overall system efficiency (%) -> biomass into gasifier to electricity"
-        },
-        "NitrogenGas": {
-          "type": "number",
-          "format": "float",
-          "example": 51,
-          "description": "Nitrogen"
-        },
-        "CleanGasMolecularMass": {
-          "type": "number",
-          "format": "float",
-          "example": 26.2,
-          "description": "Clean Gas Molecular Mass (kg/kmol)"
-        },
-        "CleanGasDensity": {
-          "type": "number",
-          "format": "float",
-          "example": 1.071,
-          "description": "Clean Gas Density 298K, 1 atm (kg/m3)"
-        },
-        "CleanGasHigherHeatingValue": {
-          "type": "number",
-          "format": "float",
-          "example": 5523,
-          "description": "Clean Gas Higher Heating Value (kJ/m3)"
-        },
-        "CleanGasLowerHeatingValue": {
-          "type": "number",
-          "format": "float",
-          "example": 5127,
-          "description": "Clean Gas Lower Heating Value (MJ/m3)"
-        },
-        "TotalFuelPowerInput": {
-          "type": "number",
-          "format": "float",
-          "example": 2174,
-          "description": "Total Fuel Power Input (kW)"
-        },
-        "CleanGasPowerInput": {
-          "type": "number",
-          "format": "float",
-          "example": 1739,
-          "description": "Clean Gas Power Input (kW)"
-        },
-        "DualFuelPowerInput": {
-          "type": "number",
-          "format": "float",
-          "example": 435,
-          "description": "Dual Fuel Power Input (kW)"
-        },
-        "CleanGasFlowRateVolume": {
-          "type": "number",
-          "format": "float",
-          "example": 1134,
-          "description": "Clean Gas Flow Rate (m3/h)"
-        },
-        "CleanGasFlowRateMass": {
-          "type": "number",
-          "format": "float",
-          "example": 1215,
-          "description": "Clean Gas Flow Rate (kg/h)"
-        },
-        "AnnualCleanGasConsumption": {
-          "type": "number",
-          "format": "float",
-          "example": 9045,
-          "description": "Annual Clean Gas Consumption (dry metric tons/year)"
-        },
-        "DualFuelFlowRate": {
-          "type": "number",
-          "format": "float",
-          "example": 40,
-          "description": "Dual Fuel Flow Rate (L/h) * Default assumes heavy diesel fuel"
-        },
-        "AnnualDualFuelConsumption": {
-          "type": "number",
-          "format": "float",
-          "example": 301347,
-          "description": "Annual Dual Fuel Consumption (L/year)"
-        },
-        "BiomassFeedRate": {
-          "type": "number",
-          "format": "float",
-          "example": 518,
-          "description": "Biomass Feed Rate (kg/h)--dry basis"
-        },
-        "AnnualBiomassConsumptionDryMass": {
-          "type": "number",
-          "format": "float",
-          "example": 3854,
-          "description": "Annual Biomass Consumption (t/year)--dry basis"
-        },
-        "AnnualBiomassConsumptionWetMass": {
-          "type": "number",
-          "format": "float",
-          "example": 4534,
-          "description": "Annual Biomass Consumption (t/year)--wet basis"
-        },
-        "CharProductionRate": {
-          "type": "number",
-          "format": "float",
-          "example": 37,
-          "description": "Char Production Rate (kg/h)--dry"
-        },
-        "AnnualCharProduction": {
-          "type": "number",
-          "format": "float",
-          "example": 275,
-          "description": "Annual Char Production (t/y)--dry"
+        {
+          "xml": {
+            "name": "ElectricalFuelBaseYearModGP"
+          }
         }
-      },
-      "xml": {
-        "name": "ElectricalFuelBaseYearModGP"
-      }
+      ]
     },
     "ExpensesBaseYearMod": {
       "type": "object",

@@ -1,6 +1,10 @@
 export interface ElectricalFuelBaseYearMod {
-  // Shared // generica-power-only
   AnnualHours: number;
+  BiomassTarget: number;
+}
+
+export interface ElectricalFuelBaseYearModGPO extends ElectricalFuelBaseYearMod {
+  // Shared // generica-power-only
   FuelConsumptionRate: number;
   AnnualGeneration: number;
   CapitalCostNEC: number;
@@ -9,17 +13,16 @@ export interface ElectricalFuelBaseYearMod {
 }
 
 export interface ElectricalFuelBaseYearModCHP
-  extends ElectricalFuelBaseYearMod {
+  extends ElectricalFuelBaseYearModGPO {
   // combined-heat-power
   ParasiticLoad: number;
   FuelPower: number;
   GrossStationElectricalEfficiency: number;
 }
 
-export interface ElectricalFuelBaseYearModGP {
+export interface ElectricalFuelBaseYearModGP extends ElectricalFuelBaseYearMod {
   // gasification-power
   ParasiticLoad: number;
-  AnnualHours: number;
   AnnualNetElectricityGeneration: number;
   OverallNetSystemEfficiency: number;
   NitrogenGas: number;

@@ -501,8 +501,9 @@ function GasificationPower(input: InputModGP) {
     ConstantLevelAnnualCost.ConstantLevelAnnualRevenueRequirements /
     AnnualNetElectricityGeneration;
   const ElectricalFuelBaseYear: ElectricalFuelBaseYearModGP = {
-    ParasiticLoad: ParasiticLoad,
     AnnualHours: AnnualHours,
+    BiomassTarget: AnnualBiomassConsumptionDry,
+    ParasiticLoad: ParasiticLoad,
     AnnualNetElectricityGeneration: AnnualNetElectricityGeneration,
     OverallNetSystemEfficiency: OverallNetSystemEfficiency,
     NitrogenGas: N2,
