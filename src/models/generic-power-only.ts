@@ -3,7 +3,7 @@ import {
   CashFlowGPO,
   ConstantLevelAnnualCostMod,
   CurrentLevelAnnualCostMod,
-  ElectricalFuelBaseYearMod,
+  ElectricalFuelBaseYearModGPO,
   ExpensesBaseYearModGPO,
   FinancingMod,
   IncomeOtherThanEnergyMod,
@@ -323,8 +323,9 @@ function GenericPowerOnly(input: InputModGPO) {
   const ConstantLACofEnergy =
     ConstantLevelAnnualRevenueRequirements / AnnualGeneration;
 
-  const ElectricalFuelBaseYear: ElectricalFuelBaseYearMod = {
+  const ElectricalFuelBaseYear: ElectricalFuelBaseYearModGPO = {
     AnnualHours: 0,
+    BiomassTarget: 0,
     FuelConsumptionRate: 0,
     AnnualGeneration: 0,
     CapitalCostNEC: 0,
@@ -332,6 +333,7 @@ function GenericPowerOnly(input: InputModGPO) {
     AnnualAshDisposal: 0
   };
   ElectricalFuelBaseYear.AnnualHours = AnnualHours;
+  ElectricalFuelBaseYear.BiomassTarget = AnnualFuelConsumption;
   ElectricalFuelBaseYear.FuelConsumptionRate = FuelConsumptionRate;
   ElectricalFuelBaseYear.AnnualGeneration = AnnualGeneration;
   ElectricalFuelBaseYear.CapitalCostNEC = CapitalCostNEC;
