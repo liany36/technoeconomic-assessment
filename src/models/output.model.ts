@@ -277,7 +277,7 @@ export interface OutputMod {
   ConstantLAC: ConstantLevelAnnualCostMod;
 }
 export interface OutputModGPO extends OutputMod {
-  ElectricalAndFuelBaseYear: ElectricalFuelBaseYearMod;
+  ElectricalAndFuelBaseYear: ElectricalFuelBaseYearModGPO;
   ExpensesBaseYear: ExpensesBaseYearModGPO;
   IncomeOtherThanEnergy: IncomeOtherThanEnergyMod;
   AnnualCashFlows: CashFlowGPO[];
