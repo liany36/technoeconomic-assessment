@@ -14,39 +14,55 @@ import {
 
 function GenericPowerOnly(input: InputModGPO) {
   // Electrical and Fuel--base year
-  const AnnualHours = (input.CapacityFactor / 100) * 8760;
-  input.FuelHeatingValue =
-    input.FuelHeatingValue * (1 - input.MoistureContent / 100);
+  const AnnualHours =
+    (input.ElectricalFuelBaseYear.CapacityFactor / 100) * 8760;
+  input.ElectricalFuelBaseYear.FuelHeatingValue =
+    input.ElectricalFuelBaseYear.FuelHeatingValue *
+    (1 - input.ElectricalFuelBaseYear.MoistureContent / 100);
   const FuelConsumptionRate =
-    ((input.NetElectricalCapacity / (input.NetStationEfficiency / 100)) *
+    ((input.ElectricalFuelBaseYear.NetElectricalCapacity /
+      (input.ElectricalFuelBaseYear.NetStationEfficiency / 100)) *
       3600) /
-    input.FuelHeatingValue /
+    input.ElectricalFuelBaseYear.FuelHeatingValue /
     1000;
   const AnnualGeneration =
-    (input.NetElectricalCapacity * 8760 * input.CapacityFactor) / 100;
-  const CapitalCostNEC = input.CapitalCost / input.NetElectricalCapacity;
+    (input.ElectricalFuelBaseYear.NetElectricalCapacity *
+      8760 *
+      input.ElectricalFuelBaseYear.CapacityFactor) /
+    100;
+  const CapitalCostNEC =
+    input.CapitalCost / input.ElectricalFuelBaseYear.NetElectricalCapacity;
   const AnnualFuelConsumption = FuelConsumptionRate * AnnualHours;
   const AnnualAshDisposal =
-    (AnnualFuelConsumption * input.FuelAshConcentration) / 100;
+    (AnnualFuelConsumption *
+      input.ElectricalFuelBaseYear.FuelAshConcentration) /
+    100;
   // Expenses--base year
   const TotalNonFuelExpenses =
-    input.LaborCost +
-    input.MaintenanceCost +
-    input.InsurancePropertyTax +
-    input.Utilities +
-    input.AshDisposal +
-    input.Management +
-    input.OtherOperatingExpenses;
+    input.ExpensesBaseYear.LaborCost +
+    input.ExpensesBaseYear.MaintenanceCost +
+    input.ExpensesBaseYear.InsurancePropertyTax +
+    input.ExpensesBaseYear.Utilities +
+    input.ExpensesBaseYear.AshDisposal +
+    input.ExpensesBaseYear.Management +
+    input.ExpensesBaseYear.OtherOperatingExpenses;
   const TotalExpensesIncludingFuel =
-    input.FuelCost * AnnualFuelConsumption + TotalNonFuelExpenses;
-  const FuelCostKwh = CalcKwh(AnnualFuelConsumption * input.FuelCost);
-  const LaborCostKwh = CalcKwh(input.LaborCost);
-  const MaintenanceCostKwh = CalcKwh(input.MaintenanceCost);
-  const InsurancePropertyTaxKwh = CalcKwh(input.InsurancePropertyTax);
-  const UtilitiesKwh = CalcKwh(input.Utilities);
-  const AshDisposalKwh = CalcKwh(input.AshDisposal);
-  const ManagementKwh = CalcKwh(input.Management);
-  const OtherOperatingExpensesKwh = CalcKwh(input.OtherOperatingExpenses);
+    input.ExpensesBaseYear.BiomassFuelCost * AnnualFuelConsumption +
+    TotalNonFuelExpenses;
+  const FuelCostKwh = CalcKwh(
+    AnnualFuelConsumption * input.ExpensesBaseYear.BiomassFuelCost
+  );
+  const LaborCostKwh = CalcKwh(input.ExpensesBaseYear.LaborCost);
+  const MaintenanceCostKwh = CalcKwh(input.ExpensesBaseYear.MaintenanceCost);
+  const InsurancePropertyTaxKwh = CalcKwh(
+    input.ExpensesBaseYear.InsurancePropertyTax
+  );
+  const UtilitiesKwh = CalcKwh(input.ExpensesBaseYear.Utilities);
+  const AshDisposalKwh = CalcKwh(input.ExpensesBaseYear.AshDisposal);
+  const ManagementKwh = CalcKwh(input.ExpensesBaseYear.Management);
+  const OtherOperatingExpensesKwh = CalcKwh(
+    input.ExpensesBaseYear.OtherOperatingExpenses
+  );
   const TotalNonFuelExpensesKwh =
     LaborCostKwh +
     MaintenanceCostKwh +
@@ -61,22 +77,23 @@ function GenericPowerOnly(input: InputModGPO) {
   }
   // Taxes
   const CombinedTaxRate =
-    input.StateTaxRate + input.FederalTaxRate * (1 - input.StateTaxRate / 100);
+    input.Taxes.StateTaxRate +
+    input.Taxes.FederalTaxRate * (1 - input.Taxes.StateTaxRate / 100);
   // Financing
-  const EquityRatio = 100 - input.DebtRatio;
+  const EquityRatio = 100 - input.Financing.DebtRatio;
   const CostOfMoney =
-    (input.DebtRatio / 100) * input.InterestRateOnDebt +
-    (EquityRatio / 100) * input.CostOfEquity;
+    (input.Financing.DebtRatio / 100) * input.Financing.InterestRateOnDebt +
+    (EquityRatio / 100) * input.Financing.CostOfEquity;
   const TotalCostOfPlant = input.CapitalCost;
   const TotalEquityCost = (TotalCostOfPlant * EquityRatio) / 100;
-  const TotalDebtCost = (TotalCostOfPlant * input.DebtRatio) / 100;
+  const TotalDebtCost = (TotalCostOfPlant * input.Financing.DebtRatio) / 100;
   const CapitalRecoveryFactorEquity = CapitalRecoveryFactor(
-    input.CostOfEquity,
-    input.EconomicLife
+    input.Financing.CostOfEquity,
+    input.Financing.EconomicLife
   );
   const CapitalRecoveryFactorDebt = CapitalRecoveryFactor(
-    input.InterestRateOnDebt,
-    input.EconomicLife
+    input.Financing.InterestRateOnDebt,
+    input.Financing.EconomicLife
   );
   const AnnualEquityRecovery = CapitalRecoveryFactorEquity * TotalEquityCost;
   const AnnualDebtPayment = TotalDebtCost * CapitalRecoveryFactorDebt;
@@ -88,14 +105,15 @@ function GenericPowerOnly(input: InputModGPO) {
   }
   // Income other than energy
   const AnnualCapacityPayment =
-    input.CapacityPayment * input.NetElectricalCapacity;
+    input.IncomeOtherThanEnergy.CapacityPayment *
+    input.ElectricalFuelBaseYear.NetElectricalCapacity;
   const AnnualDebtReserveInterest =
-    (DebtReserve * input.InterestRateonDebtReserve) / 100;
+    (DebtReserve * input.IncomeOtherThanEnergy.InterestRateOnDebtReserve) / 100;
   // Depreciation Schedule
-  const DepreciationFraction = 1 / input.EconomicLife;
+  const DepreciationFraction = 1 / input.Financing.EconomicLife;
   // Annual Cash Flows
   const cashFlow = [];
-  for (let i = 0; i < input.EconomicLife; i++) {
+  for (let i = 0; i < input.Financing.EconomicLife; i++) {
     const newCF: CashFlowGPO = {
       Year: 0,
       EquityRecovery: 0,
@@ -119,7 +137,7 @@ function GenericPowerOnly(input: InputModGPO) {
     };
     cashFlow.push(newCF);
   }
-  for (let i = 0; i < input.EconomicLife; i++) {
+  for (let i = 0; i < input.Financing.EconomicLife; i++) {
     cashFlow[i] = CalcCashFlow(cashFlow[i - 1], i + 1);
   }
   function CalcCashFlow(CF: CashFlowGPO, Year: number) {
@@ -148,13 +166,12 @@ function GenericPowerOnly(input: InputModGPO) {
     newCF.EquityRecovery = AnnualEquityRecovery;
     if (Year === 1) {
       newCF.EquityInterest =
-        (input.CostOfEquity / 100) * TotalEquityCost;
+        (input.Financing.CostOfEquity / 100) * TotalEquityCost;
     } else {
       newCF.EquityInterest =
-        (input.CostOfEquity / 100) * CF.EquityPrincipalRemaining;
+        (input.Financing.CostOfEquity / 100) * CF.EquityPrincipalRemaining;
     }
-    newCF.EquityPrincipalPaid =
-      newCF.EquityRecovery - newCF.EquityInterest;
+    newCF.EquityPrincipalPaid = newCF.EquityRecovery - newCF.EquityInterest;
     if (Year === 1) {
       newCF.EquityPrincipalRemaining =
         TotalEquityCost - newCF.EquityPrincipalPaid;
@@ -165,30 +182,31 @@ function GenericPowerOnly(input: InputModGPO) {
     newCF.DebtRecovery = AnnualDebtPayment;
     if (Year === 1) {
       newCF.DebtInterest =
-        (input.InterestRateOnDebt / 100) * TotalDebtCost;
+        (input.Financing.InterestRateOnDebt / 100) * TotalDebtCost;
     } else {
       newCF.DebtInterest =
-        (input.InterestRateOnDebt / 100) * CF.DebtPrincipalRemaining;
+        (input.Financing.InterestRateOnDebt / 100) * CF.DebtPrincipalRemaining;
     }
-    newCF.DebtPrincipalPaid =
-      newCF.DebtRecovery - newCF.DebtInterest;
+    newCF.DebtPrincipalPaid = newCF.DebtRecovery - newCF.DebtInterest;
     if (Year === 1) {
-      newCF.DebtPrincipalRemaining =
-        TotalDebtCost - newCF.DebtPrincipalPaid;
+      newCF.DebtPrincipalRemaining = TotalDebtCost - newCF.DebtPrincipalPaid;
     } else {
       newCF.DebtPrincipalRemaining =
         CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
     }
     newCF.FuelCost =
       AnnualFuelConsumption *
-      input.FuelCost *
-      Math.pow(1 + input.EscalationFuel / 100, Year - 1);
+      input.ExpensesBaseYear.BiomassFuelCost *
+      Math.pow(
+        1 + input.EscalationInflation.EscalationBiomassFuel / 100,
+        Year - 1
+      );
     newCF.NonFuelExpenses =
       TotalNonFuelExpenses *
-      Math.pow(1 + input.EscalationOther / 100, Year - 1);
+      Math.pow(1 + input.EscalationInflation.EscalationOther / 100, Year - 1);
     if (Year === 1) {
       newCF.DebtReserve = DebtReserve;
-    } else if (Year < input.EconomicLife) {
+    } else if (Year < input.Financing.EconomicLife) {
       newCF.DebtReserve = 0;
     } else {
       newCF.DebtReserve = -DebtReserve;
@@ -205,8 +223,11 @@ function GenericPowerOnly(input: InputModGPO) {
         newCF.DebtReserve);
     newCF.TaxCredit =
       AnnualGeneration *
-      input.ProductionTaxCredit *
-      Math.pow(1 + input.EscalationProductionTaxCredit / 100, Year - 1) *
+      input.Taxes.ProductionTaxCredit *
+      Math.pow(
+        1 + input.EscalationInflation.EscalationProductionTaxCredit / 100,
+        Year - 1
+      ) *
       input.TaxCreditFrac[Year - 1];
     newCF.Taxes =
       (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
@@ -259,13 +280,11 @@ function GenericPowerOnly(input: InputModGPO) {
     Total.DebtReserve += cashFlow[i].DebtReserve;
     Total.Depreciation += cashFlow[i].Depreciation;
     Total.IncomeCapacity += cashFlow[i].IncomeCapacity;
-    Total.InterestOnDebtReserve +=
-      cashFlow[i].InterestOnDebtReserve;
+    Total.InterestOnDebtReserve += cashFlow[i].InterestOnDebtReserve;
     Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
     Total.TaxCredit += cashFlow[i].TaxCredit;
     Total.Taxes += cashFlow[i].Taxes;
-    Total.EnergyRevenueRequired +=
-      cashFlow[i].EnergyRevenueRequired;
+    Total.EnergyRevenueRequired += cashFlow[i].EnergyRevenueRequired;
   }
   // Current $ Level Annual Cost (LAC)
   const PresentWorth = [];
@@ -273,7 +292,7 @@ function GenericPowerOnly(input: InputModGPO) {
   for (let i = 0; i < cashFlow.length; i++) {
     const newPW = PW(
       cashFlow[i].EnergyRevenueRequired,
-      input.CostOfEquity,
+      input.Financing.CostOfEquity,
       i + 1
     );
     PresentWorth.push(newPW);
@@ -292,10 +311,12 @@ function GenericPowerOnly(input: InputModGPO) {
     return EnergyRevenueRequired * Math.pow(1 + CostOfEquity / 100, -Year);
   }
   const RealCostOfMoney =
-    (1 + input.CostOfEquity / 100) / (1 + input.GeneralInflation / 100) - 1;
+    (1 + input.Financing.CostOfEquity / 100) /
+      (1 + input.EscalationInflation.GeneralInflation / 100) -
+    1;
   const CapitalRecoveryFactorConstant = CapitalRecoveryFactor(
     RealCostOfMoney * 100,
-    input.EconomicLife
+    input.Financing.EconomicLife
   );
   const ConstantLevelAnnualRevenueRequirements =
     TotalPresentWorth * CapitalRecoveryFactorConstant;
@@ -378,7 +399,7 @@ function GenericPowerOnly(input: InputModGPO) {
     CurrentLevelAnnualRevenueRequirements: 0,
     CurrentLACofEnergy: 0
   };
-  CurrentLevelAnnualCost.CostOfMoney = input.CostOfEquity / 100;
+  CurrentLevelAnnualCost.CostOfMoney = input.Financing.CostOfEquity / 100;
   CurrentLevelAnnualCost.PresentWorth = PresentWorth;
   CurrentLevelAnnualCost.TotalPresentWorth = TotalPresentWorth;
   CurrentLevelAnnualCost.CapitalRecoveryFactorCurrent = CapitalRecoveryFactorCurrent;

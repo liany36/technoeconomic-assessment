@@ -1,6 +1,6 @@
 {
   "name": "@ucdavis/tea",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "./out/index.js",
   "types": "./out/index.d.ts",
   "author": "Kaiyan Li",

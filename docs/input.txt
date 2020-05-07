@@ -28,7 +28,7 @@ http://localhost:3000/genericPowerOnly
     "CostOfEquity": 15,
 
     "CapacityPayment": 166,
-    "InterestRateonDebtReserve": 5,
+    "InterestRateOnDebtReserve": 5,
 
     "GeneralInflation": 2.1,
     "EscalationFuel": 2.1,
@@ -69,7 +69,7 @@ http://localhost:3000/genericCombinedHeatPower
     "CostOfEquity": 15,
 
     "CapacityPayment": 166,
-    "InterestRateonDebtReserve": 5,
+    "InterestRateOnDebtReserve": 5,
 
     "GeneralInflation": 2.1,
     "EscalationFuel": 2.1,

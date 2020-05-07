@@ -2,38 +2,17 @@
 export interface InputModGPO {
   CapitalCost: number;
   // Electrical and Fuel--base year
-  NetElectricalCapacity: number;
-  CapacityFactor: number;
-  NetStationEfficiency: number;
-  MoistureContent: number;
-  FuelHeatingValue: number;
-  FuelAshConcentration: number;
+  ElectricalFuelBaseYear: ElectricalFuelBaseYearInputModGPO;
   // Expenses--base year
-  FuelCost: number;
-  LaborCost: number;
-  MaintenanceCost: number;
-  InsurancePropertyTax: number;
-  Utilities: number;
-  AshDisposal: number;
-  Management: number;
-  OtherOperatingExpenses: number;
+  ExpensesBaseYear: ExpensesBaseYearInputModGPO;
   // Taxes
-  FederalTaxRate: number;
-  StateTaxRate: number;
-  ProductionTaxCredit: number;
+  Taxes: TaxesInputMod;
   // Financing
-  DebtRatio: number;
-  InterestRateOnDebt: number;
-  EconomicLife: number;
-  CostOfEquity: number;
+  Financing: FinancingInputMod;
   // Income other than energy
-  CapacityPayment: number;
-  InterestRateonDebtReserve: number;
+  IncomeOtherThanEnergy: IncomeOtherThanEnergyInputMod;
   // Escalation/Inflation
-  GeneralInflation: number;
-  EscalationFuel: number;
-  EscalationProductionTaxCredit: number;
-  EscalationOther: number;
+  EscalationInflation: EscalationInflationInputMod;
   // Tax Credit Schedule
   TaxCreditFrac: number[];
 }
@@ -42,43 +21,19 @@ export interface InputModGPO {
 export interface InputModCHP {
   CapitalCost: number;
   // Electrical and Fuel--base year
-  GrossElectricalCapacity: number;
-  NetElectricalCapacity: number;
-  CapacityFactor: number;
-  NetStationEfficiency: number;
-  MoistureContent: number;
-  FuelHeatingValue: number;
-  FuelAshConcentration: number;
+  ElectricalFuelBaseYear: ElectricalFuelBaseYearInputModCHP;
   // Heat-base year
-  AggregateFractionOfHeatRecovered: number;
-  AggregateSalesPriceForHeat: number;
+  HeatBaseYear: HeatBaseYearInputMod;
   // Expenses--base year
-  FuelCost: number;
-  LaborCost: number;
-  MaintenanceCost: number;
-  InsurancePropertyTax: number;
-  Utilities: number;
-  AshDisposal: number;
-  Management: number;
-  OtherOperatingExpenses: number;
+  ExpensesBaseYear: ExpensesBaseYearInputModGPO;
   // Taxes
-  FederalTaxRate: number;
-  StateTaxRate: number;
-  ProductionTaxCredit: number;
+  Taxes: TaxesInputMod;
   // Financing
-  DebtRatio: number;
-  InterestRateOnDebt: number;
-  EconomicLife: number;
-  CostOfEquity: number;
+  Financing: FinancingInputMod;
   // Income other than energy
-  CapacityPayment: number;
-  InterestRateonDebtReserve: number;
+  IncomeOtherThanEnergy: IncomeOtherThanEnergyInputMod;
   // Escalation/Inflation
-  GeneralInflation: number;
-  EscalationFuel: number;
-  EscalationProductionTaxCredit: number;
-  EscalationHeatSales: number;
-  EscalationOther: number;
+  EscalationInflation: EscalationInflationInputMod;
   // Tax Credit Schedule
   TaxCreditFrac: number[];
 }
@@ -86,61 +41,21 @@ export interface InputModCHP {
 // GasificationPower
 export interface InputModGP {
   // Capital Cost from Gasification Power Generation
-  GasifierSystemCapitalCost: number;
-  GasCleaningSystemCapitalCost: number;
-  PowerGenerationCapitalCost: number;
-  EmissionControlSystemCapitalCost: number;
-  HeatRecoverySystemCapitalCost: number;
+  CapitalCost: CapitalCostInputModGP;
   // Electrical and Fuel -- base year from Gasification Power Generation
-  GrossElectricalCapacity: number;
-  NetElectricalCapacity: number;
-  HHVEfficiency: number;
-  NetHHVEfficiency: number;
-  FractionOfInputEnergy: number; // Dual Fuel if ant, default set to heavy disele
-  CO: number;
-  H2: number;
-  Hydrocarbons: number;
-  CO2: number;
-  O2: number;
-  HHV: number; // Higher Heating Value of Biomass Feedstock to Gasifier (kJ/kg)
-  MoistureContent: number;
-  AshContent: number;
-  CarbonConcentration: number;
-  CapacityFactor: number;
+  ElectricalFuelBaseYear: ElectricalFuelBaseYearInputModGP;
   // Heat--Base Year
-  AggregateFractionOfHeatRecovered: number;
-  AggregateSalesPriceForHeat: number;
+  HeatBaseYear: HeatBaseYearInputMod;
   // Expenses--Base Year
-  BiomassFuelCost: number;
-  DualFuelCost: number;
-  LaborCost: number;
-  MaintenanceCost: number;
-  WasteTreatment: number;
-  Insurance: number;
-  Utilities: number;
-  Management: number;
-  OtherOperatingExpenses: number;
+  ExpensesBaseYear: ExpensesBaseYearInputModGP;
   // Taxes
-  FederalTaxRate: number;
-  StateTaxRate: number;
-  ProductionTaxCredit: number;
-  // Income Other Than Energy
-  ElectricityCapacityPayment: number;
-  InterestRateOnDebtReserve: number;
-  SalesPriceForChar: number;
-  // Escalation/Inflation
-  GeneralInflation: number;
-  EscalationBiomassFuel: number;
-  EscalationDualFuel: number;
-  EscalationProductionTaxCredit: number;
-  EscalationHeatSales: number;
-  EscalationCharSales: number;
-  EscalationOther: number;
+  Taxes: TaxesInputMod;
   // Financing
-  DebtRatio: number;
-  InterestRateOnDebt: number;
-  EconomicLife: number;
-  CostOfEquity: number;
+  Financing: FinancingInputMod;
+  // Income Other Than Energy
+  IncomeOtherThanEnergy: IncomeOtherThanEnergyInputModGP;
+  // Escalation/Inflation
+  EscalationInflation: EscalationInflationInputModGP;
   // Tax Rate Schedule
   TaxCreditFrac: number[];
 }
@@ -187,4 +102,100 @@ export interface InputModHydrogen {
   InterestRateOnDebtReserve: number;
   // Tax Credit Schedule
   TaxCreditFrac: number[];
+}
+
+export interface ElectricalFuelBaseYearInputMod {
+  NetElectricalCapacity: number;
+  CapacityFactor: number;
+  MoistureContent: number;
+}
+export interface ElectricalFuelBaseYearInputModGPO
+  extends ElectricalFuelBaseYearInputMod {
+  NetStationEfficiency: number;
+  FuelHeatingValue: number;
+  FuelAshConcentration: number;
+}
+export interface ElectricalFuelBaseYearInputModCHP
+  extends ElectricalFuelBaseYearInputModGPO {
+  GrossElectricalCapacity: number;
+}
+export interface ElectricalFuelBaseYearInputModGP
+  extends ElectricalFuelBaseYearInputMod {
+  GrossElectricalCapacity: number;
+  HHVEfficiency: number;
+  NetHHVEfficiency: number;
+  FractionOfInputEnergy: number; // Dual Fuel if ant, default set to heavy disele
+  CO: number;
+  H2: number;
+  Hydrocarbons: number;
+  CO2: number;
+  O2: number;
+  HHV: number; // Higher Heating Value of Biomass Feedstock to Gasifier (kJ/kg)
+  AshContent: number;
+  CarbonConcentration: number;
+}
+
+export interface ExpensesBaseYearInputMod {
+  BiomassFuelCost: number; // FuelCost for GPO and CHP on spreadsheet
+  LaborCost: number;
+  MaintenanceCost: number;
+  InsurancePropertyTax: number;
+  Utilities: number;
+  Management: number;
+  OtherOperatingExpenses: number;
+}
+export interface ExpensesBaseYearInputModGPO extends ExpensesBaseYearInputMod {
+  AshDisposal: number;
+}
+export interface ExpensesBaseYearInputModGP extends ExpensesBaseYearInputMod {
+  DualFuelCost: number;
+  WasteTreatment: number;
+}
+
+export interface HeatBaseYearInputMod {
+  AggregateFractionOfHeatRecovered: number;
+  AggregateSalesPriceForHeat: number;
+}
+
+export interface TaxesInputMod {
+  FederalTaxRate: number;
+  StateTaxRate: number;
+  ProductionTaxCredit: number;
+}
+
+export interface FinancingInputMod {
+  DebtRatio: number;
+  InterestRateOnDebt: number;
+  EconomicLife: number;
+  CostOfEquity: number;
+}
+
+export interface IncomeOtherThanEnergyInputMod {
+  CapacityPayment: number;
+  InterestRateOnDebtReserve: number;
+}
+export interface IncomeOtherThanEnergyInputModGP
+  extends IncomeOtherThanEnergyInputMod {
+  SalesPriceForChar: number;
+}
+
+export interface EscalationInflationInputMod {
+  GeneralInflation: number;
+  EscalationBiomassFuel: number; // for GPO and CHP this is just EscalationFuel on the spreadsheet
+  EscalationProductionTaxCredit: number;
+  EscalationHeatSales: number;
+  EscalationOther: number;
+}
+export interface EscalationInflationInputModGP
+  extends EscalationInflationInputMod {
+  EscalationDualFuel: number;
+  EscalationCharSales: number;
+}
+
+export interface CapitalCostInputModGP {
+  GasifierSystemCapitalCost: number;
+  GasCleaningSystemCapitalCost: number;
+  PowerGenerationCapitalCost: number;
+  EmissionControlSystemCapitalCost: number;
+  HeatRecoverySystemCapitalCost: number;
 }

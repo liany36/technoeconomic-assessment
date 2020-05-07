@@ -8,7 +8,8 @@ export interface ElectricalFuelBaseYearMod {
   AnnualAshDisposal: number;
 }
 
-export interface ElectricalFuelBaseYearModCHP extends ElectricalFuelBaseYearMod {
+export interface ElectricalFuelBaseYearModCHP
+  extends ElectricalFuelBaseYearMod {
   // combined-heat-power
   ParasiticLoad: number;
   FuelPower: number;
