@@ -199,3 +199,33 @@ export interface CapitalCostInputModGP {
   EmissionControlSystemCapitalCost: number;
   HeatRecoverySystemCapitalCost: number;
 }
+
+// GenericPowerOnly
+export interface InputModTransimission {
+  VoltageClass: string;
+  ConductorType: string;
+  Structure: string;
+  LengthCategory: string;
+  NewOrReconductor: boolean; // true for New, false for Re-conductor
+  AverageTerrainMultiplier: number;
+  MilesForested: number;
+  MilesFlat: number;
+  MilesWetland: number;
+  MilesFarmland: number;
+  MilesDesert: number;
+  MilesUrban: number;
+  MilesHills: number;
+  MilesMountain: number;
+  MilesBLM1: number;
+  MilesBLM2: number;
+  MilesBLM3: number;
+  MilesBLM4: number;
+  MilesBLM5: number;
+  MilesBLM6: number;
+  MilesBLM7: number;
+  MilesBLM8: number;
+  MilesBLM9: number;
+  MilesBLM10: number;
+  MilesBLM11: number;
+  MilesBLM12: number;
+}
