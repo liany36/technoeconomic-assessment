@@ -200,7 +200,7 @@ export interface CapitalCostInputModGP {
   HeatRecoverySystemCapitalCost: number;
 }
 
-// GenericPowerOnly
+// Transmission
 export interface InputModTransimission {
   VoltageClass: string;
   ConductorType: string;
@@ -230,4 +230,19 @@ export interface InputModTransimission {
     Zone11: number;
     Zone12: number;
   };
+}
+
+// Substation
+export interface InputModSubstation {
+  Voltage: string;
+  NewOrExisting: string;
+  CircuitBreakerType: string;
+  NoLineXFMRPositions: number;
+  HVDCconverter: string;
+  TransformerType: string;
+  MVAratingPerTransformer: number;
+  NoTransformers: number;
+  SVCmvarRating: number;
+  ShuntReactorMVARrating: number;
+  SeriesCapacitorMVARrating: number;
 }
