@@ -134,6 +134,64 @@
           }
         }
       }
+    },
+    "/transmission": {
+      "post": {
+        "tags": ["transmission"],
+        "summary": "Transmission Line Capital Cost Calculator",
+        "description": "",
+        "operationId": "transmission",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "params",
+            "schema": {
+              "$ref": "#/definitions/InputModTransmission"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OutputModTransmission"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters supplied"
+          }
+        }
+      }
+    },
+    "/substation": {
+      "post": {
+        "tags": ["substation"],
+        "summary": "Substation Capital Cost Calculator",
+        "description": "",
+        "operationId": "substation",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "params",
+            "schema": {
+              "$ref": "#/definitions/InputModSubstation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OutputModSubstation"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters supplied"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -322,6 +380,529 @@
       "required": ["TaxCreditFrac"],
       "xml": {
         "name": "InputModGP"
+      }
+    },
+    "InputModHydrogen": {
+      "type": "object",
+      "properties": {
+        "GrossDesignHydrogenCapacity": {
+          "type": "number",
+          "example": 158366.518706405,
+          "description": "Gross design hydrogen capacity (kg/day)"
+        },
+        "Feedstock": {
+          "type": "number",
+          "example": 19.3498437209302,
+          "description": "Feedstock (dry) heating value (MJ/kg)"
+        },
+        "OverallProductionEfficiency": {
+          "type": "number",
+          "example": 60.5,
+          "description": "Overall production efficiency (%, HHV)"
+        },
+        "CapacityFactor": {
+          "type": "number",
+          "example": 91.324200913242,
+          "description": "Capacity Factor (%)"
+        },
+        "CapitalCost": {
+          "type": "number",
+          "format": "float",
+          "example": 206500000,
+          "description": "Total facility capital cost ($)"
+        },
+        "FeedstockCost": {
+          "type": "number",
+          "example": 38.7,
+          "description": "Delivered feedstock cost (dry, $/Mg)"
+        },
+        "OperatingExpensesRate": {
+          "type": "number",
+          "example": 4,
+          "description": "Operating expenses rate (% of capital investment)"
+        },
+        "ElectricalEnergy": {
+          "type": "number",
+          "example": 2,
+          "description": "Other Revenues or Cost Savings -> Electrical energy ($/year)"
+        },
+        "IncentivePayments": {
+          "type": "number",
+          "example": 2,
+          "description": "Other Revenues or Cost Savings -> Incentive payments ($/year)"
+        },
+        "Capacity": {
+          "type": "number",
+          "example": 2,
+          "description": "Other Revenues or Cost Savings -> Capacity ($/year)"
+        },
+        "Heat": {
+          "type": "number",
+          "example": 2,
+          "description": "Other Revenues or Cost Savings -> Heat ($/year)"
+        },
+        "Residues": {
+          "type": "number",
+          "example": 2,
+          "description": "Other Revenues or Cost Savings -> Residues ($/year)"
+        },
+        "FederalTaxRate": {
+          "type": "number",
+          "example": 34,
+          "description": "Federal Tax Rate (%)"
+        },
+        "StateTaxRate": {
+          "type": "number",
+          "format": "float",
+          "example": 9.3,
+          "description": "State Tax Rate (%)"
+        },
+        "ProductionTaxCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 0.09,
+          "description": "Production Tax Credit ($/GJ)"
+        },
+        "NegativeTaxesOffset": {
+          "type": "boolean",
+          "example": true,
+          "description": "Negative taxes allowed to offset taxes elsewhere? true if yes, false if no"
+        },
+        "GeneralInflation": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "General Inflation (%/year)"
+        },
+        "EscalationFeedstock": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Escalation--Fuel (%/year)"
+        },
+        "EscalationElectricalEnergy": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Escalation--electrical energy (%/year)"
+        },
+        "EscalationIncentivePayments": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Escalation--incentive payments (%/year)"
+        },
+        "EscalationCapacityPayment": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Escalation--capacity payment (%/year)"
+        },
+        "EscalationProductionTaxCredit": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Escalation--Production Tax Credit (%/year)"
+        },
+        "EscalationHeatSales": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Escalation--heat sales (%/year)"
+        },
+        "EscalationResidueSales": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Escalation--residue sales (%/year)"
+        },
+        "EscalationOther": {
+          "type": "number",
+          "format": "float",
+          "example": 2.1,
+          "description": "Escalation--other (%/year)"
+        },
+        "DebtRatio": {
+          "type": "number",
+          "example": 90,
+          "description": "Debt ratio (%)"
+        },
+        "InterestRateOnDebt": {
+          "type": "number",
+          "example": 5,
+          "description": "Interest rate on debt (%/year)"
+        },
+        "OneYearDebtReserveRequired": {
+          "type": "boolean",
+          "example": true,
+          "description": "One year debt reserve required? true if yes, false if no"
+        },
+        "MARR": {
+          "type": "number",
+          "example": 15,
+          "description": "Minimum attractive rate of return on equity (MARR) (%/year)"
+        },
+        "EconomicLife": {
+          "type": "number",
+          "example": 15,
+          "description": "Life of Loan (years)"
+        },
+        "InterestRateOnDebtReserve": {
+          "type": "number",
+          "example": 2,
+          "description": "Interest rate on debt reserve (%/year)"
+        },
+        "TaxCreditFrac": {
+          "description": "Tax Credit Schedule -> Fraction is 1 if received in year, 0 if not",
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "example": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "required": [
+        "GrossDesignHydrogenCapacity",
+        "Feedstock",
+        "OverallProductionEfficiency",
+        "CapacityFactor",
+        "CapitalCost",
+        "FeedstockCost",
+        "OperatingExpensesRate",
+        "ElectricalEnergy",
+        "IncentivePayments",
+        "Capacity",
+        "Heat",
+        "Residues",
+        "FederalTaxRate",
+        "StateTaxRate",
+        "ProductionTaxCredit",
+        "NegativeTaxesOffset",
+        "DebtRatio",
+        "InterestRateOnDebt",
+        "OneYearDebtReserveRequired",
+        "EconomicLife",
+        "CostOfEquity",
+        "CapacityPayment",
+        "InterestRateOnDebtReserve",
+        "GeneralInflation",
+        "EscalationFeedstock",
+        "EscalationElectricalEnergy",
+        "EscalationIncentivePayments",
+        "EscalationCapacityPayment",
+        "EscalationProductionTaxCredit",
+        "EscalationHeatSales",
+        "EscalationResidueSales",
+        "EscalationOther",
+        "TaxCreditFrac"
+      ],
+      "xml": {
+        "name": "InputModHydrogen"
+      }
+    },
+    "InputModTransmission": {
+      "type": "object",
+      "properties": {
+        "VoltageClass": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "230 kV Single Circuit",
+            "230 kV Double Circuit",
+            "345 kV Single Circuit",
+            "345 kV Double Circuit",
+            "500 kV Single Circuit",
+            "500 kV Double Circuit",
+            "500 kV HVDC Circuit",
+            "600 kV HVDC Circuit"
+          ],
+          "example": "230 kV Single Circuit"
+        },
+        "ConductorType": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "ACSR",
+            "ACSS",
+            "HTLS"
+          ],
+          "example": "ACSS"
+        },
+        "Structure": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "Lattice",
+            "Tubular Steel"
+          ],
+          "example": "Lattice"
+        },
+        "LengthCategory": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "> 10 miles",
+            "3-10 miles",
+            "< 3 miles"
+          ],
+          "example": "> 10 miles"
+        },
+        "NewOrReconductor": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "New",
+            "Re-conductor"
+          ],
+          "example": "New"
+        },
+        "AverageTerrainMultiplier": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "Miles": {
+          "required": true,
+          "type": "object",
+          "properties": {
+            "Forested": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Flat": {
+              "required": true,
+              "type": "number",
+              "example": 1
+            },
+            "Wetland": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Farmland": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Desert": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Urban": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Hills": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Mountain": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Zone1": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Zone2": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Zone3": {
+              "required": true,
+              "type": "number",
+              "example": 1
+            },
+            "Zone4": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Zone5": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Zone6": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Zone7": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Zone8": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Zone9": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Zone10": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Zone11": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            },
+            "Zone12": {
+              "required": true,
+              "type": "number",
+              "example": 0
+            }
+          }
+        }
+      },
+      "xml": {
+        "name": "InputModTransmission"
+      }
+    },
+    "InputModSubstation": {
+      "type": "object",
+      "properties": {
+        "Voltage": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "230 kV Substation",
+            "345 kV Substation",
+            "500 kV Substation"
+          ],
+          "example": "500 kV Substation"
+        },
+        "NewOrExisting": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "New",
+            "Existing"
+          ],
+          "example": "New"
+        },
+        "CircuitBreakerType": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "Ring Bus",
+            "Breaker and a Half"
+          ],
+          "example": "Breaker and a Half"
+        },
+        "NoLineXFMRPositions": {
+          "required": true,
+          "type": "number",
+          "example": 8
+        },
+        "HVDCconverter": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "500 kV HVDC Converter",
+            "600 kV HVDC Converter",
+            "No"
+          ],
+          "example": "500 kV HVDC Converter"
+        },
+        "TransformerType": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "115/230 kV XFMR",
+            "115/345 kV XFMR",
+            "115/500 kV XFMR",
+            "138/230 kV XFMR",
+            "138/345 kV XFMR",
+            "138/500 kV XFMR",
+            "230/345 kV XFMR",
+            "230/500 kV XFMR",
+            "345/500 kV XFMR"
+          ],
+          "example": "345/500 kV XFMR"
+        },
+        "MVAratingPerTransformer": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "NoTransformers": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "SVCmvarRating": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "ShuntReactorMVARrating": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "SeriesCapacitorMVARrating": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        }
+      },
+      "xml": {
+        "name": "InputModSubstation"
       }
     },
     "CapitalCostInputModGP": {
@@ -1020,6 +1601,92 @@
           }
         }
       ]
+    },
+    "OutputModTransmission": {
+      "type": "object",
+      "properties": {
+        "LineCost": {
+          "type": "number",
+          "format": "float",
+          "example": 1048291.43
+        },
+        "ROWcost": {
+          "type": "number",
+          "format": "float",
+          "example": 5173.50
+        },
+        "OverheadCost": {
+          "type": "number",
+          "format": "float",
+          "example": 184356.36
+        },
+        "AllCost": {
+          "type": "number",
+          "format": "float",
+          "example": 1237821.29
+        },
+        "LineLoss": {
+          "type": "number",
+          "format": "float",
+          "example": 0.36
+        },
+        "xml": {
+          "name": "OutputModTransmission"
+        }
+      }
+    },
+    "OutputModSubstation": {
+      "type": "object",
+      "properties": {
+        "BaseCost": {
+          "type": "number",
+          "format": "float",
+          "example": 2875971
+        },
+        "CircuitBreakers": {
+          "type": "number",
+          "format": "float",
+          "example": 40263594
+        },
+        "HVDCconverter": {
+          "type": "number",
+          "format": "float",
+          "example": 517721317
+        },
+        "Transformer": {
+          "type": "number",
+          "format": "float",
+          "example": 15124
+        },
+        "SVC": {
+          "type": "number",
+          "format": "float",
+          "example": 98891
+        },
+        "ShuntReactor": {
+          "type": "number",
+          "format": "float",
+          "example": 23268
+        },
+        "SeriesCapacitor": {
+          "type": "number",
+          "format": "float",
+          "example": 11634
+        },
+        "OverheadCost": {
+          "type": "number",
+          "format": "float",
+          "example": 98176715.015
+        },
+        "TotalSubstationCost": {
+          "type": "number",
+          "format": "float",
+          "example": 659186515
+        },
+        "xml": {
+          "name": "OutputModTransmission"
+        }
+      }
     },
     "ElectricalFuelBaseYearMod": {
       "type": "object",
