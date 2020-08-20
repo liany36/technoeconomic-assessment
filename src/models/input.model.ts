@@ -199,3 +199,35 @@ export interface CapitalCostInputModGP {
   EmissionControlSystemCapitalCost: number;
   HeatRecoverySystemCapitalCost: number;
 }
+
+// GenericPowerOnly
+export interface InputModTransimission {
+  VoltageClass: string;
+  ConductorType: string;
+  Structure: string;
+  LengthCategory: string;
+  NewOrReconductor: string;
+  AverageTerrainMultiplier: number;
+  Miles: {
+    Forested: number;
+    Flat: number;
+    Wetland: number;
+    Farmland: number;
+    Desert: number;
+    Urban: number;
+    Hills: number;
+    Mountain: number;
+    Zone1: number;
+    Zone2: number;
+    Zone3: number;
+    Zone4: number;
+    Zone5: number;
+    Zone6: number;
+    Zone7: number;
+    Zone8: number;
+    Zone9: number;
+    Zone10: number;
+    Zone11: number;
+    Zone12: number;
+  };
+}
