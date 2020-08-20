@@ -352,6 +352,52 @@ export function TransmissionCost(input: InputModTransimission) {
       }
       ROWwidth = 250;
       break;
+      case '500 kV HVDC Circuit': // -----------------------------------------------
+      InitialCost = 1484000;
+      InitialCost = InitialCost * (1 + InflationRate);
+      switch (input.ConductorType) {
+        case 'ACSR':
+          Multiplier.Conductor = 1;
+          LineLossUnitMile = 0.1652;
+          break;
+        case 'ACSS':
+          Multiplier.Conductor = 1.08;
+          LineLossUnitMile = 0.4429;
+          break;
+        case 'HTLS':
+          Multiplier.Conductor = 3.6;
+          LineLossUnitMile = 0.4709;
+          break;
+      }
+      switch (input.Structure) {
+        case 'Lattice':
+          Multiplier.Structure = 1;
+          break;
+        case 'Tubular Steel':
+          Multiplier.Structure = 1.5;
+          break;
+      }
+      switch (input.LengthCategory) {
+        case '> 10 miles':
+          Multiplier.Length = 1;
+          break;
+        case '3-10 miles':
+          Multiplier.Length = 1.2;
+          break;
+        case '< 3 miles':
+          Multiplier.Length = 1.5;
+          break;
+      }
+      switch (input.NewOrReconductor) {
+        case 'New':
+          Multiplier.NewOrReconductor = 1;
+          break;
+        case 'Re-conductor':
+          Multiplier.NewOrReconductor = 0.55;
+          break;
+      }
+      ROWwidth = 200;
+      break;
   }
   TotalMiles =
     input.Miles.Forested +
