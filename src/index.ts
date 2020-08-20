@@ -7,8 +7,10 @@ import {
   InputModGP,
   InputModGPO,
   InputModHydrogen,
-  InputModTransimission
+  InputModSubstation,
+  InputModTransimission,
 } from './models/input.model';
+import { SubstationCost } from './models/substation';
 import { TransmissionCost } from './models/transmission';
 
 export const genericPowerOnly = (params: InputModGPO) => {
@@ -29,4 +31,8 @@ export const hydrogen = (params: InputModHydrogen) => {
 
 export const transmission = (params: InputModTransimission) => {
   return TransmissionCost(params);
+};
+
+export const substation = (params: InputModSubstation) => {
+  return SubstationCost(params);
 };
