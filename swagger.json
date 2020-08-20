@@ -163,6 +163,35 @@
           }
         }
       }
+    },
+    "/substation": {
+      "post": {
+        "tags": ["substation"],
+        "summary": "Substation Capital Cost Calculator",
+        "description": "",
+        "operationId": "substation",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "params",
+            "schema": {
+              "$ref": "#/definitions/InputModSubstation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OutputModSubstation"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters supplied"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -782,6 +811,98 @@
       },
       "xml": {
         "name": "InputModTransmission"
+      }
+    },
+    "InputModSubstation": {
+      "type": "object",
+      "properties": {
+        "Voltage": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "230 kV Substation",
+            "345 kV Substation",
+            "500 kV Substation"
+          ],
+          "example": "500 kV Substation"
+        },
+        "NewOrExisting": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "New",
+            "Existing"
+          ],
+          "example": "New"
+        },
+        "CircuitBreakerType": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "Ring Bus",
+            "Breaker and a Half"
+          ],
+          "example": "Breaker and a Half"
+        },
+        "NoLineXFMRPositions": {
+          "required": true,
+          "type": "number",
+          "example": 8
+        },
+        "HVDCconverter": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "500 kV HVDC Converter",
+            "600 kV HVDC Converter",
+            "No"
+          ],
+          "example": "500 kV HVDC Converter"
+        },
+        "TransformerType": {
+          "required": true,
+          "type": "string",
+          "enum": [
+            "115/230 kV XFMR",
+            "115/345 kV XFMR",
+            "115/500 kV XFMR",
+            "138/230 kV XFMR",
+            "138/345 kV XFMR",
+            "138/500 kV XFMR",
+            "230/345 kV XFMR",
+            "230/500 kV XFMR",
+            "345/500 kV XFMR"
+          ],
+          "example": "345/500 kV XFMR"
+        },
+        "MVAratingPerTransformer": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "NoTransformers": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "SVCmvarRating": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "ShuntReactorMVARrating": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "SeriesCapacitorMVARrating": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        }
+      },
+      "xml": {
+        "name": "InputModSubstation"
       }
     },
     "CapitalCostInputModGP": {
@@ -1508,6 +1629,59 @@
           "type": "number",
           "format": "float",
           "example": 0.36
+        },
+        "xml": {
+          "name": "OutputModTransmission"
+        }
+      }
+    },
+    "OutputModSubstation": {
+      "type": "object",
+      "properties": {
+        "BaseCost": {
+          "type": "number",
+          "format": "float",
+          "example": 2875971
+        },
+        "CircuitBreakers": {
+          "type": "number",
+          "format": "float",
+          "example": 40263594
+        },
+        "HVDCconverter": {
+          "type": "number",
+          "format": "float",
+          "example": 517721317
+        },
+        "Transformer": {
+          "type": "number",
+          "format": "float",
+          "example": 15124
+        },
+        "SVC": {
+          "type": "number",
+          "format": "float",
+          "example": 98891
+        },
+        "ShuntReactor": {
+          "type": "number",
+          "format": "float",
+          "example": 23268
+        },
+        "SeriesCapacitor": {
+          "type": "number",
+          "format": "float",
+          "example": 11634
+        },
+        "OverheadCost": {
+          "type": "number",
+          "format": "float",
+          "example": 98176715.015
+        },
+        "TotalSubstationCost": {
+          "type": "number",
+          "format": "float",
+          "example": 659186515
         },
         "xml": {
           "name": "OutputModTransmission"
