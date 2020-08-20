@@ -12,8 +12,10 @@ import {
   InputModGP,
   InputModGPO,
   InputModHydrogen,
+  InputModSubstation,
   InputModTransimission,
 } from './models/input.model';
+import { SubstationCost } from './models/substation';
 import { TransmissionCost } from './models/transmission';
 
 // tslint:disable-next-line: no-var-requires
@@ -80,6 +82,16 @@ app.post('/transmission', async (req: any, res: any) => {
   const params: InputModTransimission = req.body;
   try {
     const result = await TransmissionCost(params);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+});
+
+app.post('/substation', async (req: any, res: any) => {
+  const params: InputModSubstation = req.body;
+  try {
+    const result = await SubstationCost(params);
     res.status(200).json(result);
   } catch (e) {
     res.status(400).send(e.message);
