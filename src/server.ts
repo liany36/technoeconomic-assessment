@@ -11,8 +11,10 @@ import {
   InputModCHP,
   InputModGP,
   InputModGPO,
-  InputModHydrogen
+  InputModHydrogen,
+  InputModTransimission,
 } from './models/input.model';
+import { TransmissionCost } from './models/transmission';
 
 // tslint:disable-next-line: no-var-requires
 const swaggerDocument = require('../swagger.json');
@@ -68,6 +70,16 @@ app.post('/hydrogen', async (req: any, res: any) => {
   const params: InputModHydrogen = req.body;
   try {
     const result = await Hydrogen(params);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+});
+
+app.post('/transmission', async (req: any, res: any) => {
+  const params: InputModTransimission = req.body;
+  try {
+    const result = await TransmissionCost(params);
     res.status(200).json(result);
   } catch (e) {
     res.status(400).send(e.message);
