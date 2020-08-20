@@ -38,6 +38,19 @@ export function SubstationCost(input: InputModSubstation) {
       TransformerCost.XFMR138o230kV = 7000 * (1 + InflationRate);
       TransformerCost.XFMR230o500kV = 11000 * (1 + InflationRate);
       break;
+    case '345 kV Substation':
+      BaseCostNewSubstation = 2060000 * (1 + InflationRate);
+      CostPerLinePosition = 2163000 * (1 + InflationRate);
+      RingBus = 1;
+      BreakerAndHalf = 1.5;
+      ShuntReactorCost = 20000 * (1 + InflationRate);
+      SeriesCapacitorCost = 10000 * (1 + InflationRate);
+      SVCcost = 85000 * (1 + InflationRate);
+      TransformerCost.XFMR115o345kV = 10000 * (1 + InflationRate);
+      TransformerCost.XFMR138o345kV = 10000 * (1 + InflationRate);
+      TransformerCost.XFMR230o345kV = 10000 * (1 + InflationRate);
+      TransformerCost.XFMR345o500kV = 13000 * (1 + InflationRate);
+      break;
   }
 
   let BaseCost = 0;
