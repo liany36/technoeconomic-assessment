@@ -2,25 +2,12 @@
 import { InputModTransimission } from './input.model';
 
 export function TransmissionCost(input: InputModTransimission) {
-  let Capacity;
-  let PhaseCurrent;
-  let NoConductorsPerPhase;
-  let NoCircuitsPerLine;
-  let NoPhases;
-  let ACSRsize;
-  let ACSRresistance;
-  let ACSSsize;
-  let ACSSresistance;
-  let HTLS;
-  let HTLSresistance;
-
   const Multiplier = {
     Conductor: 0,
     Structure: 0,
     Length: 0,
     NewOrReconductor: 0,
     AverageTerrain: 0,
-    // Terrain
     Forested: 2.25,
     Flat: 1, // Scrubbed/Flat
     Wetland: 1.2,
@@ -33,7 +20,7 @@ export function TransmissionCost(input: InputModTransimission) {
 
   let TotalMiles;
   let WeightedMiles;
-  let InitialCost = 927000; // 2012
+  let InitialCost = 0; // 2012
   const InflationRate = (540.7 - 464.751) / 464.751; // 2012-2019
 
   // 2015 Per Acre Rent ($/acre-year)
@@ -73,7 +60,7 @@ export function TransmissionCost(input: InputModTransimission) {
     Zone11: calcLandMarketValue(Rent.Zone11),
     Zone12: calcLandMarketValue(Rent.Zone12),
   };
-  let ROWwidth;
+  let ROWwidth = 0;
   let AcresUnitMile;
   const OverheadCostRatio = 0.175;
 
@@ -81,7 +68,7 @@ export function TransmissionCost(input: InputModTransimission) {
   let ROWcostUnitMile;
   let OverheadCostUnitMile;
   let AllCostUnitMile;
-  let LineLossUnitMile;
+  let LineLossUnitMile = 0;
   let LineCost;
   let ROWcost;
   let OverheadCost;
@@ -90,22 +77,8 @@ export function TransmissionCost(input: InputModTransimission) {
 
   switch (input.VoltageClass) {
     case '230 kV Single Circuit':
-      Capacity = 400;
-      NoConductorsPerPhase = 1;
-      NoCircuitsPerLine = 1;
-      NoPhases = 3;
-      ACSRsize = 1272;
-      ACSRresistance = 0.08305;
-      ACSSsize = 477;
-      ACSSresistance = 0.2253;
-      HTLS = 477;
-      HTLSresistance = 0.2275;
-      PhaseCurrent =
-        ((Capacity / 0.95) * 1000) /
-        (230 * NoPhases ** 0.5 * NoCircuitsPerLine);
-      // Transmission Cost Assumptions, ROW Widths, and Land Costs
+      InitialCost = 927000;
       InitialCost = InitialCost * (1 + InflationRate);
-      LineLossUnitMile = 0;
       switch (input.ConductorType) {
         case 'ACSR':
           Multiplier.Conductor = 1;
@@ -147,63 +120,109 @@ export function TransmissionCost(input: InputModTransimission) {
           Multiplier.NewOrReconductor = 0.35;
           break;
       }
-      TotalMiles =
-        input.Miles.Forested +
-        input.Miles.Flat +
-        input.Miles.Wetland +
-        input.Miles.Farmland +
-        input.Miles.Desert +
-        input.Miles.Urban +
-        input.Miles.Hills +
-        input.Miles.Mountain;
-      WeightedMiles =
-        input.Miles.Forested * Multiplier.Forested +
-        input.Miles.Flat * Multiplier.Flat +
-        input.Miles.Wetland * Multiplier.Wetland +
-        input.Miles.Farmland * Multiplier.Farmland +
-        input.Miles.Desert * Multiplier.Desert +
-        input.Miles.Urban * Multiplier.Urban +
-        input.Miles.Hills * Multiplier.Hills +
-        input.Miles.Mountain * Multiplier.Mountain;
-      Multiplier.AverageTerrain = WeightedMiles / TotalMiles;
-
-      LineCostUnitMile =
-        InitialCost *
-        Multiplier.Conductor *
-        Multiplier.Structure *
-        Multiplier.Length *
-        Multiplier.NewOrReconductor *
-        Multiplier.AverageTerrain;
       ROWwidth = 125;
-      AcresUnitMile = (ROWwidth * 5280) / 43560;
-
-      ROWcostUnitMile =
-        (input.Miles.Zone1 * LandMarketValue.Zone1 * AcresUnitMile +
-          input.Miles.Zone2 * LandMarketValue.Zone2 * AcresUnitMile +
-          input.Miles.Zone3 * LandMarketValue.Zone3 * AcresUnitMile +
-          input.Miles.Zone4 * LandMarketValue.Zone4 * AcresUnitMile +
-          input.Miles.Zone5 * LandMarketValue.Zone5 * AcresUnitMile +
-          input.Miles.Zone6 * LandMarketValue.Zone6 * AcresUnitMile +
-          input.Miles.Zone7 * LandMarketValue.Zone7 * AcresUnitMile +
-          input.Miles.Zone8 * LandMarketValue.Zone8 * AcresUnitMile +
-          input.Miles.Zone9 * LandMarketValue.Zone9 * AcresUnitMile +
-          input.Miles.Zone10 * LandMarketValue.Zone10 * AcresUnitMile +
-          input.Miles.Zone11 * LandMarketValue.Zone11 * AcresUnitMile +
-          input.Miles.Zone12 * LandMarketValue.Zone12 * AcresUnitMile) /
-        TotalMiles;
-
-      OverheadCostUnitMile =
-        (LineCostUnitMile + ROWcostUnitMile) * OverheadCostRatio;
-      AllCostUnitMile =
-        LineCostUnitMile + ROWcostUnitMile + OverheadCostUnitMile;
-
-      LineCost = LineCostUnitMile * TotalMiles;
-      ROWcost = ROWcostUnitMile * TotalMiles;
-      OverheadCost = OverheadCostUnitMile * TotalMiles;
-      AllCost = AllCostUnitMile * TotalMiles;
-      LineLoss = LineLossUnitMile * TotalMiles;
+      break;
+    case '230 kV Double Circuit': // -----------------------------------------------
+      InitialCost = 1484000;
+      InitialCost = InitialCost * (1 + InflationRate);
+      switch (input.ConductorType) {
+        case 'ACSR':
+          Multiplier.Conductor = 1;
+          LineLossUnitMile = 0.2672;
+          break;
+        case 'ACSS':
+          Multiplier.Conductor = 1.08;
+          LineLossUnitMile = 0.7249;
+          break;
+        case 'HTLS':
+          Multiplier.Conductor = 3.6;
+          LineLossUnitMile = 0.7319;
+          break;
+      }
+      switch (input.Structure) {
+        case 'Lattice':
+          Multiplier.Structure = 0.9;
+          break;
+        case 'Tubular Steel':
+          Multiplier.Structure = 1;
+          break;
+      }
+      switch (input.LengthCategory) {
+        case '< 3 miles':
+          Multiplier.Length = 1.5;
+          break;
+        case '3-10 miles':
+          Multiplier.Length = 1.2;
+          break;
+        case '> 10 miles':
+          Multiplier.Length = 1;
+          break;
+      }
+      switch (input.NewOrReconductor) {
+        case 'New':
+          Multiplier.NewOrReconductor = 1;
+          break;
+        case 'Re-conductor':
+          Multiplier.NewOrReconductor = 0.45;
+          break;
+      }
+      ROWwidth = 150;
       break;
   }
+  TotalMiles =
+    input.Miles.Forested +
+    input.Miles.Flat +
+    input.Miles.Wetland +
+    input.Miles.Farmland +
+    input.Miles.Desert +
+    input.Miles.Urban +
+    input.Miles.Hills +
+    input.Miles.Mountain;
+  WeightedMiles =
+    input.Miles.Forested * Multiplier.Forested +
+    input.Miles.Flat * Multiplier.Flat +
+    input.Miles.Wetland * Multiplier.Wetland +
+    input.Miles.Farmland * Multiplier.Farmland +
+    input.Miles.Desert * Multiplier.Desert +
+    input.Miles.Urban * Multiplier.Urban +
+    input.Miles.Hills * Multiplier.Hills +
+    input.Miles.Mountain * Multiplier.Mountain;
+  Multiplier.AverageTerrain = WeightedMiles / TotalMiles;
+
+  LineCostUnitMile =
+    InitialCost *
+    Multiplier.Conductor *
+    Multiplier.Structure *
+    Multiplier.Length *
+    Multiplier.NewOrReconductor *
+    Multiplier.AverageTerrain;
+
+  AcresUnitMile = (ROWwidth * 5280) / 43560;
+  ROWcostUnitMile =
+    (input.Miles.Zone1 * LandMarketValue.Zone1 * AcresUnitMile +
+      input.Miles.Zone2 * LandMarketValue.Zone2 * AcresUnitMile +
+      input.Miles.Zone3 * LandMarketValue.Zone3 * AcresUnitMile +
+      input.Miles.Zone4 * LandMarketValue.Zone4 * AcresUnitMile +
+      input.Miles.Zone5 * LandMarketValue.Zone5 * AcresUnitMile +
+      input.Miles.Zone6 * LandMarketValue.Zone6 * AcresUnitMile +
+      input.Miles.Zone7 * LandMarketValue.Zone7 * AcresUnitMile +
+      input.Miles.Zone8 * LandMarketValue.Zone8 * AcresUnitMile +
+      input.Miles.Zone9 * LandMarketValue.Zone9 * AcresUnitMile +
+      input.Miles.Zone10 * LandMarketValue.Zone10 * AcresUnitMile +
+      input.Miles.Zone11 * LandMarketValue.Zone11 * AcresUnitMile +
+      input.Miles.Zone12 * LandMarketValue.Zone12 * AcresUnitMile) /
+    TotalMiles;
+
+  OverheadCostUnitMile =
+    (LineCostUnitMile + ROWcostUnitMile) * OverheadCostRatio;
+  AllCostUnitMile = LineCostUnitMile + ROWcostUnitMile + OverheadCostUnitMile;
+
+  LineCost = LineCostUnitMile * TotalMiles;
+  ROWcost = ROWcostUnitMile * TotalMiles;
+  OverheadCost = OverheadCostUnitMile * TotalMiles;
+  AllCost = AllCostUnitMile * TotalMiles;
+  LineLoss = LineLossUnitMile * TotalMiles;
+
   return {
     LineCost: LineCost,
     ROWcost: ROWcost,
