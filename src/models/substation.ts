@@ -5,8 +5,8 @@ export function SubstationCost(input: InputModSubstation) {
   let CostPerLinePosition = 0;
   let RingBus = 0;
   let BreakerAndHalf = 0;
-  const HVDCconverter500kV = 0;
-  const HVDCconverter600kV = 0;
+  let HVDCconverter500kV = 0;
+  let HVDCconverter600kV = 0;
   let ShuntReactorCost = 0;
   let SeriesCapacitorCost = 0;
   let SVCcost = 0;
@@ -21,7 +21,6 @@ export function SubstationCost(input: InputModSubstation) {
     XFMR230o500kV: 0,
     XFMR345o500kV: 0,
   };
-
   const InflationRate = (540.7 - 464.751) / 464.751; // 2012-2019
   const OverheadCostRatio = 0.175;
 
@@ -49,6 +48,21 @@ export function SubstationCost(input: InputModSubstation) {
       TransformerCost.XFMR115o345kV = 10000 * (1 + InflationRate);
       TransformerCost.XFMR138o345kV = 10000 * (1 + InflationRate);
       TransformerCost.XFMR230o345kV = 10000 * (1 + InflationRate);
+      TransformerCost.XFMR345o500kV = 13000 * (1 + InflationRate);
+      break;
+    case '500 kV Substation':
+      BaseCostNewSubstation = 2472000 * (1 + InflationRate);
+      CostPerLinePosition = 2884000 * (1 + InflationRate);
+      RingBus = 1;
+      BreakerAndHalf = 1.5;
+      HVDCconverter500kV = 445000000 * (1 + InflationRate);
+      HVDCconverter600kV = 489500000 * (1 + InflationRate);
+      ShuntReactorCost = 20000 * (1 + InflationRate);
+      SeriesCapacitorCost = 10000 * (1 + InflationRate);
+      SVCcost = 85000 * (1 + InflationRate);
+      TransformerCost.XFMR115o500kV = 10000 * (1 + InflationRate);
+      TransformerCost.XFMR138o500kV = 10000 * (1 + InflationRate);
+      TransformerCost.XFMR230o500kV = 11000 * (1 + InflationRate);
       TransformerCost.XFMR345o500kV = 13000 * (1 + InflationRate);
       break;
   }
