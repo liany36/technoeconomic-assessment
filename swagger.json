@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This is a service for running Techno-Economic Assessment (TEA) API, funded by California Energy Commission.",
+    "description": "This service is used for determining energy costs based on your technical, financial, and economic assumptions. It was originally created in Excel spreadsheets and published by California Biomass Collaborative, and is now coded by UC Davis CEC group, funded by California Energy Commission.",
     "version": "1.0.0",
     "title": "Techno-Economic Assessment",
     "contact": {
@@ -21,11 +21,15 @@
   "paths": {
     "/genericPowerOnly": {
       "post": {
-        "tags": ["genericPowerOnly"],
+        "tags": [
+          "genericPowerOnly"
+        ],
         "summary": "Runs GPO from given input",
         "description": "This route is used for generic-power-only (GPO) model",
         "operationId": "runGPO",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -50,11 +54,15 @@
     },
     "/genericCombinedHeatPower": {
       "post": {
-        "tags": ["genericCombinedHeatPower"],
+        "tags": [
+          "genericCombinedHeatPower"
+        ],
         "summary": "Runs CHP from given input",
         "description": "This route is used for generic-combine-heat-power (CHP) model",
         "operationId": "runCHP",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -79,11 +87,15 @@
     },
     "/gasificationPower": {
       "post": {
-        "tags": ["gasificationPower"],
+        "tags": [
+          "gasificationPower"
+        ],
         "summary": "Runs GP from given input",
         "description": "This route is used for gasification-power (GP) model",
         "operationId": "runGP",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -108,11 +120,15 @@
     },
     "/hydrogen": {
       "post": {
-        "tags": ["hydrogen"],
+        "tags": [
+          "hydrogen"
+        ],
         "summary": "Runs Hydrogen from given input",
         "description": "This route is used for hydrogen model",
         "operationId": "runHydro",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -137,11 +153,15 @@
     },
     "/transmission": {
       "post": {
-        "tags": ["transmission"],
+        "tags": [
+          "transmission"
+        ],
         "summary": "Transmission Line Capital Cost Calculator",
         "description": "",
         "operationId": "transmission",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -166,11 +186,15 @@
     },
     "/substation": {
       "post": {
-        "tags": ["substation"],
+        "tags": [
+          "substation"
+        ],
         "summary": "Substation Capital Cost Calculator",
         "description": "",
         "operationId": "substation",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -251,7 +275,9 @@
           ]
         }
       },
-      "required": ["CapitalCost, TaxCreditFrac"],
+      "required": [
+        "CapitalCost, TaxCreditFrac"
+      ],
       "xml": {
         "name": "InputModGPO"
       }
@@ -315,7 +341,9 @@
           ]
         }
       },
-      "required": ["CapitalCost, TaxCreditFrac"],
+      "required": [
+        "CapitalCost, TaxCreditFrac"
+      ],
       "xml": {
         "name": "InputModCHP"
       }
@@ -377,7 +405,9 @@
           ]
         }
       },
-      "required": ["TaxCreditFrac"],
+      "required": [
+        "TaxCreditFrac"
+      ],
       "xml": {
         "name": "InputModGP"
       }
@@ -645,7 +675,6 @@
       "type": "object",
       "properties": {
         "VoltageClass": {
-          "required": true,
           "type": "string",
           "enum": [
             "230 kV Single Circuit",
@@ -660,7 +689,6 @@
           "example": "230 kV Single Circuit"
         },
         "ConductorType": {
-          "required": true,
           "type": "string",
           "enum": [
             "ACSR",
@@ -670,7 +698,6 @@
           "example": "ACSS"
         },
         "Structure": {
-          "required": true,
           "type": "string",
           "enum": [
             "Lattice",
@@ -679,7 +706,6 @@
           "example": "Lattice"
         },
         "LengthCategory": {
-          "required": true,
           "type": "string",
           "enum": [
             "> 10 miles",
@@ -689,7 +715,6 @@
           "example": "> 10 miles"
         },
         "NewOrReconductor": {
-          "required": true,
           "type": "string",
           "enum": [
             "New",
@@ -698,117 +723,104 @@
           "example": "New"
         },
         "AverageTerrainMultiplier": {
-          "required": true,
           "type": "number",
           "example": 1
         },
         "Miles": {
-          "required": true,
           "type": "object",
           "properties": {
             "Forested": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Flat": {
-              "required": true,
               "type": "number",
               "example": 1
             },
             "Wetland": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Farmland": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Desert": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Urban": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Hills": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Mountain": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Zone1": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Zone2": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Zone3": {
-              "required": true,
               "type": "number",
               "example": 1
             },
             "Zone4": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Zone5": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Zone6": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Zone7": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Zone8": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Zone9": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Zone10": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Zone11": {
-              "required": true,
               "type": "number",
               "example": 0
             },
             "Zone12": {
-              "required": true,
               "type": "number",
               "example": 0
             }
           }
         }
       },
+      "required": [
+        "VoltageClass",
+        "ConductorType",
+        "Structure",
+        "LengthCategory",
+        "NewOrReconductor",
+        "AverageTerrainMultiplier",
+        "Miles"
+      ],
       "xml": {
         "name": "InputModTransmission"
       }
@@ -817,7 +829,6 @@
       "type": "object",
       "properties": {
         "Voltage": {
-          "required": true,
           "type": "string",
           "enum": [
             "230 kV Substation",
@@ -827,7 +838,6 @@
           "example": "500 kV Substation"
         },
         "NewOrExisting": {
-          "required": true,
           "type": "string",
           "enum": [
             "New",
@@ -836,7 +846,6 @@
           "example": "New"
         },
         "CircuitBreakerType": {
-          "required": true,
           "type": "string",
           "enum": [
             "Ring Bus",
@@ -845,12 +854,10 @@
           "example": "Breaker and a Half"
         },
         "NoLineXFMRPositions": {
-          "required": true,
           "type": "number",
           "example": 8
         },
         "HVDCconverter": {
-          "required": true,
           "type": "string",
           "enum": [
             "500 kV HVDC Converter",
@@ -860,7 +867,6 @@
           "example": "500 kV HVDC Converter"
         },
         "TransformerType": {
-          "required": true,
           "type": "string",
           "enum": [
             "115/230 kV XFMR",
@@ -876,31 +882,39 @@
           "example": "345/500 kV XFMR"
         },
         "MVAratingPerTransformer": {
-          "required": true,
           "type": "number",
           "example": 1
         },
         "NoTransformers": {
-          "required": true,
           "type": "number",
           "example": 1
         },
         "SVCmvarRating": {
-          "required": true,
           "type": "number",
           "example": 1
         },
         "ShuntReactorMVARrating": {
-          "required": true,
           "type": "number",
           "example": 1
         },
         "SeriesCapacitorMVARrating": {
-          "required": true,
           "type": "number",
           "example": 1
         }
       },
+      "required": [
+        "Voltage",
+        "NewOrExisting",
+        "CircuitBreakerType",
+        "NoLineXFMRPositions",
+        "HVDCconverter",
+        "TransformerType",
+        "MVAratingPerTransformer",
+        "NoTransformers",
+        "SVCmvarRating",
+        "ShuntReactorMVARrating",
+        "SeriesCapacitorMVARrating"
+      ],
       "xml": {
         "name": "InputModSubstation"
       }
@@ -1028,7 +1042,9 @@
               "description": "Total gross generating capacity (kWe)"
             }
           },
-          "required": ["GrossElectricalCapacity"]
+          "required": [
+            "GrossElectricalCapacity"
+          ]
         },
         {
           "xml": {
@@ -1226,7 +1242,9 @@
               "description": "Cost of ash disposal from plant ($/year), use negative value when ash is sold at value"
             }
           },
-          "required": ["AshDisposal"]
+          "required": [
+            "AshDisposal"
+          ]
         },
         {
           "xml": {
@@ -1256,7 +1274,10 @@
               "description": "Waste Treatment/Disposal ($/year)"
             }
           },
-          "required": ["DualFuelCost", "WasteTreatment"]
+          "required": [
+            "DualFuelCost",
+            "WasteTreatment"
+          ]
         },
         {
           "xml": {
@@ -1286,7 +1307,11 @@
           "description": "Production Tax Credit on electrical energy (%)"
         }
       },
-      "required": ["FederalTaxRate", "StateTaxRate", "ProductionTaxCredit"],
+      "required": [
+        "FederalTaxRate",
+        "StateTaxRate",
+        "ProductionTaxCredit"
+      ],
       "xml": {
         "name": "TaxesInputMod"
       }
@@ -1339,12 +1364,14 @@
           "description": "Interest income earned on reserve account if financing institution requires security deposit (%/year)"
         }
       },
-      "required": ["CapacityPayment", "InterestRateOnDebtReserve"],
+      "required": [
+        "CapacityPayment",
+        "InterestRateOnDebtReserve"
+      ],
       "xml": {
         "name": "IncomeOtherThanEnergyInputMod"
       }
     },
-
     "IncomeOtherThanEnergyInputModGP": {
       "allOf": [
         {
@@ -1362,7 +1389,9 @@
               "description": "Sales Price for Char/Ash ($/t)--for disposal"
             }
           },
-          "required": ["SalesPriceForChar"]
+          "required": [
+            "SalesPriceForChar"
+          ]
         },
         {
           "xml": {
@@ -1415,7 +1444,6 @@
         "name": "EscalationInflationInputMod"
       }
     },
-
     "EscalationInflationInputModGP": {
       "allOf": [
         {
@@ -1439,7 +1467,10 @@
               "description": "Escalation rate applied to sales of char or ash (%/year)"
             }
           },
-          "required": ["EscalationCharSales", "EscalationDualFuel"]
+          "required": [
+            "EscalationCharSales",
+            "EscalationDualFuel"
+          ]
         },
         {
           "xml": {
@@ -1613,7 +1644,7 @@
         "ROWcost": {
           "type": "number",
           "format": "float",
-          "example": 5173.50
+          "example": 5173.5
         },
         "OverheadCost": {
           "type": "number",
@@ -1629,10 +1660,10 @@
           "type": "number",
           "format": "float",
           "example": 0.36
-        },
-        "xml": {
-          "name": "OutputModTransmission"
         }
+      },
+      "xml": {
+        "name": "OutputModTransmission"
       }
     },
     "OutputModSubstation": {
@@ -1682,10 +1713,10 @@
           "type": "number",
           "format": "float",
           "example": 659186515
-        },
-        "xml": {
-          "name": "OutputModTransmission"
         }
+      },
+      "xml": {
+        "name": "OutputModTransmission"
       }
     },
     "ElectricalFuelBaseYearMod": {
@@ -1804,138 +1835,138 @@
         },
         {
           "properties": {
-              "ParasiticLoad": {
-                "type": "number",
-                "format": "float",
-                "example": 150,
-                "description": "Electrical power used to operate system (kWe)"
-              },
-              "AnnualHours": {
-                "type": "number",
-                "format": "float",
-                "example": 7446,
-                "description": "Annual Hours"
-              },
-              "AnnualNetElectricityGeneration": {
-                "type": "number",
-                "format": "float",
-                "example": 3723000,
-                "description": "Annual Net Electricity Generation (kWh)"
-              },
-              "OverallNetSystemEfficiency": {
-                "type": "number",
-                "format": "float",
-                "example": 15,
-                "description": "Overall system efficiency (%) -> biomass into gasifier to electricity"
-              },
-              "NitrogenGas": {
-                "type": "number",
-                "format": "float",
-                "example": 51,
-                "description": "Nitrogen"
-              },
-              "CleanGasMolecularMass": {
-                "type": "number",
-                "format": "float",
-                "example": 26.2,
-                "description": "Clean Gas Molecular Mass (kg/kmol)"
-              },
-              "CleanGasDensity": {
-                "type": "number",
-                "format": "float",
-                "example": 1.071,
-                "description": "Clean Gas Density 298K, 1 atm (kg/m3)"
-              },
-              "CleanGasHigherHeatingValue": {
-                "type": "number",
-                "format": "float",
-                "example": 5523,
-                "description": "Clean Gas Higher Heating Value (kJ/m3)"
-              },
-              "CleanGasLowerHeatingValue": {
-                "type": "number",
-                "format": "float",
-                "example": 5127,
-                "description": "Clean Gas Lower Heating Value (MJ/m3)"
-              },
-              "TotalFuelPowerInput": {
-                "type": "number",
-                "format": "float",
-                "example": 2174,
-                "description": "Total Fuel Power Input (kW)"
-              },
-              "CleanGasPowerInput": {
-                "type": "number",
-                "format": "float",
-                "example": 1739,
-                "description": "Clean Gas Power Input (kW)"
-              },
-              "DualFuelPowerInput": {
-                "type": "number",
-                "format": "float",
-                "example": 435,
-                "description": "Dual Fuel Power Input (kW)"
-              },
-              "CleanGasFlowRateVolume": {
-                "type": "number",
-                "format": "float",
-                "example": 1134,
-                "description": "Clean Gas Flow Rate (m3/h)"
-              },
-              "CleanGasFlowRateMass": {
-                "type": "number",
-                "format": "float",
-                "example": 1215,
-                "description": "Clean Gas Flow Rate (kg/h)"
-              },
-              "AnnualCleanGasConsumption": {
-                "type": "number",
-                "format": "float",
-                "example": 9045,
-                "description": "Annual Clean Gas Consumption (dry metric tons/year)"
-              },
-              "DualFuelFlowRate": {
-                "type": "number",
-                "format": "float",
-                "example": 40,
-                "description": "Dual Fuel Flow Rate (L/h) * Default assumes heavy diesel fuel"
-              },
-              "AnnualDualFuelConsumption": {
-                "type": "number",
-                "format": "float",
-                "example": 301347,
-                "description": "Annual Dual Fuel Consumption (L/year)"
-              },
-              "BiomassFeedRate": {
-                "type": "number",
-                "format": "float",
-                "example": 518,
-                "description": "Biomass Feed Rate (kg/h)--dry basis"
-              },
-              "AnnualBiomassConsumptionDryMass": {
-                "type": "number",
-                "format": "float",
-                "example": 3854,
-                "description": "Annual Biomass Consumption (t/year)--dry basis"
-              },
-              "AnnualBiomassConsumptionWetMass": {
-                "type": "number",
-                "format": "float",
-                "example": 4534,
-                "description": "Annual Biomass Consumption (t/year)--wet basis"
-              },
-              "CharProductionRate": {
-                "type": "number",
-                "format": "float",
-                "example": 37,
-                "description": "Char Production Rate (kg/h)--dry"
-              },
-              "AnnualCharProduction": {
-                "type": "number",
-                "format": "float",
-                "example": 275,
-                "description": "Annual Char Production (t/y)--dry"
-              }
+            "ParasiticLoad": {
+              "type": "number",
+              "format": "float",
+              "example": 150,
+              "description": "Electrical power used to operate system (kWe)"
+            },
+            "AnnualHours": {
+              "type": "number",
+              "format": "float",
+              "example": 7446,
+              "description": "Annual Hours"
+            },
+            "AnnualNetElectricityGeneration": {
+              "type": "number",
+              "format": "float",
+              "example": 3723000,
+              "description": "Annual Net Electricity Generation (kWh)"
+            },
+            "OverallNetSystemEfficiency": {
+              "type": "number",
+              "format": "float",
+              "example": 15,
+              "description": "Overall system efficiency (%) -> biomass into gasifier to electricity"
+            },
+            "NitrogenGas": {
+              "type": "number",
+              "format": "float",
+              "example": 51,
+              "description": "Nitrogen"
+            },
+            "CleanGasMolecularMass": {
+              "type": "number",
+              "format": "float",
+              "example": 26.2,
+              "description": "Clean Gas Molecular Mass (kg/kmol)"
+            },
+            "CleanGasDensity": {
+              "type": "number",
+              "format": "float",
+              "example": 1.071,
+              "description": "Clean Gas Density 298K, 1 atm (kg/m3)"
+            },
+            "CleanGasHigherHeatingValue": {
+              "type": "number",
+              "format": "float",
+              "example": 5523,
+              "description": "Clean Gas Higher Heating Value (kJ/m3)"
+            },
+            "CleanGasLowerHeatingValue": {
+              "type": "number",
+              "format": "float",
+              "example": 5127,
+              "description": "Clean Gas Lower Heating Value (MJ/m3)"
+            },
+            "TotalFuelPowerInput": {
+              "type": "number",
+              "format": "float",
+              "example": 2174,
+              "description": "Total Fuel Power Input (kW)"
+            },
+            "CleanGasPowerInput": {
+              "type": "number",
+              "format": "float",
+              "example": 1739,
+              "description": "Clean Gas Power Input (kW)"
+            },
+            "DualFuelPowerInput": {
+              "type": "number",
+              "format": "float",
+              "example": 435,
+              "description": "Dual Fuel Power Input (kW)"
+            },
+            "CleanGasFlowRateVolume": {
+              "type": "number",
+              "format": "float",
+              "example": 1134,
+              "description": "Clean Gas Flow Rate (m3/h)"
+            },
+            "CleanGasFlowRateMass": {
+              "type": "number",
+              "format": "float",
+              "example": 1215,
+              "description": "Clean Gas Flow Rate (kg/h)"
+            },
+            "AnnualCleanGasConsumption": {
+              "type": "number",
+              "format": "float",
+              "example": 9045,
+              "description": "Annual Clean Gas Consumption (dry metric tons/year)"
+            },
+            "DualFuelFlowRate": {
+              "type": "number",
+              "format": "float",
+              "example": 40,
+              "description": "Dual Fuel Flow Rate (L/h) * Default assumes heavy diesel fuel"
+            },
+            "AnnualDualFuelConsumption": {
+              "type": "number",
+              "format": "float",
+              "example": 301347,
+              "description": "Annual Dual Fuel Consumption (L/year)"
+            },
+            "BiomassFeedRate": {
+              "type": "number",
+              "format": "float",
+              "example": 518,
+              "description": "Biomass Feed Rate (kg/h)--dry basis"
+            },
+            "AnnualBiomassConsumptionDryMass": {
+              "type": "number",
+              "format": "float",
+              "example": 3854,
+              "description": "Annual Biomass Consumption (t/year)--dry basis"
+            },
+            "AnnualBiomassConsumptionWetMass": {
+              "type": "number",
+              "format": "float",
+              "example": 4534,
+              "description": "Annual Biomass Consumption (t/year)--wet basis"
+            },
+            "CharProductionRate": {
+              "type": "number",
+              "format": "float",
+              "example": 37,
+              "description": "Char Production Rate (kg/h)--dry"
+            },
+            "AnnualCharProduction": {
+              "type": "number",
+              "format": "float",
+              "example": 275,
+              "description": "Annual Char Production (t/y)--dry"
+            }
           }
         },
         {
