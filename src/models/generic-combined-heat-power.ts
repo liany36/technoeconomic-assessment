@@ -308,7 +308,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     TaxCredit: 0,
     Taxes: 0,
     EnergyRevenueRequired: 0,
-    FuelCost: 0,
+    BiomassFuelCost: 0,
     IncomeHeat: 0
   };
   for (let i = 0; i < cashFlow.length; i++) {
@@ -318,7 +318,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     Total.DebtRecovery += cashFlow[i].DebtRecovery;
     Total.DebtInterest += cashFlow[i].DebtInterest;
     Total.DebtPrincipalPaid += cashFlow[i].DebtPrincipalPaid;
-    Total.FuelCost += cashFlow[i].BiomassFuelCost;
+    Total.BiomassFuelCost += cashFlow[i].BiomassFuelCost;
     Total.NonFuelExpenses += cashFlow[i].NonFuelExpenses;
     Total.DebtReserve += cashFlow[i].DebtReserve;
     Total.Depreciation += cashFlow[i].Depreciation;

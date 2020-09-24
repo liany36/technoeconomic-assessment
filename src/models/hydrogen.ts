@@ -304,7 +304,7 @@ function Hydrogen(input: InputModHydrogen) {
     TaxCredit: 0,
     Taxes: 0,
     EnergyRevenueRequired: 0,
-    FuelCost: 0,
+    BiomassFuelCost: 0,
     Expenses: 0,
     IncomeElectricalEnergy: 0,
     IncomeIncentivePayments: 0,
@@ -318,7 +318,7 @@ function Hydrogen(input: InputModHydrogen) {
     Total.DebtRecovery += cashFlow[i].DebtRecovery;
     Total.DebtInterest += cashFlow[i].DebtInterest;
     Total.DebtPrincipalPaid += cashFlow[i].DebtPrincipalPaid;
-    Total.FuelCost += cashFlow[i].BiomassFuelCost;
+    Total.BiomassFuelCost += cashFlow[i].BiomassFuelCost;
     Total.NonFuelExpenses += cashFlow[i].NonFuelExpenses;
     Total.Expenses += cashFlow[i].Expenses;
     Total.DebtReserve += cashFlow[i].DebtReserve;

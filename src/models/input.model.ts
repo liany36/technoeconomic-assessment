@@ -60,6 +60,15 @@ export interface InputModGP {
   TaxCreditFrac: number[];
 }
 
+// Sensitivity Analysis
+export interface InputModSensitivity {
+  model: string;
+  input: any;
+  base: number;
+  high: number;
+  low: number;
+}
+
 // Hydrogen
 export interface InputModHydrogen {
   // Hydrogen Generation
