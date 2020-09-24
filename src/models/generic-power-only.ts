@@ -1,6 +1,6 @@
 import { InputModGPO } from './input.model';
 import {
-  CashFlowGPO,
+  CashFlow,
   ConstantLevelAnnualCostMod,
   CurrentLevelAnnualCostMod,
   ElectricalFuelBaseYearModGPO,
@@ -114,7 +114,7 @@ function GenericPowerOnly(input: InputModGPO) {
   // Annual Cash Flows
   const cashFlow = [];
   for (let i = 0; i < input.Financing.EconomicLife; i++) {
-    const newCF: CashFlowGPO = {
+    const newCF: CashFlow = {
       Year: 0,
       EquityRecovery: 0,
       EquityInterest: 0,
@@ -133,15 +133,15 @@ function GenericPowerOnly(input: InputModGPO) {
       TaxCredit: 0,
       Taxes: 0,
       EnergyRevenueRequired: 0,
-      FuelCost: 0
+      BiomassFuelCost: 0
     };
     cashFlow.push(newCF);
   }
   for (let i = 0; i < input.Financing.EconomicLife; i++) {
     cashFlow[i] = CalcCashFlow(cashFlow[i - 1], i + 1);
   }
-  function CalcCashFlow(CF: CashFlowGPO, Year: number) {
-    const newCF: CashFlowGPO = {
+  function CalcCashFlow(CF: CashFlow, Year: number) {
+    const newCF: CashFlow = {
       Year: 0,
       EquityRecovery: 0,
       EquityInterest: 0,
@@ -160,7 +160,7 @@ function GenericPowerOnly(input: InputModGPO) {
       TaxCredit: 0,
       Taxes: 0,
       EnergyRevenueRequired: 0,
-      FuelCost: 0
+      BiomassFuelCost: 0
     };
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRecovery;
@@ -194,7 +194,7 @@ function GenericPowerOnly(input: InputModGPO) {
       newCF.DebtPrincipalRemaining =
         CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
     }
-    newCF.FuelCost =
+    newCF.BiomassFuelCost =
       AnnualFuelConsumption *
       input.ExpensesBaseYear.BiomassFuelCost *
       Math.pow(
@@ -240,7 +240,7 @@ function GenericPowerOnly(input: InputModGPO) {
     newCF.EnergyRevenueRequired =
       newCF.EquityRecovery +
       newCF.DebtRecovery +
-      newCF.FuelCost +
+      newCF.BiomassFuelCost +
       newCF.NonFuelExpenses +
       newCF.Taxes +
       newCF.DebtReserve -
@@ -275,7 +275,7 @@ function GenericPowerOnly(input: InputModGPO) {
     Total.DebtRecovery += cashFlow[i].DebtRecovery;
     Total.DebtInterest += cashFlow[i].DebtInterest;
     Total.DebtPrincipalPaid += cashFlow[i].DebtPrincipalPaid;
-    Total.FuelCost += cashFlow[i].FuelCost;
+    Total.FuelCost += cashFlow[i].BiomassFuelCost;
     Total.NonFuelExpenses += cashFlow[i].NonFuelExpenses;
     Total.DebtReserve += cashFlow[i].DebtReserve;
     Total.Depreciation += cashFlow[i].Depreciation;

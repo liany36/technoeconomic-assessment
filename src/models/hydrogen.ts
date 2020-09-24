@@ -122,7 +122,7 @@ function Hydrogen(input: InputModHydrogen) {
       TaxCredit: 0,
       Taxes: 0,
       EnergyRevenueRequired: 0,
-      FuelCost: 0,
+      BiomassFuelCost: 0,
       Expenses: 0,
       IncomeElectricalEnergy: 0,
       IncomeIncentivePayments: 0,
@@ -154,7 +154,7 @@ function Hydrogen(input: InputModHydrogen) {
       TaxCredit: 0,
       Taxes: 0,
       EnergyRevenueRequired: 0,
-      FuelCost: 0,
+      BiomassFuelCost: 0,
       Expenses: 0,
       IncomeElectricalEnergy: 0,
       IncomeIncentivePayments: 0,
@@ -191,13 +191,13 @@ function Hydrogen(input: InputModHydrogen) {
     if (Year === 1) {
       newCF.DebtPrincipalRemaining =
         TotalDebtPrincipal - newCF.DebtPrincipalPaid;
-      newCF.FuelCost = AnnualFeedstockCost;
+      newCF.BiomassFuelCost = AnnualFeedstockCost;
       newCF.NonFuelExpenses = OperatingExpenses;
       newCF.DebtReserve = DebtReserve;
     } else {
       newCF.DebtPrincipalRemaining =
         CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
-      newCF.FuelCost =
+      newCF.BiomassFuelCost =
         AnnualFeedstockCost *
         Math.pow(1 + input.EscalationFeedstock / 100, Year - 1);
       newCF.NonFuelExpenses =
@@ -209,7 +209,7 @@ function Hydrogen(input: InputModHydrogen) {
         newCF.DebtReserve = 0;
       }
     }
-    newCF.Expenses = newCF.FuelCost + newCF.NonFuelExpenses;
+    newCF.Expenses = newCF.BiomassFuelCost + newCF.NonFuelExpenses;
     newCF.Depreciation = AmountOfCapitalFinancing * DepreciationFraction;
     if (Year === 1) {
       newCF.IncomeElectricalEnergy = input.ElectricalEnergy;
@@ -274,7 +274,7 @@ function Hydrogen(input: InputModHydrogen) {
     newCF.EnergyRevenueRequired =
       newCF.EquityRecovery +
       newCF.DebtRecovery +
-      newCF.FuelCost +
+      newCF.BiomassFuelCost +
       newCF.NonFuelExpenses +
       newCF.Taxes +
       newCF.DebtReserve -
@@ -318,7 +318,7 @@ function Hydrogen(input: InputModHydrogen) {
     Total.DebtRecovery += cashFlow[i].DebtRecovery;
     Total.DebtInterest += cashFlow[i].DebtInterest;
     Total.DebtPrincipalPaid += cashFlow[i].DebtPrincipalPaid;
-    Total.FuelCost += cashFlow[i].FuelCost;
+    Total.FuelCost += cashFlow[i].BiomassFuelCost;
     Total.NonFuelExpenses += cashFlow[i].NonFuelExpenses;
     Total.Expenses += cashFlow[i].Expenses;
     Total.DebtReserve += cashFlow[i].DebtReserve;

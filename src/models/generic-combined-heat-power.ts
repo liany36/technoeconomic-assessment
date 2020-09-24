@@ -162,7 +162,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
       TaxCredit: 0,
       Taxes: 0,
       EnergyRevenueRequired: 0,
-      FuelCost: 0,
+      BiomassFuelCost: 0,
       IncomeHeat: 0
     };
     cashFlow.push(newCF);
@@ -190,7 +190,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
       TaxCredit: 0,
       Taxes: 0,
       EnergyRevenueRequired: 0,
-      FuelCost: 0,
+      BiomassFuelCost: 0,
       IncomeHeat: 0
     };
     newCF.Year = Year;
@@ -225,7 +225,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
       newCF.DebtPrincipalRemaining =
         CF.DebtPrincipalRemaining - newCF.DebtPrincipalPaid;
     }
-    newCF.FuelCost =
+    newCF.BiomassFuelCost =
       AnnualFuelConsumption *
       input.ExpensesBaseYear.BiomassFuelCost *
       Math.pow(
@@ -281,7 +281,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     newCF.EnergyRevenueRequired =
       newCF.EquityRecovery +
       newCF.DebtRecovery +
-      newCF.FuelCost +
+      newCF.BiomassFuelCost +
       newCF.NonFuelExpenses +
       newCF.Taxes +
       newCF.DebtReserve -
@@ -318,7 +318,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     Total.DebtRecovery += cashFlow[i].DebtRecovery;
     Total.DebtInterest += cashFlow[i].DebtInterest;
     Total.DebtPrincipalPaid += cashFlow[i].DebtPrincipalPaid;
-    Total.FuelCost += cashFlow[i].FuelCost;
+    Total.FuelCost += cashFlow[i].BiomassFuelCost;
     Total.NonFuelExpenses += cashFlow[i].NonFuelExpenses;
     Total.DebtReserve += cashFlow[i].DebtReserve;
     Total.Depreciation += cashFlow[i].Depreciation;

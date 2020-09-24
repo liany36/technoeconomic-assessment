@@ -149,7 +149,7 @@ export interface CashFlow {
   DebtInterest: number;
   DebtPrincipalPaid: number;
   DebtPrincipalRemaining: number;
-  // FuelCost: number;
+  BiomassFuelCost: number;
   NonFuelExpenses: number;
   DebtReserve: number;
   Depreciation: number;
@@ -161,20 +161,13 @@ export interface CashFlow {
   EnergyRevenueRequired: number;
 }
 
-export interface CashFlowGPO extends CashFlow {
-  // generic-power-only
-  FuelCost: number;
-}
-
 export interface CashFlowCHP extends CashFlow {
   // combined-heat-power
-  FuelCost: number;
   IncomeHeat: number;
 }
 
 export interface CashFlowGP extends CashFlow {
   // gasification-power
-  BiomassFuelCost: number;
   DualFuelCost: number;
   IncomeHeat: number;
   IncomeChar: number;
@@ -182,7 +175,6 @@ export interface CashFlowGP extends CashFlow {
 
 export interface CashFlowHydrogen extends CashFlow {
   // hydrogen
-  FuelCost: number;
   Expenses: number;
   IncomeElectricalEnergy: number;
   IncomeIncentivePayments: number;
@@ -280,7 +272,7 @@ export interface OutputModGPO extends OutputMod {
   ElectricalAndFuelBaseYear: ElectricalFuelBaseYearModGPO;
   ExpensesBaseYear: ExpensesBaseYearModGPO;
   IncomeOtherThanEnergy: IncomeOtherThanEnergyMod;
-  AnnualCashFlows: CashFlowGPO[];
+  AnnualCashFlows: CashFlow[];
   TotalCashFlow: TotalCashFlowGPO;
 }
 export interface OutputModCHP extends OutputMod {
