@@ -23,7 +23,7 @@ export interface ElectricalFuelBaseYearModCHP
 export interface ElectricalFuelBaseYearModGP extends ElectricalFuelBaseYearMod {
   // gasification-power
   ParasiticLoad: number;
-  AnnualNetElectricityGeneration: number;
+  AnnualGeneration: number;
   OverallNetSystemEfficiency: number;
   NitrogenGas: number;
   CleanGasMolecularMass: number;
