@@ -128,8 +128,6 @@ export const calculateConstantLAC = (
   return ConstantLACofEnergy;
 };
 
-export const calculateSensitivity = (
-  params: InputModSensitivity
-) => {
+export const calculateSensitivity = (params: InputModSensitivity) => {
   return sensitivity(params);
 };
