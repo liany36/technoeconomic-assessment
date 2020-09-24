@@ -64,9 +64,41 @@ export interface InputModGP {
 export interface InputModSensitivity {
   model: string;
   input: any;
-  base: number;
-  high: number;
-  low: number;
+  CapitalCost: {
+    base: number;
+    high: number;
+    low: number;
+  };
+  BiomassFuelCost: {
+    base: number;
+    high: number;
+    low: number;
+  };
+  DebtRatio: {
+    base: number;
+    high: number;
+    low: number;
+  };
+  DebtInterestRate: {
+    base: number;
+    high: number;
+    low: number;
+  };
+  CostOfEquity: {
+    base: number;
+    high: number;
+    low: number;
+  };
+  NetStationEfficiency: {
+    base: number;
+    high: number;
+    low: number;
+  };
+  CapacityFactor: {
+    base: number;
+    high: number;
+    low: number;
+  };
 }
 
 // Hydrogen

@@ -11,7 +11,7 @@ import {
   InputModSubstation,
   InputModTransimission,
 } from './models/input.model';
-import { sensitivityCapitalCost } from './models/sensitivity';
+import { sensitivity } from './models/sensitivity';
 import { SubstationCost } from './models/substation';
 import { TransmissionCost } from './models/transmission';
 
@@ -128,8 +128,8 @@ export const calculateConstantLAC = (
   return ConstantLACofEnergy;
 };
 
-export const calculateSensitivityCapitalCost = (
+export const calculateSensitivity = (
   params: InputModSensitivity
 ) => {
-  return sensitivityCapitalCost(params);
+  return sensitivity(params);
 };

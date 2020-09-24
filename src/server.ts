@@ -16,7 +16,7 @@ import {
   InputModSubstation,
   InputModTransimission,
 } from './models/input.model';
-import { sensitivityCapitalCost } from './models/sensitivity';
+import { sensitivity } from './models/sensitivity';
 import { SubstationCost } from './models/substation';
 import { TransmissionCost } from './models/transmission';
 
@@ -83,7 +83,7 @@ app.post('/hydrogen', async (req: any, res: any) => {
 app.post('/sensitivity', async (req: any, res: any) => {
   const params: InputModSensitivity = req.body;
   try {
-    const result = await sensitivityCapitalCost(params);
+    const result = await sensitivity(params);
     res.status(200).json(result);
   } catch (e) {
     res.status(400).send(e.message);

@@ -290,3 +290,34 @@ export interface OutputModHydrogen extends OutputMod {
   AnnualCashFlows: CashFlowHydrogen[];
   TotalCashFlow: TotalCashFlowHydrogen;
 }
+
+export interface OutputModSensitivity {
+  CapitalCost: {
+    constantLAC: number[],
+    relativeChange: number[]
+  };
+  BiomassFuelCost: {
+    constantLAC: number[],
+    relativeChange: number[]
+  };
+  DebtRatio: {
+    constantLAC: number[],
+    relativeChange: number[]
+  };
+  DebtInterestRate: {
+    constantLAC: number[],
+    relativeChange: number[]
+  };
+  CostOfEquity: {
+    constantLAC: number[],
+    relativeChange: number[]
+  };
+  NetStationEfficiency: {
+    constantLAC: number[],
+    relativeChange: number[]
+  };
+  CapacityFactor: {
+    constantLAC: number[],
+    relativeChange: number[]
+  };
+}
