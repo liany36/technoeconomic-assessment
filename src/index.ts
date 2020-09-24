@@ -10,7 +10,6 @@ import {
   InputModSubstation,
   InputModTransimission,
 } from './models/input.model';
-import { CashFlowCHP, CashFlowGP } from './models/output.model';
 import { SubstationCost } from './models/substation';
 import { TransmissionCost } from './models/transmission';
 
@@ -125,4 +124,48 @@ export const calculateConstantLAC = (
     (TotalEnergyRevenueRequiredPW * CapitalRecoveryFactorConstant) /
     AnnualGeneration;
   return ConstantLACofEnergy;
+};
+
+const sensitivityCapitalCost = (
+  model: string,
+  input: any,
+  base: number,
+  low: number,
+  high: number
+) => {
+  const increment1 = (base - low) / 10;
+  const increment2 = (high - base) / 10;
+  input.CapitalCost = base;
+  const baseConstantLAC = GenericPowerOnly(input).ConstantLAC
+    .ConstantLACofEnergy;
+  const constantLAC = [];
+  const relativeChange = [];
+  let ithConstantLAC = 0;
+  let ithRelativeChange = 0;
+  for (let i = 0; i < 21; i++) {
+    if (i < 11) {
+      input.CapitalCost = increment1 * i;
+    } else {
+      input.CapitalCost = base + increment2 * (i - 10);
+    }
+    switch (model) {
+      case 'GPO':
+        ithConstantLAC = GenericPowerOnly(input).ConstantLAC
+          .ConstantLACofEnergy;
+        break;
+      case 'CHP':
+        ithConstantLAC = GenericCombinedHeatPower(input).ConstantLAC
+          .ConstantLACofEnergy;
+        break;
+      case 'GP':
+        ithConstantLAC = GasificationPower(input).ConstantLAC
+          .ConstantLACofEnergy;
+        break;
+    }
+    ithRelativeChange =
+      ((ithConstantLAC - baseConstantLAC) / baseConstantLAC) * 100;
+    constantLAC.push(ithConstantLAC);
+    relativeChange.push(ithRelativeChange);
+  }
+  return { relativeChange, constantLAC };
 };
