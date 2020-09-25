@@ -504,7 +504,7 @@ function GasificationPower(input: InputModGP) {
     AnnualHours: AnnualHours,
     BiomassTarget: AnnualBiomassConsumptionDry,
     ParasiticLoad: ParasiticLoad,
-    AnnualNetElectricityGeneration: AnnualNetElectricityGeneration,
+    AnnualGeneration: AnnualNetElectricityGeneration,
     OverallNetSystemEfficiency: OverallNetSystemEfficiency,
     NitrogenGas: N2,
     CleanGasMolecularMass: CleanGasMolecularMass,
