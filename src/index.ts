@@ -102,8 +102,7 @@ export const calculateCurrentLAC = (
 ) => {
   const CostOfMoney = CostOfEquity / 100;
   const CapitalRecoveryFactorCurrent =
-    (CostOfMoney * (1 + CostOfMoney)) **
-    (EconomicLife / (1 + CostOfMoney) ** (EconomicLife - 1));
+    CostOfMoney * (1 + CostOfMoney) ** EconomicLife / ((1 + CostOfMoney) ** EconomicLife - 1);
   const CurrentLACofEnergy =
     (TotalEnergyRevenueRequiredPW * CapitalRecoveryFactorCurrent) /
     AnnualGeneration;
@@ -120,8 +119,7 @@ export const calculateConstantLAC = (
   const RealCostOfMoney =
     (1 + CostOfEquity / 100) / (1 + GeneralInflation / 100) - 1;
   const CapitalRecoveryFactorConstant =
-    (RealCostOfMoney * (1 + RealCostOfMoney)) **
-    (EconomicLife / (1 + RealCostOfMoney) ** (EconomicLife - 1));
+    RealCostOfMoney * (1 + RealCostOfMoney) ** EconomicLife / ((1 + RealCostOfMoney) ** EconomicLife - 1);
   const ConstantLACofEnergy =
     (TotalEnergyRevenueRequiredPW * CapitalRecoveryFactorConstant) /
     AnnualGeneration;
