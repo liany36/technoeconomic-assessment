@@ -294,30 +294,37 @@ export interface OutputModHydrogen extends OutputMod {
 export interface OutputModSensitivity {
   CapitalCost: {
     constantLAC: number[],
+    relativeChangeCOE: number[]
     relativeChange: number[]
   };
   BiomassFuelCost: {
     constantLAC: number[],
+    relativeChangeCOE: number[]
     relativeChange: number[]
   };
   DebtRatio: {
     constantLAC: number[],
+    relativeChangeCOE: number[]
     relativeChange: number[]
   };
   DebtInterestRate: {
     constantLAC: number[],
+    relativeChangeCOE: number[]
     relativeChange: number[]
   };
   CostOfEquity: {
     constantLAC: number[],
+    relativeChangeCOE: number[]
     relativeChange: number[]
   };
   NetStationEfficiency: {
     constantLAC: number[],
+    relativeChangeCOE: number[]
     relativeChange: number[]
   };
   CapacityFactor: {
     constantLAC: number[],
+    relativeChangeCOE: number[]
     relativeChange: number[]
   };
 }

@@ -8,31 +8,39 @@ function sensitivity(params: InputModSensitivity) {
   const output: OutputModSensitivity = {
     CapitalCost: {
       constantLAC: [],
-      relativeChange: [],
+      relativeChangeCOE: [],
+      relativeChange: []
+
     },
     BiomassFuelCost: {
       constantLAC: [],
-      relativeChange: [],
+      relativeChangeCOE: [],
+      relativeChange: []
     },
     DebtRatio: {
       constantLAC: [],
-      relativeChange: [],
+      relativeChangeCOE: [],
+      relativeChange: []
     },
     DebtInterestRate: {
       constantLAC: [],
-      relativeChange: [],
+      relativeChangeCOE: [],
+      relativeChange: []
     },
     CostOfEquity: {
       constantLAC: [],
-      relativeChange: [],
+      relativeChangeCOE: [],
+      relativeChange: []
     },
     NetStationEfficiency: {
       constantLAC: [],
-      relativeChange: [],
+      relativeChangeCOE: [],
+      relativeChange: []
     },
     CapacityFactor: {
       constantLAC: [],
-      relativeChange: [],
+      relativeChangeCOE: [],
+      relativeChange: []
     },
   };
   // Capital Cost
@@ -54,6 +62,7 @@ function sensitivity(params: InputModSensitivity) {
       break;
   }
   let ithConstantLAC = 0;
+  let ithRelativeChangeCOE = 0;
   let ithRelativeChange = 0;
   for (let i = 0; i < 21; i++) {
     if (i < 11) {
@@ -76,10 +85,12 @@ function sensitivity(params: InputModSensitivity) {
           .ConstantLACofEnergy;
         break;
     }
-    ithRelativeChange =
+    ithRelativeChangeCOE =
       ((ithConstantLAC - baseConstantLAC) / baseConstantLAC) * 100;
     output.CapitalCost.constantLAC.push(ithConstantLAC);
-    output.CapitalCost.relativeChange.push(ithRelativeChange);
+    output.CapitalCost.relativeChangeCOE.push(ithRelativeChangeCOE);
+    ithRelativeChange = (params.input.CapitalCost - params.CapitalCost.base) / params.CapitalCost.base;
+    output.CapitalCost.relativeChange.push(ithRelativeChange * 100);
   }
   params.input.CapitalCost = params.CapitalCost.base;
 
@@ -108,10 +119,13 @@ function sensitivity(params: InputModSensitivity) {
           .ConstantLACofEnergy;
         break;
     }
-    ithRelativeChange =
+    ithRelativeChangeCOE =
       ((ithConstantLAC - baseConstantLAC) / baseConstantLAC) * 100;
     output.BiomassFuelCost.constantLAC.push(ithConstantLAC);
-    output.BiomassFuelCost.relativeChange.push(ithRelativeChange);
+    output.BiomassFuelCost.relativeChangeCOE.push(ithRelativeChangeCOE);
+    ithRelativeChange = (params.input.ExpensesBaseYear.BiomassFuelCost - params.BiomassFuelCost.base)
+                      / params.BiomassFuelCost.base;
+    output.BiomassFuelCost.relativeChange.push(ithRelativeChange * 100);
   }
   params.input.ExpensesBaseYear.BiomassFuelCost = params.BiomassFuelCost.base;
 
@@ -139,10 +153,13 @@ function sensitivity(params: InputModSensitivity) {
           .ConstantLACofEnergy;
         break;
     }
-    ithRelativeChange =
+    ithRelativeChangeCOE =
       ((ithConstantLAC - baseConstantLAC) / baseConstantLAC) * 100;
     output.DebtRatio.constantLAC.push(ithConstantLAC);
-    output.DebtRatio.relativeChange.push(ithRelativeChange);
+    output.DebtRatio.relativeChangeCOE.push(ithRelativeChangeCOE);
+    ithRelativeChange = (params.input.Financing.DebtRatio - params.DebtRatio.base)
+                      / params.DebtRatio.base;
+    output.DebtRatio.relativeChange.push(ithRelativeChange * 100);
   }
   params.input.Financing.DebtRatio = params.DebtRatio.base;
 
@@ -173,10 +190,13 @@ function sensitivity(params: InputModSensitivity) {
           .ConstantLACofEnergy;
         break;
     }
-    ithRelativeChange =
+    ithRelativeChangeCOE =
       ((ithConstantLAC - baseConstantLAC) / baseConstantLAC) * 100;
     output.DebtInterestRate.constantLAC.push(ithConstantLAC);
-    output.DebtInterestRate.relativeChange.push(ithRelativeChange);
+    output.DebtInterestRate.relativeChangeCOE.push(ithRelativeChangeCOE);
+    ithRelativeChange = (params.input.Financing.InterestRateOnDebt - params.DebtInterestRate.base)
+                      / params.DebtInterestRate.base;
+    output.DebtInterestRate.relativeChange.push(ithRelativeChange * 100);
   }
   params.input.Financing.InterestRateOnDebt = params.DebtInterestRate.base;
 
@@ -205,10 +225,13 @@ function sensitivity(params: InputModSensitivity) {
           .ConstantLACofEnergy;
         break;
     }
-    ithRelativeChange =
+    ithRelativeChangeCOE =
       ((ithConstantLAC - baseConstantLAC) / baseConstantLAC) * 100;
     output.CostOfEquity.constantLAC.push(ithConstantLAC);
-    output.CostOfEquity.relativeChange.push(ithRelativeChange);
+    output.CostOfEquity.relativeChangeCOE.push(ithRelativeChangeCOE);
+    ithRelativeChange = (params.input.Financing.CostOfEquity - params.CostOfEquity.base)
+                      / params.CostOfEquity.base;
+    output.CostOfEquity.relativeChange.push(ithRelativeChange * 100);
   }
   params.input.Financing.CostOfEquity = params.CostOfEquity.base;
 
@@ -239,10 +262,13 @@ function sensitivity(params: InputModSensitivity) {
           .ConstantLACofEnergy;
         break;
     }
-    ithRelativeChange =
+    ithRelativeChangeCOE =
       ((ithConstantLAC - baseConstantLAC) / baseConstantLAC) * 100;
     output.NetStationEfficiency.constantLAC.push(ithConstantLAC);
-    output.NetStationEfficiency.relativeChange.push(ithRelativeChange);
+    output.NetStationEfficiency.relativeChangeCOE.push(ithRelativeChangeCOE);
+    ithRelativeChange = (params.input.ElectricalFuelBaseYear.NetStationEfficiency - params.NetStationEfficiency.base)
+                      / params.NetStationEfficiency.base;
+    output.NetStationEfficiency.relativeChange.push(ithRelativeChange * 100);
   }
   params.input.ElectricalFuelBaseYear.NetStationEfficiency =
     params.NetStationEfficiency.base;
@@ -272,10 +298,13 @@ function sensitivity(params: InputModSensitivity) {
           .ConstantLACofEnergy;
         break;
     }
-    ithRelativeChange =
+    ithRelativeChangeCOE =
       ((ithConstantLAC - baseConstantLAC) / baseConstantLAC) * 100;
     output.CapacityFactor.constantLAC.push(ithConstantLAC);
-    output.CapacityFactor.relativeChange.push(ithRelativeChange);
+    output.CapacityFactor.relativeChangeCOE.push(ithRelativeChangeCOE);
+    ithRelativeChange = (params.input.ElectricalFuelBaseYear.CapacityFactor - params.CapacityFactor.base)
+                      / params.CapacityFactor.base;
+    output.CapacityFactor.relativeChange.push(ithRelativeChange * 100);
   }
   params.input.ElectricalFuelBaseYear.CapacityFactor =
     params.CapacityFactor.base;
