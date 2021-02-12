@@ -1,10 +1,10 @@
-import { calculateSensitivity } from '../src';
-import { gpoExample } from './data/sensitivity';
+import { calculateSensitivity } from "../src";
+import { gpoExample, chpExample, gpExample } from "./data/sensitivity";
 
 test("GPO model gives correct output", () => {
   const results = calculateSensitivity(gpoExample);
 
-  // TODO: more full testing here
+  // GPO results look good.  Here is an example of full testing of one of the output dimensions
   expect(results.output.CapitalCost.relativeChangeCOE).toStrictEqual([
     -44.84741838128575,
     -40.36267654315716,
@@ -28,4 +28,19 @@ test("GPO model gives correct output", () => {
     74.95925643729187,
     83.28806270810205,
   ]);
+});
+
+test("CHP model gives correct output", () => {
+  const results = calculateSensitivity(chpExample);
+
+  // FIX: the outputs are huge and shouldn't be -- the cart relative change COE axis is between [-100,200]
+  // values in this array are in the trillions
+  expect(Math.max(...results.output.BiomassFuelCost.relativeChangeCOE)).toBeLessThan(200);
+});
+
+test("GP model gives correct output", () => {
+  const results = calculateSensitivity(gpExample);
+
+  // FIX: the outputs returned are not numbers in most cases
+  expect(results.output.BiomassFuelCost.relativeChangeCOE[0]).not.toBeNaN();
 });
