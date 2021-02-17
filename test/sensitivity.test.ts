@@ -33,9 +33,9 @@ test('GPO model gives correct output', () => {
 test('CHP model gives correct output', () => {
   const results = calculateSensitivity(chpExample);
 
-  // FIX: the outputs are huge and shouldn't be -- the cart relative change COE axis is between [-100,200]
+  // FIX: the outputs are huge and shouldn't be -- the cart relative change COE axis is between [-100,250]
   // values in this array are in the trillions
-  expect(Math.max(...results.output.BiomassFuelCost.relativeChangeCOE)).toBeLessThan(200);
+  expect(Math.max(...results.output.BiomassFuelCost.relativeChangeCOE)).toBeLessThan(250);
 });
 
 test('GP model gives correct output', () => {
