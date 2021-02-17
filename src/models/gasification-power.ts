@@ -1,6 +1,6 @@
 import { InputModGP } from './input.model';
 import {
-  CapitalCostMod,
+  // CapitalCostMod,
   CashFlowGP,
   ConstantLevelAnnualCostMod,
   CurrentLevelAnnualCostMod,
@@ -36,39 +36,39 @@ function GasificationPower(input: InputModGP) {
   const CH4_HHV_KJL = CH4_HHV * CH4Density * 1000; // CH4 Higher Heating Value (kJ/L)
   const CH4_LHV_KJL = CH4_LHV * CH4Density * 1000; // CH4 Lower Heating Value (kJ/L)
   // Capital Cost
-  const CapitalCost: CapitalCostMod = {
-    TotalFacilityCapitalCost: 0,
-    GasifierSystemCapitalCostPerKwe: 0,
-    GasCleaningSystemCapitalCostPerKwe: 0,
-    PowerGenerationCapitalCostPerKwe: 0,
-    EmissionControlSystemCapitalCostPerKwe: 0,
-    HeatRecoverySystemCapitalCostPerKwe: 0,
-    TotalFacilityCapitalCostPerKwe: 0
-  };
-  CapitalCost.GasifierSystemCapitalCostPerKwe =
-    input.CapitalCost.GasifierSystemCapitalCost /
-    input.ElectricalFuelBaseYear.NetElectricalCapacity;
-  CapitalCost.GasCleaningSystemCapitalCostPerKwe =
-    input.CapitalCost.GasCleaningSystemCapitalCost /
-    input.ElectricalFuelBaseYear.NetElectricalCapacity;
-  CapitalCost.PowerGenerationCapitalCostPerKwe =
-    input.CapitalCost.PowerGenerationCapitalCost /
-    input.ElectricalFuelBaseYear.NetElectricalCapacity;
-  CapitalCost.EmissionControlSystemCapitalCostPerKwe =
-    input.CapitalCost.EmissionControlSystemCapitalCost /
-    input.ElectricalFuelBaseYear.NetElectricalCapacity;
-  CapitalCost.HeatRecoverySystemCapitalCostPerKwe =
-    input.CapitalCost.HeatRecoverySystemCapitalCost /
-    input.ElectricalFuelBaseYear.NetElectricalCapacity;
-  CapitalCost.TotalFacilityCapitalCost =
-    input.CapitalCost.GasifierSystemCapitalCost +
-    input.CapitalCost.GasCleaningSystemCapitalCost +
-    input.CapitalCost.PowerGenerationCapitalCost +
-    input.CapitalCost.EmissionControlSystemCapitalCost +
-    input.CapitalCost.HeatRecoverySystemCapitalCost;
-  CapitalCost.TotalFacilityCapitalCostPerKwe =
-    CapitalCost.TotalFacilityCapitalCost /
-    input.ElectricalFuelBaseYear.NetElectricalCapacity;
+  // const CapitalCost: CapitalCostMod = {
+  //   TotalFacilityCapitalCost: 0,
+  //   GasifierSystemCapitalCostPerKwe: 0,
+  //   GasCleaningSystemCapitalCostPerKwe: 0,
+  //   PowerGenerationCapitalCostPerKwe: 0,
+  //   EmissionControlSystemCapitalCostPerKwe: 0,
+  //   HeatRecoverySystemCapitalCostPerKwe: 0,
+  //   TotalFacilityCapitalCostPerKwe: 0
+  // };
+  // CapitalCost.GasifierSystemCapitalCostPerKwe =
+  //   input.CapitalCost.GasifierSystemCapitalCost /
+  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
+  // CapitalCost.GasCleaningSystemCapitalCostPerKwe =
+  //   input.CapitalCost.GasCleaningSystemCapitalCost /
+  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
+  // CapitalCost.PowerGenerationCapitalCostPerKwe =
+  //   input.CapitalCost.PowerGenerationCapitalCost /
+  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
+  // CapitalCost.EmissionControlSystemCapitalCostPerKwe =
+  //   input.CapitalCost.EmissionControlSystemCapitalCost /
+  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
+  // CapitalCost.HeatRecoverySystemCapitalCostPerKwe =
+  //   input.CapitalCost.HeatRecoverySystemCapitalCost /
+  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
+  // CapitalCost.TotalFacilityCapitalCost =
+  //   input.CapitalCost.GasifierSystemCapitalCost +
+  //   input.CapitalCost.GasCleaningSystemCapitalCost +
+  //   input.CapitalCost.PowerGenerationCapitalCost +
+  //   input.CapitalCost.EmissionControlSystemCapitalCost +
+  //   input.CapitalCost.HeatRecoverySystemCapitalCost;
+  // CapitalCost.TotalFacilityCapitalCostPerKwe =
+  //   CapitalCost.TotalFacilityCapitalCost /
+  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
   // Electrical and Fuel--base year
   const ParasiticLoad =
     input.ElectricalFuelBaseYear.GrossElectricalCapacity -
@@ -79,7 +79,7 @@ function GasificationPower(input: InputModGP) {
     input.ElectricalFuelBaseYear.NetElectricalCapacity * AnnualHours;
   const OverallNetSystemEfficiency =
     (input.ElectricalFuelBaseYear.HHVEfficiency *
-      input.ElectricalFuelBaseYear.NetHHVEfficiency) /
+      input.ElectricalFuelBaseYear.NetStationEfficiency) /
     100;
   const N2 =
     100 -
@@ -109,7 +109,7 @@ function GasificationPower(input: InputModGP) {
     100;
   const TotalFuelPowerInput =
     input.ElectricalFuelBaseYear.NetElectricalCapacity /
-    (input.ElectricalFuelBaseYear.NetHHVEfficiency / 100);
+    (input.ElectricalFuelBaseYear.NetStationEfficiency / 100);
   const CleanGasPowerInput =
     TotalFuelPowerInput *
     (1 - input.ElectricalFuelBaseYear.FractionOfInputEnergy / 100);
@@ -121,13 +121,13 @@ function GasificationPower(input: InputModGP) {
   const AnnualCleanGasConsumption = (CleanGasFlowRateMass * AnnualHours) / 1000;
   const DualFuelFlowRate = (DualFuelPowerInput / HeavyDieselHHVkJL) * 3600;
   const AnnualDualFuelConsumption = DualFuelFlowRate * AnnualHours;
-  input.ElectricalFuelBaseYear.HHV =
+  const HHV =
     input.ElectricalFuelBaseYear.HHV *
     (1 - input.ElectricalFuelBaseYear.MoistureContent / 100);
   const BiomassFeedRate =
     (CleanGasPowerInput /
       (input.ElectricalFuelBaseYear.HHVEfficiency / 100) /
-      input.ElectricalFuelBaseYear.HHV) *
+      HHV) *
     3600;
   const AnnualBiomassConsumptionDry = (BiomassFeedRate * AnnualHours) / 1000;
   const AnnualBiomassConsumptionWet =
@@ -212,7 +212,8 @@ function GasificationPower(input: InputModGP) {
   const CostOfMoney =
     (input.Financing.DebtRatio / 100) * input.Financing.InterestRateOnDebt +
     (EquityRatio / 100) * input.Financing.CostOfEquity;
-  const TotalCostOfPlant = CapitalCost.TotalFacilityCapitalCost;
+  // const TotalCostOfPlant = CapitalCost.TotalFacilityCapitalCost;
+  const TotalCostOfPlant = input.CapitalCost;
   const TotalEquityCost = (TotalCostOfPlant * EquityRatio) / 100;
   const TotalDebtCost = (TotalCostOfPlant * input.Financing.DebtRatio) / 100;
   const CapitalRecoveryFactorEquity =
@@ -580,7 +581,7 @@ function GasificationPower(input: InputModGP) {
     Financing: Financing,
     CurrentLAC: CurrentLevelAnnualCost,
     ConstantLAC: ConstantLevelAnnualCost,
-    CapitalCost: CapitalCost,
+    // CapitalCost: CapitalCost,
     ElectricalAndFuelBaseYear: ElectricalFuelBaseYear,
     HeatBaseYear: HeatBaseYear,
     ExpensesBaseYear: ExpensesBaseYear,
