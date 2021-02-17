@@ -976,12 +976,18 @@
           "type": "number",
           "example": 50,
           "description": "Moisture Content of Biomass Feedstock (% wet basis)"
+        },
+        "NetStationEfficiency": {
+          "type": "number",
+          "example": 20,
+          "description": "Ratio of net energy output from plant to fuel energy input to plant (%)"
         }
       },
       "required": [
         "NetElectricalCapacity",
         "CapacityFactor",
-        "MoistureContent"
+        "MoistureContent",
+        "NetStationEfficiency"
       ],
       "xml": {
         "name": "ElectricalFuelBaseYearInputMod"
@@ -997,11 +1003,6 @@
         },
         {
           "properties": {
-            "NetStationEfficiency": {
-              "type": "number",
-              "example": 20,
-              "description": "Ratio of net energy output from plant to fuel energy input to plant (%)"
-            },
             "FuelHeatingValue": {
               "type": "number",
               "example": 18608,
@@ -1072,11 +1073,6 @@
               "type": "number",
               "example": 65,
               "description": "HHV Efficiency of Gasification System--Biomass to Clean Gas (%)"
-            },
-            "NetHHVEfficiency": {
-              "type": "number",
-              "example": 23,
-              "description": "Net HHV Efficiency of Power Generation incl. Dual Fuel (%)"
             },
             "FractionOfInputEnergy": {
               "type": "number",
@@ -1566,9 +1562,6 @@
         },
         {
           "properties": {
-            "CapitalCost": {
-              "$ref": "#/definitions/CapitalCostMod"
-            },
             "ElectricalAndFuelBaseYear": {
               "$ref": "#/definitions/ElectricalFuelBaseYearModGP"
             },
@@ -2936,56 +2929,6 @@
       },
       "xml": {
         "name": "HeatBaseYearMod"
-      }
-    },
-    "CapitalCostMod": {
-      "type": "object",
-      "properties": {
-        "TotalFacilityCapitalCost": {
-          "type": "number",
-          "format": "float",
-          "example": 875000,
-          "description": "Total installed cost of plant including electrical plus heat recovery and distribution ($)"
-        },
-        "GasifierSystemCapitalCostPerKwe": {
-          "type": "number",
-          "format": "float",
-          "example": 600,
-          "description": "Gasifier and Feedstock Handling System Capital Cost ($/kWe-net)"
-        },
-        "GasCleaningSystemCapitalCostPerKwe": {
-          "type": "number",
-          "format": "float",
-          "example": 100,
-          "description": "Gas Cleaning System Capital Cost ($/kWe-net)"
-        },
-        "PowerGenerationCapitalCostPerKwe": {
-          "type": "number",
-          "format": "float",
-          "example": 900,
-          "description": "Power Generation/Interconnect System Capital Cost ($/kWe-net)"
-        },
-        "EmissionControlSystemCapitalCostPerKwe": {
-          "type": "number",
-          "format": "float",
-          "example": 50,
-          "description": "Emission Control System Capital Cost ($/kWe-net)"
-        },
-        "HeatRecoverySystemCapitalCostPerKwe": {
-          "type": "number",
-          "format": "float",
-          "example": 100,
-          "description": "Heat Recovery System Capital Cost ($/kWe-net)"
-        },
-        "TotalFacilityCapitalCostPerKwe": {
-          "type": "number",
-          "format": "float",
-          "example": 1750,
-          "description": "Total Facility Capital Cost ($/kWe-net)"
-        }
-      },
-      "xml": {
-        "name": "CapitalCostMod"
       }
     },
     "HydrogenGenerationMod": {
