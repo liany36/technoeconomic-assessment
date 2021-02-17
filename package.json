@@ -35,7 +35,7 @@
     "nodemon": "^1.18.9",
     "tslint": "^5.12.1",
     "tslint-eslint-rules": "^5.4.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.9.9"
   },
   "description": "https://technoeconomic-assessment.azurewebsites.net/",
   "directories": {
