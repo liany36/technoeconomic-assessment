@@ -1,7 +1,7 @@
-import { calculateSensitivity } from "../src";
-import { gpoExample, chpExample, gpExample } from "./data/sensitivity";
+import { calculateSensitivity } from '../src';
+import { chpExample, gpExample, gpoExample } from './data/sensitivity';
 
-test("GPO model gives correct output", () => {
+test('GPO model gives correct output', () => {
   const results = calculateSensitivity(gpoExample);
 
   // GPO results look good.  Here is an example of full testing of one of the output dimensions
@@ -30,7 +30,7 @@ test("GPO model gives correct output", () => {
   ]);
 });
 
-test("CHP model gives correct output", () => {
+test('CHP model gives correct output', () => {
   const results = calculateSensitivity(chpExample);
 
   // FIX: the outputs are huge and shouldn't be -- the cart relative change COE axis is between [-100,200]
@@ -38,7 +38,7 @@ test("CHP model gives correct output", () => {
   expect(Math.max(...results.output.BiomassFuelCost.relativeChangeCOE)).toBeLessThan(200);
 });
 
-test("GP model gives correct output", () => {
+test('GP model gives correct output', () => {
   const results = calculateSensitivity(gpExample);
 
   // FIX: the outputs returned are not numbers in most cases
