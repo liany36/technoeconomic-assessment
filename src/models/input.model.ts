@@ -41,7 +41,8 @@ export interface InputModCHP {
 // GasificationPower
 export interface InputModGP {
   // Capital Cost from Gasification Power Generation
-  CapitalCost: CapitalCostInputModGP;
+  // CapitalCost: CapitalCostInputModGP;
+  CapitalCost: number;
   // Electrical and Fuel -- base year from Gasification Power Generation
   ElectricalFuelBaseYear: ElectricalFuelBaseYearInputModGP;
   // Heat--Base Year
@@ -149,10 +150,10 @@ export interface ElectricalFuelBaseYearInputMod {
   NetElectricalCapacity: number;
   CapacityFactor: number;
   MoistureContent: number;
+  NetStationEfficiency: number;
 }
 export interface ElectricalFuelBaseYearInputModGPO
   extends ElectricalFuelBaseYearInputMod {
-  NetStationEfficiency: number;
   FuelHeatingValue: number;
   FuelAshConcentration: number;
 }
@@ -164,7 +165,7 @@ export interface ElectricalFuelBaseYearInputModGP
   extends ElectricalFuelBaseYearInputMod {
   GrossElectricalCapacity: number;
   HHVEfficiency: number;
-  NetHHVEfficiency: number;
+  // NetHHVEfficiency: number;
   FractionOfInputEnergy: number; // Dual Fuel if ant, default set to heavy disele
   CO: number;
   H2: number;

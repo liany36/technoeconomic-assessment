@@ -228,16 +228,16 @@ export interface SensitivityAnalysisMod {
   LACconstant: number;
 }
 
-export interface CapitalCostMod {
-  // combined-heat-power
-  TotalFacilityCapitalCost: number;
-  GasifierSystemCapitalCostPerKwe: number;
-  GasCleaningSystemCapitalCostPerKwe: number;
-  PowerGenerationCapitalCostPerKwe: number;
-  EmissionControlSystemCapitalCostPerKwe: number;
-  HeatRecoverySystemCapitalCostPerKwe: number;
-  TotalFacilityCapitalCostPerKwe: number;
-}
+// export interface CapitalCostMod {
+//   // combined-heat-power
+//   TotalFacilityCapitalCost: number;
+//   GasifierSystemCapitalCostPerKwe: number;
+//   GasCleaningSystemCapitalCostPerKwe: number;
+//   PowerGenerationCapitalCostPerKwe: number;
+//   EmissionControlSystemCapitalCostPerKwe: number;
+//   HeatRecoverySystemCapitalCostPerKwe: number;
+//   TotalFacilityCapitalCostPerKwe: number;
+// }
 
 export interface HydrogenGenerationMod {
   HydrogenEnergy: number;
@@ -276,7 +276,7 @@ export interface OutputModCHP extends OutputMod {
   TotalCashFlow: TotalCashFlowCHP;
 }
 export interface OutputModGP extends OutputMod {
-  CapitalCost: CapitalCostMod;
+  // CapitalCost: CapitalCostMod;
   ElectricalAndFuelBaseYear: ElectricalFuelBaseYearModGP;
   HeatBaseYear: HeatBaseYearMod;
   ExpensesBaseYear: ExpensesBaseYearModGP;
