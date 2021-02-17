@@ -10,7 +10,7 @@ import {
   IncomeOtherThanEnergyMod,
   OutputModCHP,
   SensitivityAnalysisMod,
-  TotalCashFlowCHP
+  TotalCashFlowCHP,
 } from './output.model';
 
 function GenericCombinedHeatPower(input: InputModCHP) {
@@ -20,20 +20,16 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     input.ElectricalFuelBaseYear.NetElectricalCapacity;
   const AnnualHours =
     (input.ElectricalFuelBaseYear.CapacityFactor / 100) * 8760;
-  input.ElectricalFuelBaseYear.FuelHeatingValue =
+  const FuelHeatingValue =
     input.ElectricalFuelBaseYear.FuelHeatingValue *
     (1 - input.ElectricalFuelBaseYear.MoistureContent / 100);
   const FuelConsumptionRate =
     ((input.ElectricalFuelBaseYear.NetElectricalCapacity /
       (input.ElectricalFuelBaseYear.NetStationEfficiency / 100)) *
       3600) /
-    input.ElectricalFuelBaseYear.FuelHeatingValue /
+    FuelHeatingValue /
     1000;
-  const FuelPower =
-    (FuelConsumptionRate *
-      1000 *
-      input.ElectricalFuelBaseYear.FuelHeatingValue) /
-    3600;
+  const FuelPower = (FuelConsumptionRate * 1000 * FuelHeatingValue) / 3600;
   const GrossStationElectricalEfficiency =
     (input.ElectricalFuelBaseYear.GrossElectricalCapacity / FuelPower) * 100;
   const AnnualNetGeneration =
@@ -163,7 +159,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
       Taxes: 0,
       EnergyRevenueRequired: 0,
       BiomassFuelCost: 0,
-      IncomeHeat: 0
+      IncomeHeat: 0,
     };
     cashFlow.push(newCF);
   }
@@ -191,7 +187,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
       Taxes: 0,
       EnergyRevenueRequired: 0,
       BiomassFuelCost: 0,
-      IncomeHeat: 0
+      IncomeHeat: 0,
     };
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRecovery;
@@ -309,7 +305,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     Taxes: 0,
     EnergyRevenueRequired: 0,
     BiomassFuelCost: 0,
-    IncomeHeat: 0
+    IncomeHeat: 0,
   };
   for (let i = 0; i < cashFlow.length; i++) {
     Total.EquityRecovery += cashFlow[i].EquityRecovery;
@@ -377,7 +373,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     AnnualAshDisposal: 0,
     ParasiticLoad: 0,
     FuelPower: 0,
-    GrossStationElectricalEfficiency: 0
+    GrossStationElectricalEfficiency: 0,
   };
   ElectricalFuelBaseYear.AnnualHours = AnnualHours;
   ElectricalFuelBaseYear.BiomassTarget = AnnualFuelConsumption;
@@ -396,7 +392,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     TotalIncomeFromHeatSales: 0,
     HeatIncomePerUnitNEE: 0,
     OverallCHPefficiencyGross: 0,
-    OverallCHPefficiencyNet: 0
+    OverallCHPefficiencyNet: 0,
   };
   HeatBaseYear.TotalHeatProductionRate = TotalHeatProductionRate;
   HeatBaseYear.RecoveredHeat = RecoveredHeat;
@@ -417,7 +413,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     TotalNonFuelExpensesKwh: 0,
     TotalExpensesIncludingFuelKwh: 0,
     FuelCostKwh: 0,
-    AshDisposalKwh: 0
+    AshDisposalKwh: 0,
   };
   ExpensesBaseYear.TotalNonFuelExpenses = TotalNonFuelExpenses;
   ExpensesBaseYear.TotalExpensesIncludingFuel = TotalExpensesIncludingFuel;
@@ -433,7 +429,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
   ExpensesBaseYear.TotalExpensesIncludingFuelKwh = TotalExpensesIncludingFuelKwh;
   const IncomeOtherThanEnergy: IncomeOtherThanEnergyMod = {
     AnnualCapacityPayment: 0,
-    AnnualDebtReserveInterest: 0
+    AnnualDebtReserveInterest: 0,
   };
   IncomeOtherThanEnergy.AnnualCapacityPayment = AnnualCapacityPayment;
   IncomeOtherThanEnergy.AnnualDebtReserveInterest = AnnualDebtReserveInterest;
@@ -447,7 +443,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     CapitalRecoveryFactorDebt: 0,
     AnnualEquityRecovery: 0,
     AnnualDebtPayment: 0,
-    DebtReserve: 0
+    DebtReserve: 0,
   };
   Financing.EquityRatio = EquityRatio;
   Financing.CostOfMoney = CostOfMoney;
@@ -465,7 +461,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     TotalPresentWorth: 0,
     CapitalRecoveryFactorCurrent: 0,
     CurrentLevelAnnualRevenueRequirements: 0,
-    CurrentLACofEnergy: 0
+    CurrentLACofEnergy: 0,
   };
   CurrentLevelAnnualCost.CostOfMoney = input.Financing.CostOfEquity / 100;
   CurrentLevelAnnualCost.PresentWorth = PresentWorth;
@@ -477,7 +473,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     RealCostOfMoney: 0,
     CapitalRecoveryFactorConstant: 0,
     ConstantLevelAnnualRevenueRequirements: 0,
-    ConstantLACofEnergy: 0
+    ConstantLACofEnergy: 0,
   };
   ConstantLevelAnnualCost.RealCostOfMoney = RealCostOfMoney;
   ConstantLevelAnnualCost.CapitalRecoveryFactorConstant = CapitalRecoveryFactorConstant;
@@ -485,7 +481,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
   ConstantLevelAnnualCost.ConstantLACofEnergy = ConstantLACofEnergy;
   const SensitivityAnalysis: SensitivityAnalysisMod = {
     LACcurrent: CurrentLACofEnergy,
-    LACconstant: ConstantLACofEnergy
+    LACconstant: ConstantLACofEnergy,
   };
 
   const Output: OutputModCHP = {
@@ -499,7 +495,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     ExpensesBaseYear: ExpensesBaseYear,
     IncomeOtherThanEnergy: IncomeOtherThanEnergy,
     AnnualCashFlows: cashFlow,
-    TotalCashFlow: Total
+    TotalCashFlow: Total,
   };
 
   return Output;
