@@ -209,7 +209,15 @@ const gpExample = {
     low: 40,
   },
   input: {
-    CapitalCost: 875000,
+    doSensitivityAnalysis: false,
+    CapitalCostElements: {
+      GasifierSystemCapitalCost: 300000,
+      GasCleaningSystemCapitalCost: 50000,
+      PowerGenerationCapitalCost: 450000,
+      EmissionControlSystemCapitalCost: 25000,
+      HeatRecoverySystemCapitalCost: 50000
+    },
+    CapitalCost: 0,
     ElectricalFuelBaseYear: {
       NetElectricalCapacity: 500,
       CapacityFactor: 85,
