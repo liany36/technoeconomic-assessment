@@ -11,7 +11,7 @@ import {
   IncomeOtherThanEnergyModGP,
   OutputModGP,
   SensitivityAnalysisMod,
-  TotalCashFlowGP
+  TotalCashFlowGP,
 } from './output.model';
 
 function GasificationPower(input: InputModGP) {
@@ -36,39 +36,14 @@ function GasificationPower(input: InputModGP) {
   const CH4_HHV_KJL = CH4_HHV * CH4Density * 1000; // CH4 Higher Heating Value (kJ/L)
   const CH4_LHV_KJL = CH4_LHV * CH4Density * 1000; // CH4 Lower Heating Value (kJ/L)
   // Capital Cost
-  // const CapitalCost: CapitalCostMod = {
-  //   TotalFacilityCapitalCost: 0,
-  //   GasifierSystemCapitalCostPerKwe: 0,
-  //   GasCleaningSystemCapitalCostPerKwe: 0,
-  //   PowerGenerationCapitalCostPerKwe: 0,
-  //   EmissionControlSystemCapitalCostPerKwe: 0,
-  //   HeatRecoverySystemCapitalCostPerKwe: 0,
-  //   TotalFacilityCapitalCostPerKwe: 0
-  // };
-  // CapitalCost.GasifierSystemCapitalCostPerKwe =
-  //   input.CapitalCost.GasifierSystemCapitalCost /
-  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
-  // CapitalCost.GasCleaningSystemCapitalCostPerKwe =
-  //   input.CapitalCost.GasCleaningSystemCapitalCost /
-  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
-  // CapitalCost.PowerGenerationCapitalCostPerKwe =
-  //   input.CapitalCost.PowerGenerationCapitalCost /
-  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
-  // CapitalCost.EmissionControlSystemCapitalCostPerKwe =
-  //   input.CapitalCost.EmissionControlSystemCapitalCost /
-  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
-  // CapitalCost.HeatRecoverySystemCapitalCostPerKwe =
-  //   input.CapitalCost.HeatRecoverySystemCapitalCost /
-  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
-  // CapitalCost.TotalFacilityCapitalCost =
-  //   input.CapitalCost.GasifierSystemCapitalCost +
-  //   input.CapitalCost.GasCleaningSystemCapitalCost +
-  //   input.CapitalCost.PowerGenerationCapitalCost +
-  //   input.CapitalCost.EmissionControlSystemCapitalCost +
-  //   input.CapitalCost.HeatRecoverySystemCapitalCost;
-  // CapitalCost.TotalFacilityCapitalCostPerKwe =
-  //   CapitalCost.TotalFacilityCapitalCost /
-  //   input.ElectricalFuelBaseYear.NetElectricalCapacity;
+  if (!input.doSensitivityAnalysis) {
+    input.CapitalCost =
+      input.CapitalCostElements.GasifierSystemCapitalCost +
+      input.CapitalCostElements.GasCleaningSystemCapitalCost +
+      input.CapitalCostElements.PowerGenerationCapitalCost +
+      input.CapitalCostElements.EmissionControlSystemCapitalCost +
+      input.CapitalCostElements.HeatRecoverySystemCapitalCost;
+  }
   // Electrical and Fuel--base year
   const ParasiticLoad =
     input.ElectricalFuelBaseYear.GrossElectricalCapacity -
@@ -267,7 +242,7 @@ function GasificationPower(input: InputModGP) {
       BiomassFuelCost: 0,
       DualFuelCost: 0,
       IncomeHeat: 0,
-      IncomeChar: 0
+      IncomeChar: 0,
     };
     cashFlow.push(newCF);
   }
@@ -297,7 +272,7 @@ function GasificationPower(input: InputModGP) {
       BiomassFuelCost: 0,
       DualFuelCost: 0,
       IncomeHeat: 0,
-      IncomeChar: 0
+      IncomeChar: 0,
     };
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRecovery;
@@ -424,7 +399,7 @@ function GasificationPower(input: InputModGP) {
     BiomassFuelCost: 0,
     DualFuelCost: 0,
     IncomeHeat: 0,
-    IncomeChar: 0
+    IncomeChar: 0,
   };
   for (let i = 0; i < cashFlow.length; i++) {
     Total.EquityRecovery += cashFlow[i].EquityRecovery;
@@ -454,7 +429,7 @@ function GasificationPower(input: InputModGP) {
     TotalPresentWorth: 0,
     CapitalRecoveryFactorCurrent: 0,
     CurrentLevelAnnualRevenueRequirements: 0,
-    CurrentLACofEnergy: 0
+    CurrentLACofEnergy: 0,
   };
   CurrentLevelAnnualCost.CostOfMoney = input.Financing.CostOfEquity / 100;
   let TempPresentWorth: number;
@@ -482,7 +457,7 @@ function GasificationPower(input: InputModGP) {
     RealCostOfMoney: 0,
     CapitalRecoveryFactorConstant: 0,
     ConstantLevelAnnualRevenueRequirements: 0,
-    ConstantLACofEnergy: 0
+    ConstantLACofEnergy: 0,
   };
   ConstantLevelAnnualCost.RealCostOfMoney =
     (1 + CurrentLevelAnnualCost.CostOfMoney) /
@@ -524,7 +499,7 @@ function GasificationPower(input: InputModGP) {
     AnnualBiomassConsumptionDryMass: AnnualBiomassConsumptionDry,
     AnnualBiomassConsumptionWetMass: AnnualBiomassConsumptionWet,
     CharProductionRate: CharProductionRate,
-    AnnualCharProduction: AnnualCharProduction
+    AnnualCharProduction: AnnualCharProduction,
   };
   const HeatBaseYear: HeatBaseYearMod = {
     TotalHeatProductionRate: TotalHeatProductionRate,
@@ -533,7 +508,7 @@ function GasificationPower(input: InputModGP) {
     TotalIncomeFromHeatSales: TotalIncomeFromHeatSales,
     HeatIncomePerUnitNEE: HeatIncomePerUnitNEE,
     OverallCHPefficiencyGross: OverallCHPefficiencyGross,
-    OverallCHPefficiencyNet: OverallCHPefficiencyNet
+    OverallCHPefficiencyNet: OverallCHPefficiencyNet,
   };
   const ExpensesBaseYear: ExpensesBaseYearModGP = {
     TotalNonFuelExpenses: TotalNonFuelExpenses,
@@ -548,12 +523,12 @@ function GasificationPower(input: InputModGP) {
     TotalExpensesIncludingFuelKwh: TotalExpensesIncludingFuelKwh,
     BiomassFuelCostKwh: BiomassFuelCostPerKwh,
     DualFuelCostKwh: DualFuelPerKwh,
-    WasteTreatmentKwh: WasteTreatmentKwh
+    WasteTreatmentKwh: WasteTreatmentKwh,
   };
   const IncomeOtherThanEnergy: IncomeOtherThanEnergyModGP = {
     AnnualCapacityPayment: 0,
     AnnualDebtReserveInterest: 0,
-    AnnualIncomeFromChar: 0
+    AnnualIncomeFromChar: 0,
   };
   IncomeOtherThanEnergy.AnnualCapacityPayment = AnnualCapacityPayment;
   IncomeOtherThanEnergy.AnnualDebtReserveInterest = AnnualDebtReserveInterest;
@@ -568,11 +543,11 @@ function GasificationPower(input: InputModGP) {
     CapitalRecoveryFactorDebt: CapitalRecoveryFactorDebt,
     AnnualEquityRecovery: AnnualEquityRecovery,
     AnnualDebtPayment: AnnualDebtPayment,
-    DebtReserve: DebtReserve
+    DebtReserve: DebtReserve,
   };
   const SensitivityAnalysis: SensitivityAnalysisMod = {
     LACcurrent: CurrentLevelAnnualCost.CurrentLACofEnergy,
-    LACconstant: ConstantLevelAnnualCost.ConstantLACofEnergy
+    LACconstant: ConstantLevelAnnualCost.ConstantLACofEnergy,
   };
 
   const Output: OutputModGP = {
@@ -581,13 +556,12 @@ function GasificationPower(input: InputModGP) {
     Financing: Financing,
     CurrentLAC: CurrentLevelAnnualCost,
     ConstantLAC: ConstantLevelAnnualCost,
-    // CapitalCost: CapitalCost,
     ElectricalAndFuelBaseYear: ElectricalFuelBaseYear,
     HeatBaseYear: HeatBaseYear,
     ExpensesBaseYear: ExpensesBaseYear,
     IncomeOtherThanEnergy: IncomeOtherThanEnergy,
     AnnualCashFlows: cashFlow,
-    TotalCashFlow: Total
+    TotalCashFlow: Total,
   };
 
   return Output;

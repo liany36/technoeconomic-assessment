@@ -41,7 +41,8 @@ export interface InputModCHP {
 // GasificationPower
 export interface InputModGP {
   // Capital Cost from Gasification Power Generation
-  // CapitalCost: CapitalCostInputModGP;
+  doSensitivityAnalysis: boolean;
+  CapitalCostElements: CapitalCostInputModGP;
   CapitalCost: number;
   // Electrical and Fuel -- base year from Gasification Power Generation
   ElectricalFuelBaseYear: ElectricalFuelBaseYearInputModGP;
@@ -66,37 +67,30 @@ export interface InputModSensitivity {
   model: string;
   input: any;
   CapitalCost: {
-    base: number;
     high: number;
     low: number;
   };
   BiomassFuelCost: {
-    base: number;
     high: number;
     low: number;
   };
   DebtRatio: {
-    base: number;
     high: number;
     low: number;
   };
   DebtInterestRate: {
-    base: number;
     high: number;
     low: number;
   };
   CostOfEquity: {
-    base: number;
     high: number;
     low: number;
   };
   NetStationEfficiency: {
-    base: number;
     high: number;
     low: number;
   };
   CapacityFactor: {
-    base: number;
     high: number;
     low: number;
   };
