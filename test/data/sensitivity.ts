@@ -1,37 +1,30 @@
 const gpoExample = {
   model: 'GPO',
   CapitalCost: {
-    base: 70000000,
     high: 200000000,
     low: 0,
   },
   BiomassFuelCost: {
-    base: 22.05,
     high: 100,
     low: 0,
   },
   DebtRatio: {
-    base: 75,
     high: 100,
     low: 0,
   },
   DebtInterestRate: {
-    base: 5,
     high: 15,
     low: 1,
   },
   CostOfEquity: {
-    base: 15,
     high: 50,
     low: 1,
   },
   NetStationEfficiency: {
-    base: 20,
     high: 50,
     low: 5,
   },
   CapacityFactor: {
-    base: 85,
     high: 100,
     low: 40,
   },
@@ -83,37 +76,30 @@ const gpoExample = {
 const chpExample = {
   model: 'CHP',
   CapitalCost: {
-    base: 70000000,
     high: 200000000,
     low: 0,
   },
   BiomassFuelCost: {
-    base: 22.05,
     high: 100,
     low: 0,
   },
   DebtRatio: {
-    base: 75,
     high: 100,
     low: 0,
   },
   DebtInterestRate: {
-    base: 5,
     high: 15,
     low: 1,
   },
   CostOfEquity: {
-    base: 15,
     high: 50,
     low: 1,
   },
   NetStationEfficiency: {
-    base: 20,
     high: 50,
     low: 5,
   },
   CapacityFactor: {
-    base: 85,
     high: 100,
     low: 40,
   },
@@ -215,7 +201,7 @@ const gpExample = {
       GasCleaningSystemCapitalCost: 50000,
       PowerGenerationCapitalCost: 450000,
       EmissionControlSystemCapitalCost: 25000,
-      HeatRecoverySystemCapitalCost: 50000
+      HeatRecoverySystemCapitalCost: 50000,
     },
     CapitalCost: 0,
     ElectricalFuelBaseYear: {
@@ -276,7 +262,7 @@ const gpExample = {
       EscalationCharSales: 2.1,
     },
     TaxCreditFrac: [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  }
+  },
 };
 
 export { gpoExample, chpExample, gpExample };
