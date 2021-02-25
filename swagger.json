@@ -351,7 +351,17 @@
     "InputModGP": {
       "type": "object",
       "properties": {
+        "doSensitivityAnalysis": {
+          "type": "boolean",
+          "example": false,
+          "description": "Whether the model will be the input for sensitivity analysis"
+        },
         "CapitalCost": {
+          "type": "number",
+          "example": 0,
+          "description": "Total Facility Capital Cost ($) that is the sum of CapitalCostElements"
+        },
+        "CapitalCostElements": {
           "$ref": "#/definitions/CapitalCostInputModGP"
         },
         "ElectricalFuelBaseYear": {
