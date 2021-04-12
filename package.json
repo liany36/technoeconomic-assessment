@@ -1,16 +1,16 @@
 {
   "name": "@ucdavis/tea",
   "version": "1.2.0",
-  "main": "./out/index.js",
-  "types": "./out/index.d.ts",
+  "main": "./out/src/index.js",
+  "types": "./out/src/index.d.ts",
   "author": "Kaiyan Li",
   "license": "MIT",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
-    "dev": "npm run build && node ./out/server.js",
+    "dev": "npm run build && node ./out/src/server.js",
     "watch": "nodemon --watch . -i out -e ts --exec npm run dev",
-    "start": "node ./out/server.js",
+    "start": "node ./out/src/server.js",
     "test": "jest",
     "prepublishOnly": "tsc -p ./ --outDir out/"
   },
