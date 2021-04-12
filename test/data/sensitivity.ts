@@ -1,7 +1,7 @@
-import { InputModSensitivity } from "src/models/input.model";
+import { InputModSensitivity } from 'src/models/input.model';
 
 const gpoExample: InputModSensitivity = {
-  model: "GPO",
+  model: 'GPO',
   CapitalCost: {
     high: 200000000,
     low: 0,
@@ -76,7 +76,7 @@ const gpoExample: InputModSensitivity = {
 };
 
 const chpExample: InputModSensitivity = {
-  model: "CHP",
+  model: 'CHP',
   CapitalCost: {
     high: 200000000,
     low: 0,
@@ -160,7 +160,7 @@ const chpExample: InputModSensitivity = {
 };
 
 const gpExample: InputModSensitivity = {
-  model: "GP",
+  model: 'GP',
   CapitalCost: {
     high: 2000000,
     low: 0,
