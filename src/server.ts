@@ -21,7 +21,7 @@ import { SubstationCost } from './models/substation';
 import { TransmissionCost } from './models/transmission';
 
 // tslint:disable-next-line: no-var-requires
-const swaggerDocument = require('../swagger.json');
+const swaggerDocument = require('../../swagger.json');
 
 dotenv.config();
 
