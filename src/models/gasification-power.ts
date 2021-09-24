@@ -243,6 +243,7 @@ function GasificationPower(input: InputModGP) {
       DualFuelCost: 0,
       IncomeHeat: 0,
       IncomeChar: 0,
+      LcfsCreditRevenue: 0,
     };
     cashFlow.push(newCF);
   }
@@ -273,6 +274,7 @@ function GasificationPower(input: InputModGP) {
       DualFuelCost: 0,
       IncomeHeat: 0,
       IncomeChar: 0,
+      LcfsCreditRevenue: 0,
     };
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRecovery;
@@ -400,6 +402,7 @@ function GasificationPower(input: InputModGP) {
     DualFuelCost: 0,
     IncomeHeat: 0,
     IncomeChar: 0,
+    LcfsCreditRevenue: 0,
   };
   for (let i = 0; i < cashFlow.length; i++) {
     Total.EquityRecovery += cashFlow[i].EquityRecovery;

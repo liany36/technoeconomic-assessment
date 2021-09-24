@@ -127,7 +127,8 @@ function Hydrogen(input: InputModHydrogen) {
       IncomeElectricalEnergy: 0,
       IncomeIncentivePayments: 0,
       IncomeHeat: 0,
-      IncomeResidue: 0
+      IncomeResidue: 0,
+      LcfsCreditRevenue: 0,
     };
     cashFlow.push(newCF);
   }
@@ -159,7 +160,8 @@ function Hydrogen(input: InputModHydrogen) {
       IncomeElectricalEnergy: 0,
       IncomeIncentivePayments: 0,
       IncomeHeat: 0,
-      IncomeResidue: 0
+      IncomeResidue: 0,
+      LcfsCreditRevenue: 0,
     };
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRepayment;
@@ -309,7 +311,8 @@ function Hydrogen(input: InputModHydrogen) {
     IncomeElectricalEnergy: 0,
     IncomeIncentivePayments: 0,
     IncomeHeat: 0,
-    IncomeResidue: 0
+    IncomeResidue: 0,
+    LcfsCreditRevenue: 0,
   };
   for (let i = 0; i < cashFlow.length; i++) {
     Total.EquityRecovery += cashFlow[i].EquityRecovery;

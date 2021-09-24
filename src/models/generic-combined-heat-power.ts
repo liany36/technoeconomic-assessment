@@ -160,6 +160,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
       EnergyRevenueRequired: 0,
       BiomassFuelCost: 0,
       IncomeHeat: 0,
+      LcfsCreditRevenue: 0,
     };
     cashFlow.push(newCF);
   }
@@ -188,6 +189,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
       EnergyRevenueRequired: 0,
       BiomassFuelCost: 0,
       IncomeHeat: 0,
+      LcfsCreditRevenue: 0,
     };
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRecovery;
@@ -306,6 +308,7 @@ function GenericCombinedHeatPower(input: InputModCHP) {
     EnergyRevenueRequired: 0,
     BiomassFuelCost: 0,
     IncomeHeat: 0,
+    LcfsCreditRevenue: 0,
   };
   for (let i = 0; i < cashFlow.length; i++) {
     Total.EquityRecovery += cashFlow[i].EquityRecovery;

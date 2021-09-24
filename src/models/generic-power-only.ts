@@ -132,6 +132,7 @@ function GenericPowerOnly(input: InputModGPO) {
       TaxesWoCredit: 0,
       TaxCredit: 0,
       Taxes: 0,
+      LcfsCreditRevenue: 0,
       EnergyRevenueRequired: 0,
       BiomassFuelCost: 0,
     };
@@ -159,6 +160,7 @@ function GenericPowerOnly(input: InputModGPO) {
       TaxesWoCredit: 0,
       TaxCredit: 0,
       Taxes: 0,
+      LcfsCreditRevenue: 0,
       EnergyRevenueRequired: 0,
       BiomassFuelCost: 0,
     };
@@ -229,6 +231,25 @@ function GenericPowerOnly(input: InputModGPO) {
         Year - 1
       ) *
       input.TaxCreditFrac[Year - 1];
+    // LCFS credit
+    const DieselComplianceStandard = -1.3705 * (Year + 2015) + 2862.1; // gCO2e/MJ
+    const CreditPrice = // $/tonne
+      input.CarbonCredit.CreditPrice *
+      Math.pow(1 + input.EscalationInflation.GeneralInflation / 100, Year - 1);
+    const KWH_TO_MJ = 3.6; // 1 kWh = 3.6 MJ
+    const TONNE_TO_GRAM = 1_000_000; // 1 tonne = 1,000,000 grams
+    if (
+      DieselComplianceStandard * input.CarbonCredit.EnergyEconomyRatio >
+      input.CarbonCredit.CIscore
+    ) {
+      newCF.LcfsCreditRevenue =
+        ((DieselComplianceStandard * input.CarbonCredit.EnergyEconomyRatio -
+          input.CarbonCredit.CIscore) /
+          TONNE_TO_GRAM) *
+        KWH_TO_MJ *
+        CreditPrice *
+        AnnualGeneration;
+    }
     newCF.Taxes =
       (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
       (newCF.EquityPrincipalPaid +
@@ -245,6 +266,7 @@ function GenericPowerOnly(input: InputModGPO) {
       newCF.Taxes +
       newCF.DebtReserve -
       newCF.IncomeCapacity -
+      newCF.LcfsCreditRevenue -
       newCF.InterestOnDebtReserve;
 
     return newCF;
@@ -265,6 +287,7 @@ function GenericPowerOnly(input: InputModGPO) {
     TaxesWoCredit: 0,
     TaxCredit: 0,
     Taxes: 0,
+    LcfsCreditRevenue: 0,
     EnergyRevenueRequired: 0,
     BiomassFuelCost: 0,
   };
@@ -284,6 +307,7 @@ function GenericPowerOnly(input: InputModGPO) {
     Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
     Total.TaxCredit += cashFlow[i].TaxCredit;
     Total.Taxes += cashFlow[i].Taxes;
+    Total.LcfsCreditRevenue += cashFlow[i].LcfsCreditRevenue;
     Total.EnergyRevenueRequired += cashFlow[i].EnergyRevenueRequired;
   }
   // Current $ Level Annual Cost (LAC)
@@ -364,7 +388,8 @@ function GenericPowerOnly(input: InputModGPO) {
   ExpensesBaseYear.ManagementKwh = ManagementKwh;
   ExpensesBaseYear.OtherOperatingExpensesKwh = OtherOperatingExpensesKwh;
   ExpensesBaseYear.TotalNonFuelExpensesKwh = TotalNonFuelExpensesKwh;
-  ExpensesBaseYear.TotalExpensesIncludingFuelKwh = TotalExpensesIncludingFuelKwh;
+  ExpensesBaseYear.TotalExpensesIncludingFuelKwh =
+    TotalExpensesIncludingFuelKwh;
   const IncomeOtherThanEnergy: IncomeOtherThanEnergyMod = {
     AnnualCapacityPayment: 0,
     AnnualDebtReserveInterest: 0,
@@ -404,8 +429,10 @@ function GenericPowerOnly(input: InputModGPO) {
   CurrentLevelAnnualCost.CostOfMoney = input.Financing.CostOfEquity / 100;
   CurrentLevelAnnualCost.PresentWorth = PresentWorth;
   CurrentLevelAnnualCost.TotalPresentWorth = TotalPresentWorth;
-  CurrentLevelAnnualCost.CapitalRecoveryFactorCurrent = CapitalRecoveryFactorCurrent;
-  CurrentLevelAnnualCost.CurrentLevelAnnualRevenueRequirements = CurrentLevelAnnualRevenueRequirements;
+  CurrentLevelAnnualCost.CapitalRecoveryFactorCurrent =
+    CapitalRecoveryFactorCurrent;
+  CurrentLevelAnnualCost.CurrentLevelAnnualRevenueRequirements =
+    CurrentLevelAnnualRevenueRequirements;
   CurrentLevelAnnualCost.CurrentLACofEnergy = CurrentLACofEnergy;
   const ConstantLevelAnnualCost: ConstantLevelAnnualCostMod = {
     RealCostOfMoney: 0,
@@ -414,8 +441,10 @@ function GenericPowerOnly(input: InputModGPO) {
     ConstantLACofEnergy: 0,
   };
   ConstantLevelAnnualCost.RealCostOfMoney = RealCostOfMoney;
-  ConstantLevelAnnualCost.CapitalRecoveryFactorConstant = CapitalRecoveryFactorConstant;
-  ConstantLevelAnnualCost.ConstantLevelAnnualRevenueRequirements = ConstantLevelAnnualRevenueRequirements;
+  ConstantLevelAnnualCost.CapitalRecoveryFactorConstant =
+    CapitalRecoveryFactorConstant;
+  ConstantLevelAnnualCost.ConstantLevelAnnualRevenueRequirements =
+    ConstantLevelAnnualRevenueRequirements;
   ConstantLevelAnnualCost.ConstantLACofEnergy = ConstantLACofEnergy;
   const SensitivityAnalysis: SensitivityAnalysisMod = {
     LACcurrent: CurrentLACofEnergy,

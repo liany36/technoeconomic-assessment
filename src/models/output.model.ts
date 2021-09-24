@@ -158,6 +158,7 @@ export interface CashFlow {
   TaxesWoCredit: number;
   TaxCredit: number;
   Taxes: number;
+  LcfsCreditRevenue: number; // LCFS: Low Carbon Fuel Standard
   EnergyRevenueRequired: number;
 }
 
@@ -199,6 +200,7 @@ export interface TotalCashFlow {
   TaxesWoCredit: number;
   TaxCredit: number;
   Taxes: number;
+  LcfsCreditRevenue: number; // LCFS: Low Carbon Fuel Standard
   EnergyRevenueRequired: number;
 }
 

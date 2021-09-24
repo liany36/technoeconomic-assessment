@@ -15,6 +15,16 @@ export interface InputModGPO {
   EscalationInflation: EscalationInflationInputMod;
   // Tax Credit Schedule
   TaxCreditFrac: number[];
+  CarbonCredit: CarbonCredit;
+}
+
+export interface CarbonCredit {
+  CreditPrice: number; // $/tonne
+  CIscore: number; // Carbon Intensity score (gCO2e/MJ)
+  // Distance an alternative-fueled vehicle travels
+  // divided by the distance an internal combustion engine vehicle travels
+  // using the same amount of energy.
+  EnergyEconomyRatio: number;
 }
 
 // GenericCombinedHeatPower
