@@ -71,6 +71,7 @@ export interface InputModGP {
   EscalationInflation: EscalationInflationInputModGP;
   // Tax Rate Schedule
   TaxCreditFrac: number[];
+  CarbonCredit: CarbonCredit;
 }
 
 // Sensitivity Analysis
