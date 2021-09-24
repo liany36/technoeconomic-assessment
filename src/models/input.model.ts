@@ -46,6 +46,7 @@ export interface InputModCHP {
   EscalationInflation: EscalationInflationInputMod;
   // Tax Credit Schedule
   TaxCreditFrac: number[];
+  CarbonCredit: CarbonCredit;
 }
 
 // GasificationPower
