@@ -16,6 +16,7 @@ export interface InputModGPO {
   // Tax Credit Schedule
   TaxCreditFrac: number[];
   CarbonCredit: CarbonCredit;
+  IncludeCarbonCredit: boolean;
 }
 
 export interface CarbonCredit {
@@ -47,6 +48,7 @@ export interface InputModCHP {
   // Tax Credit Schedule
   TaxCreditFrac: number[];
   CarbonCredit: CarbonCredit;
+  IncludeCarbonCredit: boolean;
 }
 
 // GasificationPower
@@ -72,6 +74,7 @@ export interface InputModGP {
   // Tax Rate Schedule
   TaxCreditFrac: number[];
   CarbonCredit: CarbonCredit;
+  IncludeCarbonCredit: boolean;
 }
 
 // Sensitivity Analysis

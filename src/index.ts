@@ -54,7 +54,8 @@ export const calculateEnergyRevenueRequired = (
         cashFlow.Taxes +
         cashFlow.DebtReserve -
         cashFlow.IncomeCapacity -
-        cashFlow.InterestOnDebtReserve;
+        cashFlow.InterestOnDebtReserve -
+        cashFlow.LcfsCreditRevenue;
       break;
     case 'CHP':
       energyRevenueRequired =

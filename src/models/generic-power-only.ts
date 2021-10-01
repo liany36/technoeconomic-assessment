@@ -266,8 +266,10 @@ function GenericPowerOnly(input: InputModGPO) {
       newCF.Taxes +
       newCF.DebtReserve -
       newCF.IncomeCapacity -
-      newCF.LcfsCreditRevenue -
       newCF.InterestOnDebtReserve;
+    if (input.IncludeCarbonCredit) {
+      newCF.EnergyRevenueRequired -= newCF.LcfsCreditRevenue;
+    }
 
     return newCF;
   }

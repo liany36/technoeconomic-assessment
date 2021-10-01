@@ -398,8 +398,11 @@ function GasificationPower(input: InputModGP) {
       newCF.IncomeCapacity -
       newCF.InterestOnDebtReserve -
       newCF.IncomeHeat -
-      newCF.IncomeChar -
-      newCF.LcfsCreditRevenue;
+      newCF.IncomeChar;
+    if (input.IncludeCarbonCredit) {
+      newCF.EnergyRevenueRequired -= newCF.LcfsCreditRevenue;
+    }
+
     return newCF;
   }
   const Total: TotalCashFlowGP = {
