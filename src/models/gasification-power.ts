@@ -243,6 +243,7 @@ function GasificationPower(input: InputModGP) {
       DualFuelCost: 0,
       IncomeHeat: 0,
       IncomeChar: 0,
+      LcfsCreditRevenue: 0,
     };
     cashFlow.push(newCF);
   }
@@ -273,6 +274,7 @@ function GasificationPower(input: InputModGP) {
       DualFuelCost: 0,
       IncomeHeat: 0,
       IncomeChar: 0,
+      LcfsCreditRevenue: 0,
     };
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRecovery;
@@ -366,6 +368,25 @@ function GasificationPower(input: InputModGP) {
         newCF.Depreciation +
         newCF.DebtReserve -
         newCF.TaxCredit);
+    // LCFS credit
+    const DieselComplianceStandard = -1.3705 * (Year + 2015) + 2862.1; // gCO2e/MJ
+    const CreditPrice = // $/tonne
+      input.CarbonCredit.CreditPrice *
+      Math.pow(1 + input.EscalationInflation.GeneralInflation / 100, Year - 1);
+    const KWH_TO_MJ = 3.6; // 1 kWh = 3.6 MJ
+    const TONNE_TO_GRAM = 1_000_000; // 1 tonne = 1,000,000 grams
+    if (
+      DieselComplianceStandard * input.CarbonCredit.EnergyEconomyRatio >
+      input.CarbonCredit.CIscore
+    ) {
+      newCF.LcfsCreditRevenue =
+        ((DieselComplianceStandard * input.CarbonCredit.EnergyEconomyRatio -
+          input.CarbonCredit.CIscore) /
+          TONNE_TO_GRAM) *
+        KWH_TO_MJ *
+        CreditPrice *
+        AnnualNetElectricityGeneration;
+    }
     newCF.EnergyRevenueRequired =
       newCF.EquityRecovery +
       newCF.DebtRecovery +
@@ -378,6 +399,10 @@ function GasificationPower(input: InputModGP) {
       newCF.InterestOnDebtReserve -
       newCF.IncomeHeat -
       newCF.IncomeChar;
+    if (input.IncludeCarbonCredit) {
+      newCF.EnergyRevenueRequired -= newCF.LcfsCreditRevenue;
+    }
+
     return newCF;
   }
   const Total: TotalCashFlowGP = {
@@ -400,6 +425,7 @@ function GasificationPower(input: InputModGP) {
     DualFuelCost: 0,
     IncomeHeat: 0,
     IncomeChar: 0,
+    LcfsCreditRevenue: 0,
   };
   for (let i = 0; i < cashFlow.length; i++) {
     Total.EquityRecovery += cashFlow[i].EquityRecovery;
@@ -420,6 +446,7 @@ function GasificationPower(input: InputModGP) {
     Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
     Total.TaxCredit += cashFlow[i].TaxCredit;
     Total.Taxes += cashFlow[i].Taxes;
+    Total.LcfsCreditRevenue += cashFlow[i].LcfsCreditRevenue;
     Total.EnergyRevenueRequired += cashFlow[i].EnergyRevenueRequired;
   }
   // Current $ Level Annual Cost (LAC)

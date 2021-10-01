@@ -1,8 +1,10 @@
+import internal from 'assert';
 import { GasificationPower } from './models/gasification-power';
 import { GenericCombinedHeatPower } from './models/generic-combined-heat-power';
 import { GenericPowerOnly } from './models/generic-power-only';
 import { Hydrogen } from './models/hydrogen';
 import {
+  CarbonCredit,
   InputModCHP,
   InputModGP,
   InputModGPO,
@@ -41,7 +43,8 @@ export const substation = (params: InputModSubstation) => {
 
 export const calculateEnergyRevenueRequired = (
   model: string,
-  cashFlow: any
+  cashFlow: any,
+  includeCarbonCredit: boolean
 ) => {
   let energyRevenueRequired = 0;
   switch (model) {
@@ -83,6 +86,9 @@ export const calculateEnergyRevenueRequired = (
         cashFlow.IncomeChar;
       break;
   }
+  if (includeCarbonCredit) {
+    energyRevenueRequired -= cashFlow.LcfsCreditRevenue;
+  }
   return energyRevenueRequired;
 };
 
@@ -102,7 +108,8 @@ export const calculateCurrentLAC = (
 ) => {
   const CostOfMoney = CostOfEquity / 100;
   const CapitalRecoveryFactorCurrent =
-    CostOfMoney * (1 + CostOfMoney) ** EconomicLife / ((1 + CostOfMoney) ** EconomicLife - 1);
+    (CostOfMoney * (1 + CostOfMoney) ** EconomicLife) /
+    ((1 + CostOfMoney) ** EconomicLife - 1);
   const CurrentLACofEnergy =
     (TotalEnergyRevenueRequiredPW * CapitalRecoveryFactorCurrent) /
     AnnualGeneration;
@@ -119,7 +126,8 @@ export const calculateConstantLAC = (
   const RealCostOfMoney =
     (1 + CostOfEquity / 100) / (1 + GeneralInflation / 100) - 1;
   const CapitalRecoveryFactorConstant =
-    RealCostOfMoney * (1 + RealCostOfMoney) ** EconomicLife / ((1 + RealCostOfMoney) ** EconomicLife - 1);
+    (RealCostOfMoney * (1 + RealCostOfMoney) ** EconomicLife) /
+    ((1 + RealCostOfMoney) ** EconomicLife - 1);
   const ConstantLACofEnergy =
     (TotalEnergyRevenueRequiredPW * CapitalRecoveryFactorConstant) /
     AnnualGeneration;
