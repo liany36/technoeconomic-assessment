@@ -1,18 +1,17 @@
 {
   "name": "@ucdavis/tea",
   "version": "1.2.1",
-  "main": "./out/src/index.js",
-  "types": "./out/src/index.d.ts",
+  "main": "index.js",
   "author": "Kaiyan Li",
   "license": "MIT",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
-    "dev": "npm run build && node ./out/src/server.js",
-    "watch": "nodemon --watch . -i out -e ts --exec npm run dev",
-    "start": "node ./out/src/server.js",
-    "test": "jest",
-    "prepublishOnly": "tsc -p ./ --outDir out/"
+    "dev": "npm run build && node .",
+    "watch": "nodemon --watch . -e ts --exec npm run dev",
+    "start": "node ./index.js",
+    "test": "npm run build && jest",
+    "clean": "mv babel.config.js docs/ && rm *.js *.js.map && mv ./docs/babel.config.js ."
   },
   "dependencies": {
     "body-parser": "^1.19.0",
