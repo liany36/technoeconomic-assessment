@@ -1,21 +1,17 @@
-import internal from 'assert';
-import { GasificationPower } from './models/gasification-power';
-import { GenericCombinedHeatPower } from './models/generic-combined-heat-power';
-import { GenericPowerOnly } from './models/generic-power-only';
-import { Hydrogen } from './models/hydrogen';
+import { GasificationPower } from './gasification-power';
+import { GenericCombinedHeatPower } from './generic-combined-heat-power';
+import { GenericPowerOnly } from './generic-power-only';
+import { Hydrogen } from './hydrogen';
 import {
-  CarbonCredit,
   InputModCHP,
   InputModGP,
   InputModGPO,
   InputModHydrogen,
-  InputModSensitivity,
   InputModSubstation,
   InputModTransimission,
-} from './models/input.model';
-import { sensitivity } from './models/sensitivity';
-import { SubstationCost } from './models/substation';
-import { TransmissionCost } from './models/transmission';
+} from './input.model';
+import { SubstationCost } from './substation';
+import { TransmissionCost } from './transmission';
 
 export const genericPowerOnly = (params: InputModGPO) => {
   return GenericPowerOnly(params);
@@ -41,7 +37,7 @@ export const substation = (params: InputModSubstation) => {
   return SubstationCost(params);
 };
 
-export const calculateEnergyRevenueRequired = (
+export const computeEnergyRevenueRequired = (
   model: string,
   cashFlow: any,
   includeCarbonCredit: boolean
@@ -92,7 +88,7 @@ export const calculateEnergyRevenueRequired = (
   return energyRevenueRequired;
 };
 
-export const calculateEnergyRevenueRequiredPW = (
+export const computeEnergyRevenueRequiredPW = (
   Year: number,
   CostOfEquity: number,
   EnergyRevenueRequired: number
@@ -100,7 +96,7 @@ export const calculateEnergyRevenueRequiredPW = (
   return EnergyRevenueRequired * (1 + CostOfEquity / 100) ** -Year;
 };
 
-export const calculateCurrentLAC = (
+export const computeCurrentLAC = (
   CostOfEquity: number,
   EconomicLife: number,
   TotalEnergyRevenueRequiredPW: number,
@@ -116,7 +112,7 @@ export const calculateCurrentLAC = (
   return CurrentLACofEnergy;
 };
 
-export const calculateConstantLAC = (
+export const computeConstantLAC = (
   CostOfEquity: number,
   GeneralInflation: number,
   EconomicLife: number,
@@ -134,6 +130,28 @@ export const calculateConstantLAC = (
   return ConstantLACofEnergy;
 };
 
-export const calculateSensitivity = (params: InputModSensitivity) => {
-  return sensitivity(params);
+export const computeCarbonCredit = (
+  currentYear: number,
+  firstYear: number,
+  carbonCreditPrice: number,
+  carbonIntensity: number,
+  energyEconomyRatio: number,
+  escalationRate: number, // in percentage
+  annualElectricGeneration: number
+): number => {
+  let lcfsCreditRevenue = 0;
+  const DieselComplianceStandard = -1.3705 * currentYear + 2862.1; // gCO2e/MJ
+  const CreditPrice = // $/tonne
+    carbonCreditPrice * (1 + escalationRate / 100) ** (currentYear - firstYear);
+  const KWH_TO_MJ = 3.6; // 1 kWh = 3.6 MJ
+  const TONNE_TO_GRAM = 1_000_000; // 1 tonne = 1,000,000 grams
+  if (DieselComplianceStandard * energyEconomyRatio > carbonIntensity) {
+    lcfsCreditRevenue =
+      ((DieselComplianceStandard * energyEconomyRatio - carbonIntensity) /
+        TONNE_TO_GRAM) *
+      KWH_TO_MJ *
+      CreditPrice *
+      annualElectricGeneration;
+  }
+  return lcfsCreditRevenue;
 };

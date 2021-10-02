@@ -17,6 +17,7 @@ export interface InputModGPO {
   TaxCreditFrac: number[];
   CarbonCredit: CarbonCredit;
   IncludeCarbonCredit: boolean;
+  FirstYear: number;
 }
 
 export interface CarbonCredit {
@@ -49,6 +50,7 @@ export interface InputModCHP {
   TaxCreditFrac: number[];
   CarbonCredit: CarbonCredit;
   IncludeCarbonCredit: boolean;
+  FirstYear: number;
 }
 
 // GasificationPower
@@ -75,6 +77,7 @@ export interface InputModGP {
   TaxCreditFrac: number[];
   CarbonCredit: CarbonCredit;
   IncludeCarbonCredit: boolean;
+  FirstYear: number;
 }
 
 // Sensitivity Analysis

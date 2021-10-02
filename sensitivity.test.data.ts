@@ -1,4 +1,4 @@
-import { InputModSensitivity } from 'src/models/input.model';
+import { InputModSensitivity } from './input.model';
 
 const gpoExample: InputModSensitivity = {
   model: 'GPO',
@@ -72,6 +72,13 @@ const gpoExample: InputModSensitivity = {
       EscalationOther: 2.1,
     },
     TaxCreditFrac: [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    CarbonCredit: {
+      CreditPrice: 196,
+      CIscore: 10,
+      EnergyEconomyRatio: 1,
+    },
+    IncludeCarbonCredit: false,
+    FirstYear: 2016,
   },
 };
 
@@ -156,6 +163,13 @@ const chpExample: InputModSensitivity = {
       EscalationCharSales: 2.1,
     },
     TaxCreditFrac: [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    CarbonCredit: {
+      CreditPrice: 196,
+      CIscore: 10,
+      EnergyEconomyRatio: 1,
+    },
+    IncludeCarbonCredit: false,
+    FirstYear: 2016,
   },
 };
 
@@ -257,6 +271,13 @@ const gpExample: InputModSensitivity = {
       EscalationCharSales: 2.1,
     },
     TaxCreditFrac: [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    CarbonCredit: {
+      CreditPrice: 196,
+      CIscore: 10,
+      EnergyEconomyRatio: 1,
+    },
+    IncludeCarbonCredit: false,
+    FirstYear: 2016,
   },
 };
 
