@@ -4,7 +4,7 @@ import { GenericPowerOnly } from './generic-power-only';
 import { InputModSensitivity } from './input.model';
 import { OutputModSensitivity } from './output.model';
 
-function sensitivity(params: InputModSensitivity) {
+export function runSensitivityAnalysis(params: InputModSensitivity) {
   const output: OutputModSensitivity = {
     CapitalCost: {
       constantLAC: [],
@@ -315,4 +315,3 @@ function sensitivity(params: InputModSensitivity) {
 
   return { output };
 }
-export { sensitivity };

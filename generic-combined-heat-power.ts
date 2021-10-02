@@ -1,19 +1,24 @@
-import { InputModGPO } from './input.model';
+import { InputModCHP } from './input.model';
 import {
-  CashFlow,
+  CashFlowCHP,
   ConstantLevelAnnualCostMod,
   CurrentLevelAnnualCostMod,
-  ElectricalFuelBaseYearModGPO,
+  ElectricalFuelBaseYearModCHP,
   ExpensesBaseYearModGPO,
   FinancingMod,
+  HeatBaseYearMod,
   IncomeOtherThanEnergyMod,
-  OutputModGPO,
+  OutputModCHP,
   SensitivityAnalysisMod,
-  TotalCashFlow,
+  TotalCashFlowCHP,
 } from './output.model';
+import { computeCarbonCredit } from './utility';
 
-function GenericPowerOnly(input: InputModGPO) {
+function GenericCombinedHeatPower(input: InputModCHP) {
   // Electrical and Fuel--base year
+  const ParasiticLoad =
+    input.ElectricalFuelBaseYear.GrossElectricalCapacity -
+    input.ElectricalFuelBaseYear.NetElectricalCapacity;
   const AnnualHours =
     (input.ElectricalFuelBaseYear.CapacityFactor / 100) * 8760;
   const FuelHeatingValue =
@@ -25,18 +30,39 @@ function GenericPowerOnly(input: InputModGPO) {
       3600) /
     FuelHeatingValue /
     1000;
+  const FuelPower = (FuelConsumptionRate * 1000 * FuelHeatingValue) / 3600;
+  const GrossStationElectricalEfficiency =
+    (input.ElectricalFuelBaseYear.GrossElectricalCapacity / FuelPower) * 100;
   const AnnualGeneration =
     (input.ElectricalFuelBaseYear.NetElectricalCapacity *
       8760 *
       input.ElectricalFuelBaseYear.CapacityFactor) /
     100;
+  const AnnualFuelConsumption = FuelConsumptionRate * AnnualHours;
   const CapitalCostNEC =
     input.CapitalCost / input.ElectricalFuelBaseYear.NetElectricalCapacity;
-  const AnnualFuelConsumption = FuelConsumptionRate * AnnualHours;
   const AnnualAshDisposal =
     (AnnualFuelConsumption *
       input.ElectricalFuelBaseYear.FuelAshConcentration) /
     100;
+  // Heat-base year
+  const TotalHeatProductionRate =
+    FuelPower - input.ElectricalFuelBaseYear.GrossElectricalCapacity;
+  const RecoveredHeat =
+    (TotalHeatProductionRate *
+      input.HeatBaseYear.AggregateFractionOfHeatRecovered) /
+    100;
+  const AnnualHeatSales = RecoveredHeat * AnnualHours;
+  const TotalIncomeFromHeatSales =
+    AnnualHeatSales * input.HeatBaseYear.AggregateSalesPriceForHeat;
+  const HeatIncomePerUnitNEE = TotalIncomeFromHeatSales / AnnualGeneration;
+  const OverallCHPefficiencyGross =
+    ((input.ElectricalFuelBaseYear.GrossElectricalCapacity * AnnualHours +
+      AnnualHeatSales) /
+      (FuelPower * AnnualHours)) *
+    100;
+  const OverallCHPefficiencyNet =
+    ((AnnualGeneration + AnnualHeatSales) / (FuelPower * AnnualHours)) * 100;
   // Expenses--base year
   const TotalNonFuelExpenses =
     input.ExpensesBaseYear.LaborCost +
@@ -114,7 +140,7 @@ function GenericPowerOnly(input: InputModGPO) {
   // Annual Cash Flows
   const cashFlow = [];
   for (let i = 0; i < input.Financing.EconomicLife; i++) {
-    const newCF: CashFlow = {
+    const newCF: CashFlowCHP = {
       Year: 0,
       EquityRecovery: 0,
       EquityInterest: 0,
@@ -132,17 +158,18 @@ function GenericPowerOnly(input: InputModGPO) {
       TaxesWoCredit: 0,
       TaxCredit: 0,
       Taxes: 0,
-      LcfsCreditRevenue: 0,
       EnergyRevenueRequired: 0,
       BiomassFuelCost: 0,
+      IncomeHeat: 0,
+      LcfsCreditRevenue: 0,
     };
     cashFlow.push(newCF);
   }
   for (let i = 0; i < input.Financing.EconomicLife; i++) {
     cashFlow[i] = CalcCashFlow(cashFlow[i - 1], i + 1);
   }
-  function CalcCashFlow(CF: CashFlow, Year: number) {
-    const newCF: CashFlow = {
+  function CalcCashFlow(CF: CashFlowCHP, Year: number) {
+    const newCF: CashFlowCHP = {
       Year: 0,
       EquityRecovery: 0,
       EquityInterest: 0,
@@ -160,9 +187,10 @@ function GenericPowerOnly(input: InputModGPO) {
       TaxesWoCredit: 0,
       TaxCredit: 0,
       Taxes: 0,
-      LcfsCreditRevenue: 0,
       EnergyRevenueRequired: 0,
       BiomassFuelCost: 0,
+      IncomeHeat: 0,
+      LcfsCreditRevenue: 0,
     };
     newCF.Year = Year;
     newCF.EquityRecovery = AnnualEquityRecovery;
@@ -215,6 +243,16 @@ function GenericPowerOnly(input: InputModGPO) {
     }
     newCF.Depreciation = TotalCostOfPlant * DepreciationFraction;
     newCF.IncomeCapacity = AnnualCapacityPayment;
+    if (Year === 1) {
+      newCF.IncomeHeat = TotalIncomeFromHeatSales;
+    } else {
+      newCF.IncomeHeat =
+        TotalIncomeFromHeatSales *
+        Math.pow(
+          1 + input.EscalationInflation.EscalationHeatSales / 100,
+          Year - 1
+        );
+    }
     newCF.InterestOnDebtReserve = AnnualDebtReserveInterest;
     newCF.TaxesWoCredit =
       (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
@@ -231,25 +269,6 @@ function GenericPowerOnly(input: InputModGPO) {
         Year - 1
       ) *
       input.TaxCreditFrac[Year - 1];
-    // LCFS credit
-    const DieselComplianceStandard = -1.3705 * (Year + 2015) + 2862.1; // gCO2e/MJ
-    const CreditPrice = // $/tonne
-      input.CarbonCredit.CreditPrice *
-      Math.pow(1 + input.EscalationInflation.GeneralInflation / 100, Year - 1);
-    const KWH_TO_MJ = 3.6; // 1 kWh = 3.6 MJ
-    const TONNE_TO_GRAM = 1_000_000; // 1 tonne = 1,000,000 grams
-    if (
-      DieselComplianceStandard * input.CarbonCredit.EnergyEconomyRatio >
-      input.CarbonCredit.CIscore
-    ) {
-      newCF.LcfsCreditRevenue =
-        ((DieselComplianceStandard * input.CarbonCredit.EnergyEconomyRatio -
-          input.CarbonCredit.CIscore) /
-          TONNE_TO_GRAM) *
-        KWH_TO_MJ *
-        CreditPrice *
-        AnnualGeneration;
-    }
     newCF.Taxes =
       (CombinedTaxRate / 100 / (1 - CombinedTaxRate / 100)) *
       (newCF.EquityPrincipalPaid +
@@ -258,6 +277,15 @@ function GenericPowerOnly(input: InputModGPO) {
         newCF.Depreciation +
         newCF.DebtReserve -
         newCF.TaxCredit);
+    newCF.LcfsCreditRevenue = computeCarbonCredit(
+      input.FirstYear + Year - 1,
+      input.FirstYear,
+      input.CarbonCredit.CreditPrice,
+      input.CarbonCredit.CIscore,
+      input.CarbonCredit.EnergyEconomyRatio,
+      input.EscalationInflation.GeneralInflation,
+      AnnualGeneration
+    );
     newCF.EnergyRevenueRequired =
       newCF.EquityRecovery +
       newCF.DebtRecovery +
@@ -266,7 +294,8 @@ function GenericPowerOnly(input: InputModGPO) {
       newCF.Taxes +
       newCF.DebtReserve -
       newCF.IncomeCapacity -
-      newCF.InterestOnDebtReserve;
+      newCF.InterestOnDebtReserve -
+      newCF.IncomeHeat;
     if (input.IncludeCarbonCredit) {
       newCF.EnergyRevenueRequired -= newCF.LcfsCreditRevenue;
     }
@@ -274,7 +303,7 @@ function GenericPowerOnly(input: InputModGPO) {
     return newCF;
   }
 
-  const Total: TotalCashFlow = {
+  const Total: TotalCashFlowCHP = {
     EquityRecovery: 0,
     EquityInterest: 0,
     EquityPrincipalPaid: 0,
@@ -289,9 +318,10 @@ function GenericPowerOnly(input: InputModGPO) {
     TaxesWoCredit: 0,
     TaxCredit: 0,
     Taxes: 0,
-    LcfsCreditRevenue: 0,
     EnergyRevenueRequired: 0,
     BiomassFuelCost: 0,
+    IncomeHeat: 0,
+    LcfsCreditRevenue: 0,
   };
   for (let i = 0; i < cashFlow.length; i++) {
     Total.EquityRecovery += cashFlow[i].EquityRecovery;
@@ -305,6 +335,7 @@ function GenericPowerOnly(input: InputModGPO) {
     Total.DebtReserve += cashFlow[i].DebtReserve;
     Total.Depreciation += cashFlow[i].Depreciation;
     Total.IncomeCapacity += cashFlow[i].IncomeCapacity;
+    Total.IncomeHeat += cashFlow[i].IncomeHeat;
     Total.InterestOnDebtReserve += cashFlow[i].InterestOnDebtReserve;
     Total.TaxesWoCredit += cashFlow[i].TaxesWoCredit;
     Total.TaxCredit += cashFlow[i].TaxCredit;
@@ -349,7 +380,7 @@ function GenericPowerOnly(input: InputModGPO) {
   const ConstantLACofEnergy =
     ConstantLevelAnnualRevenueRequirements / AnnualGeneration;
 
-  const ElectricalFuelBaseYear: ElectricalFuelBaseYearModGPO = {
+  const ElectricalFuelBaseYear: ElectricalFuelBaseYearModCHP = {
     AnnualHours: 0,
     BiomassTarget: 0,
     FuelConsumptionRate: 0,
@@ -357,6 +388,9 @@ function GenericPowerOnly(input: InputModGPO) {
     CapitalCostNEC: 0,
     AnnualFuelConsumption: 0,
     AnnualAshDisposal: 0,
+    ParasiticLoad: 0,
+    FuelPower: 0,
+    GrossStationElectricalEfficiency: 0,
   };
   ElectricalFuelBaseYear.AnnualHours = AnnualHours;
   ElectricalFuelBaseYear.BiomassTarget = AnnualFuelConsumption;
@@ -365,6 +399,26 @@ function GenericPowerOnly(input: InputModGPO) {
   ElectricalFuelBaseYear.CapitalCostNEC = CapitalCostNEC;
   ElectricalFuelBaseYear.AnnualFuelConsumption = AnnualFuelConsumption;
   ElectricalFuelBaseYear.AnnualAshDisposal = AnnualAshDisposal;
+  ElectricalFuelBaseYear.ParasiticLoad = ParasiticLoad;
+  ElectricalFuelBaseYear.FuelPower = FuelPower;
+  ElectricalFuelBaseYear.GrossStationElectricalEfficiency =
+    GrossStationElectricalEfficiency;
+  const HeatBaseYear: HeatBaseYearMod = {
+    TotalHeatProductionRate: 0,
+    RecoveredHeat: 0,
+    AnnualHeatSales: 0,
+    TotalIncomeFromHeatSales: 0,
+    HeatIncomePerUnitNEE: 0,
+    OverallCHPefficiencyGross: 0,
+    OverallCHPefficiencyNet: 0,
+  };
+  HeatBaseYear.TotalHeatProductionRate = TotalHeatProductionRate;
+  HeatBaseYear.RecoveredHeat = RecoveredHeat;
+  HeatBaseYear.AnnualHeatSales = AnnualHeatSales;
+  HeatBaseYear.TotalIncomeFromHeatSales = TotalIncomeFromHeatSales;
+  HeatBaseYear.HeatIncomePerUnitNEE = HeatIncomePerUnitNEE;
+  HeatBaseYear.OverallCHPefficiencyGross = OverallCHPefficiencyGross;
+  HeatBaseYear.OverallCHPefficiencyNet = OverallCHPefficiencyNet;
   const ExpensesBaseYear: ExpensesBaseYearModGPO = {
     TotalNonFuelExpenses: 0,
     TotalExpensesIncludingFuel: 0,
@@ -453,13 +507,14 @@ function GenericPowerOnly(input: InputModGPO) {
     LACconstant: ConstantLACofEnergy,
   };
 
-  const Output: OutputModGPO = {
+  const Output: OutputModCHP = {
     SensitivityAnalysis: SensitivityAnalysis,
     CombinedTaxRate: CombinedTaxRate,
     Financing: Financing,
     CurrentLAC: CurrentLevelAnnualCost,
     ConstantLAC: ConstantLevelAnnualCost,
     ElectricalAndFuelBaseYear: ElectricalFuelBaseYear,
+    HeatBaseYear: HeatBaseYear,
     ExpensesBaseYear: ExpensesBaseYear,
     IncomeOtherThanEnergy: IncomeOtherThanEnergy,
     AnnualCashFlows: cashFlow,
@@ -469,4 +524,4 @@ function GenericPowerOnly(input: InputModGPO) {
   return Output;
 }
 
-export { GenericPowerOnly };
+export { GenericCombinedHeatPower };

@@ -3,10 +3,10 @@ import dotenv from 'dotenv';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
-import { GasificationPower } from './models/gasification-power';
-import { GenericCombinedHeatPower } from './models/generic-combined-heat-power';
-import { GenericPowerOnly } from './models/generic-power-only';
-import { Hydrogen } from './models/hydrogen';
+import { GasificationPower } from './gasification-power';
+import { GenericCombinedHeatPower } from './generic-combined-heat-power';
+import { GenericPowerOnly } from './generic-power-only';
+import { Hydrogen } from './hydrogen';
 import {
   InputModCHP,
   InputModGP,
@@ -15,13 +15,13 @@ import {
   InputModSensitivity,
   InputModSubstation,
   InputModTransimission,
-} from './models/input.model';
-import { sensitivity } from './models/sensitivity';
-import { SubstationCost } from './models/substation';
-import { TransmissionCost } from './models/transmission';
+} from './input.model';
+import { runSensitivityAnalysis } from './sensitivity';
+import { SubstationCost } from './substation';
+import { TransmissionCost } from './transmission';
 
 // tslint:disable-next-line: no-var-requires
-const swaggerDocument = require('../../swagger.json');
+const swaggerDocument = require('./swagger.json');
 
 dotenv.config();
 
@@ -83,7 +83,7 @@ app.post('/hydrogen', async (req: any, res: any) => {
 app.post('/sensitivity', async (req: any, res: any) => {
   const params: InputModSensitivity = req.body;
   try {
-    const result = await sensitivity(params);
+    const result = await runSensitivityAnalysis(params);
     res.status(200).json(result);
   } catch (e) {
     res.status(400).send(e.message);

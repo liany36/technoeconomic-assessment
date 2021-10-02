@@ -13,6 +13,7 @@ import {
   SensitivityAnalysisMod,
   TotalCashFlowGP,
 } from './output.model';
+import { computeCarbonCredit } from './utility';
 
 function GasificationPower(input: InputModGP) {
   // Constants
@@ -50,7 +51,7 @@ function GasificationPower(input: InputModGP) {
     input.ElectricalFuelBaseYear.NetElectricalCapacity;
   const AnnualHours =
     (input.ElectricalFuelBaseYear.CapacityFactor / 100) * 8760;
-  const AnnualNetElectricityGeneration =
+  const AnnualGeneration =
     input.ElectricalFuelBaseYear.NetElectricalCapacity * AnnualHours;
   const OverallNetSystemEfficiency =
     (input.ElectricalFuelBaseYear.HHVEfficiency *
@@ -122,40 +123,34 @@ function GasificationPower(input: InputModGP) {
   const AnnualHeatSales = RecoveredHeat * AnnualHours;
   const TotalIncomeFromHeatSales =
     AnnualHeatSales * input.HeatBaseYear.AggregateSalesPriceForHeat;
-  const HeatIncomePerUnitNEE =
-    TotalIncomeFromHeatSales / AnnualNetElectricityGeneration;
+  const HeatIncomePerUnitNEE = TotalIncomeFromHeatSales / AnnualGeneration;
   const OverallCHPefficiencyGross =
     ((input.ElectricalFuelBaseYear.GrossElectricalCapacity * AnnualHours +
       AnnualHeatSales) /
       (TotalFuelPowerInput * AnnualHours)) *
     100;
   const OverallCHPefficiencyNet =
-    ((AnnualNetElectricityGeneration + AnnualHeatSales) /
+    ((AnnualGeneration + AnnualHeatSales) /
       (TotalFuelPowerInput * AnnualHours)) *
     100;
   // Expenses--base year
   const BiomassFuelCostPerKwh =
     (AnnualBiomassConsumptionDry * input.ExpensesBaseYear.BiomassFuelCost) /
-    AnnualNetElectricityGeneration;
+    AnnualGeneration;
   const DualFuelPerKwh =
     (input.ExpensesBaseYear.DualFuelCost * AnnualDualFuelConsumption) /
-    AnnualNetElectricityGeneration;
-  const LaborCostKwh =
-    input.ExpensesBaseYear.LaborCost / AnnualNetElectricityGeneration;
+    AnnualGeneration;
+  const LaborCostKwh = input.ExpensesBaseYear.LaborCost / AnnualGeneration;
   const MaintenanceCostKwh =
-    input.ExpensesBaseYear.MaintenanceCost / AnnualNetElectricityGeneration;
+    input.ExpensesBaseYear.MaintenanceCost / AnnualGeneration;
   const WasteTreatmentKwh =
-    input.ExpensesBaseYear.WasteTreatment / AnnualNetElectricityGeneration;
+    input.ExpensesBaseYear.WasteTreatment / AnnualGeneration;
   const InsurancePropertyTaxKwh =
-    input.ExpensesBaseYear.InsurancePropertyTax /
-    AnnualNetElectricityGeneration;
-  const UtilitiesKwh =
-    input.ExpensesBaseYear.Utilities / AnnualNetElectricityGeneration;
-  const ManagementKwh =
-    input.ExpensesBaseYear.Management / AnnualNetElectricityGeneration;
+    input.ExpensesBaseYear.InsurancePropertyTax / AnnualGeneration;
+  const UtilitiesKwh = input.ExpensesBaseYear.Utilities / AnnualGeneration;
+  const ManagementKwh = input.ExpensesBaseYear.Management / AnnualGeneration;
   const OtherOperatingExpensesKwh =
-    input.ExpensesBaseYear.OtherOperatingExpenses /
-    AnnualNetElectricityGeneration;
+    input.ExpensesBaseYear.OtherOperatingExpenses / AnnualGeneration;
   const TotalNonFuelExpenses =
     input.ExpensesBaseYear.LaborCost +
     input.ExpensesBaseYear.MaintenanceCost +
@@ -353,7 +348,7 @@ function GasificationPower(input: InputModGP) {
         newCF.Depreciation +
         newCF.DebtReserve);
     newCF.TaxCredit =
-      AnnualNetElectricityGeneration *
+      AnnualGeneration *
       input.Taxes.ProductionTaxCredit *
       Math.pow(
         1 + input.EscalationInflation.EscalationProductionTaxCredit / 100,
@@ -368,25 +363,15 @@ function GasificationPower(input: InputModGP) {
         newCF.Depreciation +
         newCF.DebtReserve -
         newCF.TaxCredit);
-    // LCFS credit
-    const DieselComplianceStandard = -1.3705 * (Year + 2015) + 2862.1; // gCO2e/MJ
-    const CreditPrice = // $/tonne
-      input.CarbonCredit.CreditPrice *
-      Math.pow(1 + input.EscalationInflation.GeneralInflation / 100, Year - 1);
-    const KWH_TO_MJ = 3.6; // 1 kWh = 3.6 MJ
-    const TONNE_TO_GRAM = 1_000_000; // 1 tonne = 1,000,000 grams
-    if (
-      DieselComplianceStandard * input.CarbonCredit.EnergyEconomyRatio >
-      input.CarbonCredit.CIscore
-    ) {
-      newCF.LcfsCreditRevenue =
-        ((DieselComplianceStandard * input.CarbonCredit.EnergyEconomyRatio -
-          input.CarbonCredit.CIscore) /
-          TONNE_TO_GRAM) *
-        KWH_TO_MJ *
-        CreditPrice *
-        AnnualNetElectricityGeneration;
-    }
+    newCF.LcfsCreditRevenue = computeCarbonCredit(
+      input.FirstYear + Year - 1,
+      input.FirstYear,
+      input.CarbonCredit.CreditPrice,
+      input.CarbonCredit.CIscore,
+      input.CarbonCredit.EnergyEconomyRatio,
+      input.EscalationInflation.GeneralInflation,
+      AnnualGeneration
+    );
     newCF.EnergyRevenueRequired =
       newCF.EquityRecovery +
       newCF.DebtRecovery +
@@ -478,7 +463,7 @@ function GasificationPower(input: InputModGP) {
     CurrentLevelAnnualCost.CapitalRecoveryFactorCurrent;
   CurrentLevelAnnualCost.CurrentLACofEnergy =
     CurrentLevelAnnualCost.CurrentLevelAnnualRevenueRequirements /
-    AnnualNetElectricityGeneration;
+    AnnualGeneration;
   // Constant & Level Annual Cost (LAC)
   const ConstantLevelAnnualCost: ConstantLevelAnnualCostMod = {
     RealCostOfMoney: 0,
@@ -502,12 +487,12 @@ function GasificationPower(input: InputModGP) {
     ConstantLevelAnnualCost.CapitalRecoveryFactorConstant;
   ConstantLevelAnnualCost.ConstantLACofEnergy =
     ConstantLevelAnnualCost.ConstantLevelAnnualRevenueRequirements /
-    AnnualNetElectricityGeneration;
+    AnnualGeneration;
   const ElectricalFuelBaseYear: ElectricalFuelBaseYearModGP = {
     AnnualHours: AnnualHours,
     BiomassTarget: AnnualBiomassConsumptionDry,
     ParasiticLoad: ParasiticLoad,
-    AnnualGeneration: AnnualNetElectricityGeneration,
+    AnnualGeneration: AnnualGeneration,
     OverallNetSystemEfficiency: OverallNetSystemEfficiency,
     NitrogenGas: N2,
     CleanGasMolecularMass: CleanGasMolecularMass,
