@@ -39,8 +39,7 @@ export interface ElectricalFuelBaseYearModGP extends ElectricalFuelBaseYearMod {
   DualFuelFlowRate: number;
   AnnualDualFuelConsumption: number;
   BiomassFeedRate: number;
-  AnnualBiomassConsumptionDryMass: number;
-  AnnualBiomassConsumptionWetMass: number;
+  AnnualBiomassConsumption: number;
   CharProductionRate: number;
   AnnualCharProduction: number;
 }

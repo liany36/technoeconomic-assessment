@@ -105,10 +105,7 @@ function GasificationPower(input: InputModGP) {
       (input.ElectricalFuelBaseYear.HHVEfficiency / 100) /
       HHV) *
     3600;
-  const AnnualBiomassConsumptionDry = (BiomassFeedRate * AnnualHours) / 1000;
-  const AnnualBiomassConsumptionWet =
-    AnnualBiomassConsumptionDry /
-    (1 - input.ElectricalFuelBaseYear.MoistureContent / 100);
+  const AnnualBiomassConsumption = (BiomassFeedRate * AnnualHours) / 1000;
   const CharProductionRate =
     ((input.ElectricalFuelBaseYear.AshContent / 100) * BiomassFeedRate) /
     (1 - input.ElectricalFuelBaseYear.CarbonConcentration / 100);
@@ -135,7 +132,7 @@ function GasificationPower(input: InputModGP) {
     100;
   // Expenses--base year
   const BiomassFuelCostPerKwh =
-    (AnnualBiomassConsumptionDry * input.ExpensesBaseYear.BiomassFuelCost) /
+    (AnnualBiomassConsumption * input.ExpensesBaseYear.BiomassFuelCost) /
     AnnualGeneration;
   const DualFuelPerKwh =
     (input.ExpensesBaseYear.DualFuelCost * AnnualDualFuelConsumption) /
@@ -168,7 +165,7 @@ function GasificationPower(input: InputModGP) {
     ManagementKwh +
     OtherOperatingExpensesKwh;
   const TotalExpensesIncludingFuel =
-    input.ExpensesBaseYear.BiomassFuelCost * AnnualBiomassConsumptionDry +
+    input.ExpensesBaseYear.BiomassFuelCost * AnnualBiomassConsumption +
     input.ExpensesBaseYear.DualFuelCost * AnnualDualFuelConsumption +
     TotalNonFuelExpenses;
   const TotalExpensesIncludingFuelKwh =
@@ -300,7 +297,7 @@ function GasificationPower(input: InputModGP) {
     if (Year === 1) {
       newCF.DebtPrincipalRemaining = TotalDebtCost - newCF.DebtPrincipalPaid;
       newCF.BiomassFuelCost =
-        AnnualBiomassConsumptionDry * input.ExpensesBaseYear.BiomassFuelCost;
+        AnnualBiomassConsumption * input.ExpensesBaseYear.BiomassFuelCost;
       newCF.DualFuelCost =
         AnnualDualFuelConsumption * input.ExpensesBaseYear.DualFuelCost;
     } else {
@@ -490,7 +487,7 @@ function GasificationPower(input: InputModGP) {
     AnnualGeneration;
   const ElectricalFuelBaseYear: ElectricalFuelBaseYearModGP = {
     AnnualHours: AnnualHours,
-    BiomassTarget: AnnualBiomassConsumptionDry,
+    BiomassTarget: AnnualBiomassConsumption,
     ParasiticLoad: ParasiticLoad,
     AnnualGeneration: AnnualGeneration,
     OverallNetSystemEfficiency: OverallNetSystemEfficiency,
@@ -508,8 +505,7 @@ function GasificationPower(input: InputModGP) {
     DualFuelFlowRate: DualFuelFlowRate,
     AnnualDualFuelConsumption: AnnualDualFuelConsumption,
     BiomassFeedRate: BiomassFeedRate,
-    AnnualBiomassConsumptionDryMass: AnnualBiomassConsumptionDry,
-    AnnualBiomassConsumptionWetMass: AnnualBiomassConsumptionWet,
+    AnnualBiomassConsumption: AnnualBiomassConsumption,
     CharProductionRate: CharProductionRate,
     AnnualCharProduction: AnnualCharProduction,
   };
