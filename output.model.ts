@@ -3,7 +3,8 @@ export interface ElectricalFuelBaseYearMod {
   BiomassTarget: number;
 }
 
-export interface ElectricalFuelBaseYearModGPO extends ElectricalFuelBaseYearMod {
+export interface ElectricalFuelBaseYearModGPO
+  extends ElectricalFuelBaseYearMod {
   // Shared // generica-power-only
   FuelConsumptionRate: number;
   AnnualGeneration: number;
@@ -229,17 +230,6 @@ export interface SensitivityAnalysisMod {
   LACconstant: number;
 }
 
-// export interface CapitalCostMod {
-//   // combined-heat-power
-//   TotalFacilityCapitalCost: number;
-//   GasifierSystemCapitalCostPerKwe: number;
-//   GasCleaningSystemCapitalCostPerKwe: number;
-//   PowerGenerationCapitalCostPerKwe: number;
-//   EmissionControlSystemCapitalCostPerKwe: number;
-//   HeatRecoverySystemCapitalCostPerKwe: number;
-//   TotalFacilityCapitalCostPerKwe: number;
-// }
-
 export interface HydrogenGenerationMod {
   HydrogenEnergy: number;
   DesignHydrogenProductionRateMW: number;
@@ -294,38 +284,38 @@ export interface OutputModHydrogen extends OutputMod {
 
 export interface OutputModSensitivity {
   CapitalCost: {
-    constantLAC: number[],
-    relativeChangeCOE: number[]
-    relativeChange: number[]
+    constantLAC: number[];
+    relativeChangeCOE: number[];
+    relativeChange: number[];
   };
   BiomassFuelCost: {
-    constantLAC: number[],
-    relativeChangeCOE: number[]
-    relativeChange: number[]
+    constantLAC: number[];
+    relativeChangeCOE: number[];
+    relativeChange: number[];
   };
   DebtRatio: {
-    constantLAC: number[],
-    relativeChangeCOE: number[]
-    relativeChange: number[]
+    constantLAC: number[];
+    relativeChangeCOE: number[];
+    relativeChange: number[];
   };
   DebtInterestRate: {
-    constantLAC: number[],
-    relativeChangeCOE: number[]
-    relativeChange: number[]
+    constantLAC: number[];
+    relativeChangeCOE: number[];
+    relativeChange: number[];
   };
   CostOfEquity: {
-    constantLAC: number[],
-    relativeChangeCOE: number[]
-    relativeChange: number[]
+    constantLAC: number[];
+    relativeChangeCOE: number[];
+    relativeChange: number[];
   };
   NetStationEfficiency: {
-    constantLAC: number[],
-    relativeChangeCOE: number[]
-    relativeChange: number[]
+    constantLAC: number[];
+    relativeChangeCOE: number[];
+    relativeChange: number[];
   };
   CapacityFactor: {
-    constantLAC: number[],
-    relativeChangeCOE: number[]
-    relativeChange: number[]
+    constantLAC: number[];
+    relativeChangeCOE: number[];
+    relativeChange: number[];
   };
 }

@@ -351,18 +351,10 @@
     "InputModGP": {
       "type": "object",
       "properties": {
-        "doSensitivityAnalysis": {
-          "type": "boolean",
-          "example": false,
-          "description": "Whether the model will be the input for sensitivity analysis"
-        },
         "CapitalCost": {
           "type": "number",
           "example": 0,
           "description": "Total Facility Capital Cost ($) that is the sum of CapitalCostElements"
-        },
-        "CapitalCostElements": {
-          "$ref": "#/definitions/CapitalCostInputModGP"
         },
         "ElectricalFuelBaseYear": {
           "$ref": "#/definitions/ElectricalFuelBaseYearInputModGP"
@@ -927,46 +919,6 @@
       ],
       "xml": {
         "name": "InputModSubstation"
-      }
-    },
-    "CapitalCostInputModGP": {
-      "type": "object",
-      "properties": {
-        "GasifierSystemCapitalCost": {
-          "type": "number",
-          "example": 300000,
-          "description": "Gasifier and Feedstock Handling System Capital Cost ($)"
-        },
-        "GasCleaningSystemCapitalCost": {
-          "type": "number",
-          "example": 50000,
-          "description": "Gas Cleaning System Capital Cost ($)"
-        },
-        "PowerGenerationCapitalCost": {
-          "type": "number",
-          "example": 450000,
-          "description": "Power Generation/Interconnect System Capital Cost ($)"
-        },
-        "EmissionControlSystemCapitalCost": {
-          "type": "number",
-          "example": 25000,
-          "description": "Emission Control System Capital Cost ($)"
-        },
-        "HeatRecoverySystemCapitalCost": {
-          "type": "number",
-          "example": 50000,
-          "description": "Heat Recovery System Capital Cost ($)"
-        }
-      },
-      "required": [
-        "GasifierSystemCapitalCost",
-        "GasCleaningSystemCapitalCost",
-        "PowerGenerationCapitalCost",
-        "EmissionControlSystemCapitalCost",
-        "HeatRecoverySystemCapitalCost"
-      ],
-      "xml": {
-        "name": "CapitalCostInputModGP"
       }
     },
     "ElectricalFuelBaseYearInputMod": {

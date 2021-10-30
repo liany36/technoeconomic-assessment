@@ -56,8 +56,6 @@ export interface InputModCHP {
 // GasificationPower
 export interface InputModGP {
   // Capital Cost from Gasification Power Generation
-  doSensitivityAnalysis: boolean;
-  CapitalCostElements: CapitalCostInputModGP;
   CapitalCost: number;
   // Electrical and Fuel -- base year from Gasification Power Generation
   ElectricalFuelBaseYear: ElectricalFuelBaseYearInputModGP;
@@ -244,14 +242,6 @@ export interface EscalationInflationInputModGP
   extends EscalationInflationInputMod {
   EscalationDualFuel: number;
   EscalationCharSales: number;
-}
-
-export interface CapitalCostInputModGP {
-  GasifierSystemCapitalCost: number;
-  GasCleaningSystemCapitalCost: number;
-  PowerGenerationCapitalCost: number;
-  EmissionControlSystemCapitalCost: number;
-  HeatRecoverySystemCapitalCost: number;
 }
 
 // Transmission

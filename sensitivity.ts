@@ -43,14 +43,6 @@ export function runSensitivityAnalysis(params: InputModSensitivity) {
     },
   };
   // Capital Cost
-  if (params.model === 'GP') {
-    params.input.CapitalCost =
-      params.input.CapitalCostElements.GasifierSystemCapitalCost +
-      params.input.CapitalCostElements.GasCleaningSystemCapitalCost +
-      params.input.CapitalCostElements.PowerGenerationCapitalCost +
-      params.input.CapitalCostElements.EmissionControlSystemCapitalCost +
-      params.input.CapitalCostElements.HeatRecoverySystemCapitalCost;
-  }
   let base = params.input.CapitalCost;
   let increment1 = (base - params.CapitalCost.low) / 10;
   let increment2 = (params.CapitalCost.high - base) / 10;
@@ -88,8 +80,6 @@ export function runSensitivityAnalysis(params: InputModSensitivity) {
           .ConstantLACofEnergy;
         break;
       case 'GP':
-        // by default, doSensitivityAnalysis = false
-        params.input.doSensitivityAnalysis = true;
         ithConstantLAC = GasificationPower(params.input).ConstantLAC
           .ConstantLACofEnergy;
         break;

@@ -36,15 +36,6 @@ function GasificationPower(input: InputModGP) {
   const H2_LHV_KJL = H2_LHV * H2Density * 1000; // H2 Lower Heating Value (kJ/L)
   const CH4_HHV_KJL = CH4_HHV * CH4Density * 1000; // CH4 Higher Heating Value (kJ/L)
   const CH4_LHV_KJL = CH4_LHV * CH4Density * 1000; // CH4 Lower Heating Value (kJ/L)
-  // Capital Cost
-  if (!input.doSensitivityAnalysis) {
-    input.CapitalCost =
-      input.CapitalCostElements.GasifierSystemCapitalCost +
-      input.CapitalCostElements.GasCleaningSystemCapitalCost +
-      input.CapitalCostElements.PowerGenerationCapitalCost +
-      input.CapitalCostElements.EmissionControlSystemCapitalCost +
-      input.CapitalCostElements.HeatRecoverySystemCapitalCost;
-  }
   // Electrical and Fuel--base year
   const ParasiticLoad =
     input.ElectricalFuelBaseYear.GrossElectricalCapacity -
