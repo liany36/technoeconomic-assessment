@@ -21,7 +21,7 @@ export function SubstationCost(input: InputModSubstation) {
     XFMR230o500kV: 0,
     XFMR345o500kV: 0,
   };
-  const InflationRate = (540.7 - 464.751) / 464.751; // 2012-2019
+  const InflationRate = (287.494 - 232.376) / 232.376; // 2012-2021
   const OverheadCostRatio = 0.175;
 
   switch (input.Voltage) {
@@ -86,12 +86,10 @@ export function SubstationCost(input: InputModSubstation) {
   }
   switch (input.CircuitBreakerType) {
     case 'Ring Bus':
-      CircuitBreakers =
-        CostPerLinePosition * RingBus * input.NoLineXFMRPositions;
+      CircuitBreakers = CostPerLinePosition * RingBus * input.NoLineXFMRPositions;
       break;
     case 'Breaker and a Half':
-      CircuitBreakers =
-        CostPerLinePosition * BreakerAndHalf * input.NoLineXFMRPositions;
+      CircuitBreakers = CostPerLinePosition * BreakerAndHalf * input.NoLineXFMRPositions;
       break;
   }
 
@@ -134,19 +132,12 @@ export function SubstationCost(input: InputModSubstation) {
       Transformer = TransformerCost.XFMR345o500kV;
       break;
   }
-  Transformer =
-    Transformer * input.MVAratingPerTransformer * input.NoTransformers;
+  Transformer = Transformer * input.MVAratingPerTransformer * input.NoTransformers;
   SVC = input.SVCmvarRating * SVCcost;
   ShuntReactor = input.ShuntReactorMVARrating * ShuntReactorCost;
   SeriesCapacitor = input.SeriesCapacitorMVARrating * SeriesCapacitorCost;
   let TotalSubstationCost =
-    BaseCost +
-    CircuitBreakers +
-    HVDCconverter +
-    Transformer +
-    SVC +
-    ShuntReactor +
-    SeriesCapacitor;
+    BaseCost + CircuitBreakers + HVDCconverter + Transformer + SVC + ShuntReactor + SeriesCapacitor;
   OverheadCost = TotalSubstationCost * OverheadCostRatio;
   TotalSubstationCost += OverheadCost;
   return {

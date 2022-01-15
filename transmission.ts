@@ -21,7 +21,7 @@ export function TransmissionCost(input: InputModTransimission) {
   let TotalMiles;
   let WeightedMiles;
   let InitialCost = 0; // 2012
-  const InflationRate = (540.7 - 464.751) / 464.751; // 2012-2019
+  const InflationRate = (287.494 - 232.376) / 232.376; // 2012-2021
 
   // 2015 Per Acre Rent ($/acre-year)
   const Rent = {
@@ -489,8 +489,7 @@ export function TransmissionCost(input: InputModTransimission) {
       input.Miles.Zone12 * LandMarketValue.Zone12 * AcresUnitMile) /
     TotalMiles;
 
-  OverheadCostUnitMile =
-    (LineCostUnitMile + ROWcostUnitMile) * OverheadCostRatio;
+  OverheadCostUnitMile = (LineCostUnitMile + ROWcostUnitMile) * OverheadCostRatio;
   AllCostUnitMile = LineCostUnitMile + ROWcostUnitMile + OverheadCostUnitMile;
 
   LineCost = LineCostUnitMile * TotalMiles;
