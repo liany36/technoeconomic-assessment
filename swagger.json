@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This service is used for determining energy costs based on your technical, financial, and economic assumptions. It was originally created in Excel spreadsheets and published by California Biomass Collaborative, and is now coded by UC Davis CEC group, funded by California Energy Commission.",
+    "description": "TEA is used for determining energy costs based on your technical, financial, and economic assumptions. It was originally developed and published by California Biomass Collaborative.",
     "version": "1.4.2",
     "title": "Techno-Economic Assessment",
     "contact": {
