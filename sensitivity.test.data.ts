@@ -204,14 +204,6 @@ const gpExample: InputModSensitivity = {
     low: 40,
   },
   input: {
-    doSensitivityAnalysis: false,
-    CapitalCostElements: {
-      GasifierSystemCapitalCost: 300000,
-      GasCleaningSystemCapitalCost: 50000,
-      PowerGenerationCapitalCost: 450000,
-      EmissionControlSystemCapitalCost: 25000,
-      HeatRecoverySystemCapitalCost: 50000,
-    },
     CapitalCost: 875000,
     ElectricalFuelBaseYear: {
       NetElectricalCapacity: 500,
